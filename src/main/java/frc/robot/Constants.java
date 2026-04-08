@@ -24,4 +24,24 @@ public class Constants {
     public static final class Swerve {
         
     }
+
+    public static final class Shooter {
+        public static final int FAT_KICKER_INNER_MOTOR_PORT = -1;
+        public static final int FAT_KICKER_OUTER_MOTOR_PORT = -1;
+        public static final int SHOOTER_MOTOR_1_PORT = -1;
+        public static final int SHOOTER_MOTOR_2_PORT = -1;
+        public static final int HOOD_MOTOR_PORT = -1;
+        public static final int BACKSPIN_MOTOR_PORT = -1;
+    }
+
+    public static final class Gyro {
+        public static final int PIGEON_ID = -1;
+
+        private Gyro() {}
+    }
+
+    public class Field {
+        public static String ALLIANCE_COLOR = "BLUE"; // Type: enum("BLUE", "RED")
+        public static String STARTING_POSITION = "CENTER"; // Type: enum("LEFT", "CENTER", "RIGHT")
+    }
 }

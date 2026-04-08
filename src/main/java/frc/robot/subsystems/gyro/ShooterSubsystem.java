@@ -7,15 +7,24 @@ import frc.robot.util.SmartKrakenMotor;
 public class ShooterSubsystem extends SubsystemBase {
     
     public final SmartKrakenMotor fatKickerInnerMotor;
+    public final SmartKrakenMotor fatKickerOuterMotor;
 
+    //[TODO]Set correct values for PID, output & angle range, gear ratio, motor mode for all motors
     public ShooterSubsystem() {
         this.fatKickerInnerMotor = SmartKrakenMotor.Builder.newInstance()
             .port(Constants.Shooter.FAT_KICKER_INNER_MOTOR_PORT)
-            .PID(1,0,0) //[TODO] set right values
-            .outputRange(-1,-1)//[TODO] set right values
-            .mode(SmartKrakenMotor.MotorMode.CONTINUOUS)//[TODO] set right motor mode
-            //.gearRatio() [TODO] find gearRatio
+            .PID(1,0,0)
+            .outputRange(-1,-1)
+            .mode(SmartKrakenMotor.MotorMode.CONTINUOUS)
+            //.gearRatio()
             .build();
+        this.fatKickerOuterMotor = SmartKrakenMotor.Builder.newInstance()
+            .port(Constants.Shooter.FAT_KICKER_OUTER_PORT)
+            .PID(1,0,0)
+            .outputRange(-1,-1)
+            //.gearRatio()
+            .build()
+        
         
     }
 
