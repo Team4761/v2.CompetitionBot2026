@@ -12,7 +12,7 @@ public class GyroSubsystem extends SubsystemBase{
     // Make the code aware there should be 2 motors
     private final Pigeon2 pigeon;
 
-    // Tell the code what those motor are/should be like and were to find them
+    // Tell the code what those motors are/should be like and where to find them
     public GyroSubsystem() {
         this.pigeon = new Pigeon2(Constants.Gyro.PIGEON_ID);
     }
