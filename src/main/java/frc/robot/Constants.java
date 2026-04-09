@@ -40,6 +40,14 @@ public class Constants {
         private Gyro() {}
     }
 
+    public static final class Snatcher {
+        public static final int SMACKDOWN_MOTOR_PORT = -1;
+        public static final int SNATCHER_MOTOR_PORT = -1;
+        public static final double MIN_SMACKDOWN_ANGLE = 0;
+        public static final double MAX_SMACKDOWN_ANGLE = 0;
+        public static final double MOTOR_ROTATIONS_PER_EXTENDER_ROTATION = 125;
+    }
+
     public class Field {
         public static String ALLIANCE_COLOR = "BLUE"; // Type: enum("BLUE", "RED")
         public static String STARTING_POSITION = "CENTER"; // Type: enum("LEFT", "CENTER", "RIGHT")
