@@ -19,11 +19,11 @@ public class ShooterSubsystem extends SubsystemBase {
             //.gearRatio()
             .build();
         this.fatKickerOuterMotor = SmartKrakenMotor.Builder.newInstance()
-            .port(Constants.Shooter.FAT_KICKER_OUTER_PORT)
+            .port(Constants.Shooter.FAT_KICKER_OUTER_MOTOR_PORT)
             .PID(1,0,0)
             .outputRange(-1,-1)
             //.gearRatio()
-            .build()
+            .build();
         
         
     }
