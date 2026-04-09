@@ -9,7 +9,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 
 import java.util.logging.Logger;
 
-public class SmartKrakenMotor {
+public class SmartTalonMotor {
     public enum MotorMode {
         CONTINUOUS,
         WRAPPED
@@ -25,9 +25,9 @@ public class SmartKrakenMotor {
     private MotorMode mode;
     private boolean coastingEnabled = false;
 
-    private static final Logger LOGGER = Logger.getLogger(SmartKrakenMotor.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(SmartTalonMotor.class.getName());
 
-    public SmartKrakenMotor(Builder builder) {
+    public SmartTalonMotor(Builder builder) {
         this.motor = new TalonFX(builder.port);
         this.config.Slot0.kP = builder.p;
         this.config.Slot0.kI = builder.i;
@@ -167,6 +167,6 @@ public class SmartKrakenMotor {
         public Builder mode(MotorMode mode) { this.mode = mode; return this; }
         public Builder gearRatio(double gearRatio) { this.gearRatio = gearRatio; return this; }
         
-        public SmartKrakenMotor build() { return new SmartKrakenMotor(this); }
+        public SmartTalonMotor build() { return new SmartTalonMotor(this); }
     }
 }
