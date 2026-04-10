@@ -3,37 +3,32 @@ package frc.robot.commands.snatcher;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;
 
-
-
-public class SmackdownSnatcherCommand extends Command {
+public class SnatchCommand extends Command{
     private SnatcherSubsystem snatcherSubsystem;
-    private int isStable = 0;
-    
-    public SmackdownSnatcherCommand(SnatcherSubsystem sub) {
+
+    public SnatchCommand(SnatcherSubsystem sub) {
         this.snatcherSubsystem = sub;
         addRequirements(sub);
     }
 
     @Override
     public void initialize() {
+        snatcherSubsystem.snatcherMotor.disableCoasting();
         snatcherSubsystem.snatcherMotor.setSpeedPercent(1);
     }
 
-    public void execute() {
-        if (snatcherSubsystem.snatcherMotor.getAngle() >= 90) {//90 is temp value we need the angle for down
-            isStable++;
-        } else {
-            isStable = 0;
-        }
-    }
+    @Override
+    public void execute() {}
 
     @Override
     public boolean isFinished() {
-        return (isStable >= 10);
+        return false;
     }
 
     @Override
-    public void end(boolean isInterrupted){
+    public void end(boolean isInterrupted) {
+        snatcherSubsystem.snatcherMotor.enableCoasting();
         snatcherSubsystem.snatcherMotor.stopTurning();
-    } 
+    }
+    
 }
