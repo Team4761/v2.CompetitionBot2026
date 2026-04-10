@@ -77,7 +77,7 @@ public final class Constants {
     }
 
     public static final class Gyro {
-        public static final int PIGEON_ID = 0; // [TODO] Set this to the correct ID
+        public static final int PIGEON_ID = 0; // Pigeon 2 is always 0
 
         private Gyro() {}
     }
@@ -87,8 +87,27 @@ public final class Constants {
         public static final String CAMERA_2_NAME = "cam2"; // [TODO] Set this to the correct camera name
         public static final String CAMERA_3_NAME = "cam3"; // [TODO] Set this to the correct camera name
         public static final String CAMERA_4_NAME = "cam4"; // [TODO] Set this to the correct camera name
+
         // [TODO] Set these to the correct translations and rotations for all 4 cameras.
         public static final Translation3d CAM_1_TRANSLATION =
+            new Translation3d(
+                Units.inchesToMeters(0),
+                Units.inchesToMeters(0),
+                Units.inchesToMeters(0)
+            );
+        public static final Translation3d CAM_2_TRANSLATION =
+            new Translation3d(
+                Units.inchesToMeters(0),
+                Units.inchesToMeters(0),
+                Units.inchesToMeters(0)
+            );
+        public static final Translation3d CAM_3_TRANSLATION =
+            new Translation3d(
+                Units.inchesToMeters(0),
+                Units.inchesToMeters(0),
+                Units.inchesToMeters(0)
+            );
+        public static final Translation3d CAM_4_TRANSLATION =
             new Translation3d(
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0),
@@ -97,31 +116,44 @@ public final class Constants {
         
         public static final Rotation3d CAM_1_ROTATION =
             new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
-
+        public static final Rotation3d CAM_2_ROTATION =
+            new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
+        public static final Rotation3d CAM_3_ROTATION =
+            new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
+        public static final Rotation3d CAM_4_ROTATION =
+            new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
+        
         public static final Transform3d CAM_1_TRANSFORM =
             new Transform3d(CAM_1_TRANSLATION, CAM_1_ROTATION);
-
-        public static final double ANGLE_DEADBAND = 2.0; // [TODO] Tune this value
+        public static final Transform3d CAM_2_TRANSFORM =
+            new Transform3d(CAM_2_TRANSLATION, CAM_2_ROTATION);
+        public static final Transform3d CAM_3_TRANSFORM =
+            new Transform3d(CAM_3_TRANSLATION, CAM_3_ROTATION);
+        public static final Transform3d CAM_4_TRANSFORM =
+            new Transform3d(CAM_4_TRANSLATION, CAM_4_ROTATION);
 
         private Vision() {}
     }
 
-    public static final class Shooter {
-        public static final double MAX_SPEED_MEASURED_MpS = 13.5; // 
-
-        public static final int SPITTER_MOTOR_PORT = -1;
+    public static final class Kicker {
         public static final int FAT_KICKER_INNER_MOTOR_PORT = -1;
         public static final int FAT_KICKER_OUTER_MOTOR_PORT = -1;
-        public static final int VERTICAL_MOTOR_PORT = 45;
 
-        private Shooter() {}
+        private Kicker() {}
+    }
+
+    public static final class Shooter {
+        public static final int LEFT_SPITTER_MOTOR_PORT = -1;
+        public static final int RIGHT_SPITTER_MOTOR_PORT = -1;
+        public static final int HOOD_MOTOR_PORT = -1;
 
         public static final class ShootConfig {
-            public static final double SPINDEXER_SPEED = 0.8;
             public static final double INNER_KICKER_SPEED = -1.0; // [TODO] Tune this value
             public static final double OUTER_KICKER_SPEED = -1.0; // [TODO] Tune this value
 
-            public static final double SPITTER_SPEED = 4000.0; // [TODO] Tune this value (in RPM)
+            public static final double SHORT_SPITTER_SPEED = 4000.0; // [TODO] Tune this value (in RPM)
+            public static final double MEDIUM_SPITTER_SPEED = 5000.0; // [TODO] Tune this value (in RPM)
+            public static final double LONG_SPITTER_SPEED = 6000.0; // [TODO] Tune this value (in RPM)
 
             public static final double SNATCHER_SPEED = -1.0; // [TODO] Tune this value
             public static final double SNATCHER_SPEED_RPM = -1.0; // [TODO] Tune this value (in RPM)
@@ -151,13 +183,18 @@ public final class Constants {
         public static final class Offset {
             public static final double X = 0.0; // [TODO] Find this value (in meters)
             public static final double Y = -6.5; // [TODO] Find this value (in meters)
+            public static final double Z = 0.0; // [TODO] Find this value (in meters)
 
             private Offset() {}
         }
+
+        private Shooter() {}
     }
+
     public static final class Slider {
         public static final int SLIDER_MOTOR_PORT = -1;//[TODO]
         public static final double SLIDER_RPM = -1; // [TODO] Tune this value (in RPM)
+        public static final int BACKSPIN_MOTOR_PORT = -1; //[TODO]
     }
 
     public static final class Snatcher {

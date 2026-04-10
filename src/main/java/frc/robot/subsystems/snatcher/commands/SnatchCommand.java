@@ -1,4 +1,4 @@
-package frc.robot.commands.snatcher;
+package frc.robot.subsystems.snatcher.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;

@@ -1,4 +1,4 @@
-package frc.robot.commands.slider;
+package frc.robot.subsystems.slider.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;

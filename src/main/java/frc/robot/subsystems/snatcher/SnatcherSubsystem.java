@@ -6,8 +6,8 @@ import frc.robot.util.SmartTalonMotor;
 
 public class SnatcherSubsystem extends SubsystemBase{
     // Make the code aware there should be 2 motors
-    public final SmartTalonMotor smackdownMotor;//falcon motor
-    public final SmartTalonMotor snatcherMotor;//kraken x44
+    public final SmartTalonMotor smackdownMotor;
+    public final SmartTalonMotor snatcherMotor;
 
     // Tell the code what those motor are/should be like and were to find them
     public SnatcherSubsystem() {
