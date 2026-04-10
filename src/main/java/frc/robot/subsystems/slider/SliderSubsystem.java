@@ -25,10 +25,5 @@ public class SliderSubsystem extends SubsystemBase{
             //.gearRatio()
             .build();
     }
-
-    
-    public void setSliderMotorSpeed(double rpm) {
-        this.sliderMotor.setSpeed(rpm);
-    }
     
 }

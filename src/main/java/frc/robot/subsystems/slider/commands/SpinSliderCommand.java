@@ -13,7 +13,7 @@ public class SpinSliderCommand extends Command{
 
     @Override
     public void initialize() {
-        sliderSubsystem.setSliderMotorSpeed(Constants.Slider.SLIDER_RPM);
+        sliderSubsystem.sliderMotor.setSpeed(Constants.Slider.SLIDER_RPM);
     }
     
     public void execute() {
@@ -22,7 +22,7 @@ public class SpinSliderCommand extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        sliderSubsystem.setSliderMotorSpeed(0);
+        sliderSubsystem.sliderMotor.setSpeed(0);
     }
 
     @Override
