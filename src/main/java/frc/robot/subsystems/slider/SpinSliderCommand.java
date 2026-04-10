@@ -1,19 +1,18 @@
 package frc.robot.subsystems.slider;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.Constants;
 
 public class SpinSliderCommand extends Command{
     private final SliderSubsystem sliderSubsystem;
-    private final double rpm;
-    public SpinSliderCommand(SliderSubsystem sliderSubsystem, double rpm) {
+    public SpinSliderCommand(SliderSubsystem sliderSubsystem) {
         this.sliderSubsystem = sliderSubsystem;
-        this.rpm = rpm;
         addRequirements(sliderSubsystem);
     }
 
     @Override
     public void initialize() {
-        sliderSubsystem.setSliderMotorSpeed(rpm);
+        sliderSubsystem.setSliderMotorSpeed(Constants.Slider.SLIDER_RPM);
     }
     
     public void execute() {

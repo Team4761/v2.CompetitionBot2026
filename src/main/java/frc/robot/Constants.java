@@ -55,7 +55,7 @@ public final class Constants {
         private Dashboard() {}
     }
     // #endregion
-    
+
     public static final class Swerve {
         public static final double MAX_DRIVE_SPEED = 0.5; // [TODO] Tune this value
 
@@ -155,7 +155,10 @@ public final class Constants {
             private Offset() {}
         }
     }
-
+    public static final class Slider {
+        public static final int SLIDER_MOTOR_PORT = -1;//[TODO]
+        public static final double SLIDER_RPM = -1; // [TODO] Tune this value (in RPM)
+    }
 
     public static final class Snatcher {
         public static final int SMACKDOWN_MOTOR_PORT = -1;//[TODO]
