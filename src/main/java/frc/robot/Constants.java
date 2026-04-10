@@ -11,7 +11,7 @@ import java.util.function.Function;
 
 public final class Constants {
     private Constants() {}
-
+    //#region Robot Constants
     public static final class Robot {
         public static final double ROBOT_WIDTH = Units.inchesToMeters(27.0);
         public static final double ROBOT_LENGTH = Units.inchesToMeters(27.0);
@@ -21,7 +21,9 @@ public final class Constants {
 
         private Robot() {}
     }
+    // #endregion
 
+    //#region Controller Constants
     public static final class Controller {
         public static final int DRIVER_PORT = 0;
         public static final int OPERATOR_PORT = 1;
@@ -37,7 +39,8 @@ public final class Constants {
 
         private Controller() {}
     }
-
+    // #endregion
+    // //#region Dashboard Constants
     public static final class Dashboard {
         public static final String DISTANCE_FROM_HUB_METERS = "Distance From Hub";
         public static final String ELASTIC_SHOOTER_TUNING_ENABLED = "Elastic Shooter Tuning Enabled";
@@ -51,7 +54,8 @@ public final class Constants {
 
         private Dashboard() {}
     }
-
+    // #endregion
+    
     public static final class Swerve {
         public static final double MAX_DRIVE_SPEED = 0.5; // [TODO] Tune this value
 
