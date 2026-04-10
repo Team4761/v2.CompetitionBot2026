@@ -22,7 +22,7 @@ public class SpinSliderCommand extends Command{
 
     @Override
     public void end(boolean interrupted) {
-        sliderSubsystem.sliderMotor.setSpeed(0);
+        sliderSubsystem.sliderMotor.stopTurning();
     }
 
     @Override

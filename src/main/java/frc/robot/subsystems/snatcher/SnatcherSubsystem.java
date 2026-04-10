@@ -10,6 +10,7 @@ public class SnatcherSubsystem extends SubsystemBase{
     public final SmartTalonMotor snatcherMotor;
 
     // Tell the code what those motor are/should be like and were to find them
+    //[TODO]Set correct values for PID, output & angle range, gear ratio, motor mode for all motors
     public SnatcherSubsystem() {
         this.smackdownMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Snatcher.SMACKDOWN_MOTOR_PORT)

@@ -138,6 +138,7 @@ public final class Constants {
     public static final class Kicker {
         public static final int FAT_KICKER_INNER_MOTOR_PORT = -1;
         public static final int FAT_KICKER_OUTER_MOTOR_PORT = -1;
+        public static final int KICKER_SPEED = 1;
 
         private Kicker() {}
     }
