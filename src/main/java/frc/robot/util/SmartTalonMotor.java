@@ -55,7 +55,6 @@ public class SmartTalonMotor {
     private boolean coastingEnabled = false;
 
     private static final Logger LOGGER = Logger.getLogger(SmartTalonMotor.class.getName());
-
     // -----------------------------------------------------------------------
     // Constructor (via Builder)
     // -----------------------------------------------------------------------
