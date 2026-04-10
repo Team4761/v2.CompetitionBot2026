@@ -154,10 +154,10 @@ public final class Constants {
 
 
     public static final class Snatcher {
-        public static final int SMACKDOWN_MOTOR_PORT = -1;
-        public static final int SNATCHER_MOTOR_PORT = -1;
+        public static final int SMACKDOWN_MOTOR_PORT = -1;//[TODO]
+        public static final int SNATCHER_MOTOR_PORT = -1;//[TODO]
         public static final double MIN_SMACKDOWN_ANGLE = 0;
-        public static final double MAX_SMACKDOWN_ANGLE = 0;
+        public static final double MAX_SMACKDOWN_ANGLE = 90;//might need to be negative
         public static final double MOTOR_ROTATIONS_PER_EXTENDER_ROTATION = 125;
     }
 
