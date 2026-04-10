@@ -1,4 +1,4 @@
-package frc.robot.subsystems.gyro;
+package frc.robot.subsystems.whirligig;
 
 import com.ctre.phoenix6.hardware.Pigeon2;
 
@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import frc.robot.Constants;
 
-public class GyroSubsystem extends SubsystemBase{
+public class WhirligigSubsystem extends SubsystemBase{
     // Make the code aware there should be 2 motors
     private final Pigeon2 pigeon;
 
     // Tell the code what those motors are/should be like and where to find them
-    public GyroSubsystem() {
+    public WhirligigSubsystem() {
         this.pigeon = new Pigeon2(Constants.Gyro.PIGEON_ID);
     }
 
