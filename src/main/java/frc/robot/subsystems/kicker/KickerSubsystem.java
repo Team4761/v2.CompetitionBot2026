@@ -14,14 +14,14 @@ public class KickerSubsystem extends SubsystemBase {
         this.fatKickerInnerMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Kicker.FAT_KICKER_INNER_MOTOR_PORT)
             .PID(1,0,0)
-            .outputRange(-1,-1)
+            .outputRange(-1,1)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
             //.gearRatio()
             .build();
         this.fatKickerOuterMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Kicker.FAT_KICKER_OUTER_MOTOR_PORT)
             .PID(1,0,0)
-            .outputRange(-1,-1)
+            .outputRange(-1,1)
             //.gearRatio()
             .build();
 

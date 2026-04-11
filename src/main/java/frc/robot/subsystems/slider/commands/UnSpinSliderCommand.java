@@ -4,16 +4,16 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.slider.SliderSubsystem;
 
-public class SpinSliderCommand extends Command{
+public class UnSpinSliderCommand extends Command{
     private final SliderSubsystem sliderSubsystem;
-    public SpinSliderCommand(SliderSubsystem sliderSubsystem) {
+    public UnSpinSliderCommand(SliderSubsystem sliderSubsystem) {
         this.sliderSubsystem = sliderSubsystem;
         addRequirements(sliderSubsystem);
     }
 
     @Override
     public void initialize() {
-        sliderSubsystem.sliderMotor.setSpeed(Constants.Slider.SLIDER_RPM);
+        sliderSubsystem.sliderMotor.setSpeed(-1 * Constants.Slider.SLIDER_RPM);
     }
     
     public void execute() {

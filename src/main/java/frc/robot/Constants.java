@@ -49,8 +49,8 @@ public final class Constants {
 
         public static final double ELASTIC_TEST_SHOOTER_RPM_MIN = -1.0; // [TODO] Tune this value
         public static final double ELASTIC_TEST_SHOOTER_RPM_MAX = -1.0; // [TODO] Tune this value
-        public static final double ELASTIC_TEST_HOOD_ANGLE_MIN = Shooter.Vertical.MIN_LAUNCH_ANGLE_DEGREES;
-        public static final double ELASTIC_TEST_HOOD_ANGLE_MAX = Shooter.Vertical.MAX_LAUNCH_ANGLE_DEGREES;
+        public static final double ELASTIC_TEST_HOOD_ANGLE_MIN = Shooter.Hood.MIN_LAUNCH_ANGLE_DEGREES;
+        public static final double ELASTIC_TEST_HOOD_ANGLE_MAX = Shooter.Hood.MAX_LAUNCH_ANGLE_DEGREES;
 
         private Dashboard() {}
     }
@@ -138,6 +138,7 @@ public final class Constants {
     public static final class Kicker {
         public static final int FAT_KICKER_INNER_MOTOR_PORT = -1;
         public static final int FAT_KICKER_OUTER_MOTOR_PORT = -1;
+        public static final int KICKER_SPEED = 1;
 
         private Kicker() {}
     }
