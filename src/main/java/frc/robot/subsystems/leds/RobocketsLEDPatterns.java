@@ -11,4 +11,5 @@ import edu.wpi.first.wpilibj.util.Color;
 public class RobocketsLEDPatterns {
     public static final LEDPattern OFF = LEDPattern.solid(Color.kBlack);
     public static final LEDPattern TEST = LEDPattern.solid(Color.kRed);
+    
 }

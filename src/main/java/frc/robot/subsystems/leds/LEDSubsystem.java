@@ -23,6 +23,7 @@ public class LEDSubsystem extends SubsystemBase {
 
     //no, the type "double" is not a mistake
     //note: must make each false condition set it to a UNIQUE out of bounds spot
+    
     public static double isSnatching = 0.0;
     public static double isSliding = 0.25;
     public static double isShooting = 0.5;
@@ -64,9 +65,9 @@ public class LEDSubsystem extends SubsystemBase {
     */
 
 
-
+    
     // This pattern is for debugging. lights up a certain part of the LEDs with a color corresponding with a certain robot function, if said function is running.
-    LEDPattern debugFunctions = LEDPattern.steps(Map.of(
+    public LEDPattern debugFunctions = LEDPattern.steps(Map.of(
         isSnatching, Color.kRed,
         isSliding, Color.kBlue, 
         isShooting, Color.kGreen, //currently no command to shoot
@@ -94,7 +95,7 @@ public class LEDSubsystem extends SubsystemBase {
             freme += 0.5;
         }
         */
-        debugFunctions.applyTo(buffer);
+        currentPattern.applyTo(buffer);
         leds.setData(buffer);
     }
 

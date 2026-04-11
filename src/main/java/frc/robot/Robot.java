@@ -11,11 +11,13 @@ import frc.robot.subsystems.leds.LEDSubsystem;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private LEDSubsystem ledSubsystem;
   private final RobotContainer m_robotContainer;
 
   public Robot() {
     m_robotContainer = new RobotContainer();
-    new LEDSubsystem();
+    ledSubsystem = new LEDSubsystem();
+    ledSubsystem.setPattern(ledSubsystem.debugFunctions);
   }
 
   @Override
