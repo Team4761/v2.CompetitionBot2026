@@ -1,4 +1,4 @@
-package frc.robot.subsystems.swerve.commands;
+/*package frc.robot.subsystems.swerve.commands;
 
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
@@ -74,4 +74,4 @@ public class DriveCommand extends Command {
                  Math.abs(Math.toDegrees(drivetrain.getState().Pose.getRotation().getRadians()) - degrees) < 2.0
         );
     }
-}
+}*/

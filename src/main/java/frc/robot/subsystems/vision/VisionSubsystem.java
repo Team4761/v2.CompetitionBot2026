@@ -1,4 +1,4 @@
-package frc.robot.subsystems.vision;
+/*package frc.robot.subsystems.vision;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -349,4 +349,4 @@ public class VisionSubsystem extends SubsystemBase {
             this.poseEstimator = new PhotonPoseEstimator(fieldLayout, config.robotToCamera());
         }
     }
-}
+}*/
