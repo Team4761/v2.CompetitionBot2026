@@ -12,6 +12,7 @@ public class RunSpitterCommand extends Command {
 
     public RunSpitterCommand(ShooterSubsystem sub) {
         this.shooterSubsystem = sub;
+        addRequirements(sub);
     }
 
     @Override
