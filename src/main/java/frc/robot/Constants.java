@@ -142,6 +142,11 @@ public final class Constants {
         private Kicker() {}
     }
 
+    public static final class LEDs{
+        public static final int LEDS_PORT = 0; //TODO: find the port ID
+        public static final int NUMBER_OF_LEDS = 16;
+    }
+
     public static final class Shooter {
         public static final int LEFT_SPITTER_MOTOR_PORT = -1;
         public static final int RIGHT_SPITTER_MOTOR_PORT = -1;
