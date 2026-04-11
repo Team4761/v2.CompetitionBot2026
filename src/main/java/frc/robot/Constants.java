@@ -83,54 +83,54 @@ public final class Constants {
     }
 
     public static final class Vision {
-        public static final String CAMERA_1_NAME = "cam1"; // [TODO] Set this to the correct camera name
-        public static final String CAMERA_2_NAME = "cam2"; // [TODO] Set this to the correct camera name
-        public static final String CAMERA_3_NAME = "cam3"; // [TODO] Set this to the correct camera name
-        public static final String CAMERA_4_NAME = "cam4"; // [TODO] Set this to the correct camera name
+        public static final String NORTH_CAMERA_NAME = "cam1"; // [TODO] Set this to the correct camera name
+        public static final String SOUTH_CAMERA_NAME = "cam2"; // [TODO] Set this to the correct camera name
+        public static final String LEFT_CAMERA_NAME = "cam3"; // [TODO] Set this to the correct camera name
+        public static final String RIGHT_CAMERA_NAME = "cam4"; // [TODO] Set this to the correct camera name
 
         // [TODO] Set these to the correct translations and rotations for all 4 cameras.
-        public static final Translation3d CAM_1_TRANSLATION =
+        public static final Translation3d NORTH_CAMERA_TRANSLATION =
             new Translation3d(
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0)
             );
-        public static final Translation3d CAM_2_TRANSLATION =
+        public static final Translation3d SOUTH_CAMERA_TRANSLATION =
             new Translation3d(
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0)
             );
-        public static final Translation3d CAM_3_TRANSLATION =
+        public static final Translation3d LEFT_CAMERA_TRANSLATION =
             new Translation3d(
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0)
             );
-        public static final Translation3d CAM_4_TRANSLATION =
+        public static final Translation3d RIGHT_CAMERA_TRANSLATION =
             new Translation3d(
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0),
                 Units.inchesToMeters(0)
             );
         
-        public static final Rotation3d CAM_1_ROTATION =
+        public static final Rotation3d NORTH_CAMERA_ROTATION =
             new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
-        public static final Rotation3d CAM_2_ROTATION =
+        public static final Rotation3d SOUTH_CAMERA_ROTATION =
             new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
-        public static final Rotation3d CAM_3_ROTATION =
+        public static final Rotation3d LEFT_CAMERA_ROTATION =
             new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
-        public static final Rotation3d CAM_4_ROTATION =
+        public static final Rotation3d RIGHT_CAMERA_ROTATION =
             new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
         
-        public static final Transform3d CAM_1_TRANSFORM =
-            new Transform3d(CAM_1_TRANSLATION, CAM_1_ROTATION);
-        public static final Transform3d CAM_2_TRANSFORM =
-            new Transform3d(CAM_2_TRANSLATION, CAM_2_ROTATION);
-        public static final Transform3d CAM_3_TRANSFORM =
-            new Transform3d(CAM_3_TRANSLATION, CAM_3_ROTATION);
-        public static final Transform3d CAM_4_TRANSFORM =
-            new Transform3d(CAM_4_TRANSLATION, CAM_4_ROTATION);
+        public static final Transform3d NORTH_CAMERA_TRANSFORM =
+            new Transform3d(NORTH_CAMERA_TRANSLATION, NORTH_CAMERA_ROTATION);
+        public static final Transform3d SOUTH_CAMERA_TRANSFORM =
+            new Transform3d(SOUTH_CAMERA_TRANSLATION, SOUTH_CAMERA_ROTATION);
+        public static final Transform3d LEFT_CAMERA_TRANSFORM =
+            new Transform3d(LEFT_CAMERA_TRANSLATION, LEFT_CAMERA_ROTATION);
+        public static final Transform3d RIGHT_CAMERA_TRANSFORM =
+            new Transform3d(RIGHT_CAMERA_TRANSLATION, RIGHT_CAMERA_ROTATION);
 
         private Vision() {}
     }
