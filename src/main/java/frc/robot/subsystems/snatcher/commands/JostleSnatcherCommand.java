@@ -17,7 +17,7 @@ public class JostleSnatcherCommand extends Command{
         snatcherSubsystem.snatcherMotor.setSpeedPercent(-1);
     }
 
-    public void execute() {
+    public void execute() {//can mabey use set angle
         if (snatcherSubsystem.snatcherMotor.getAngle() >= 90 && !runningNegative) {//90 is temp value might need to be negative cuase gear ratio 
             snatcherSubsystem.snatcherMotor.setSpeedPercent(-1);
             runningNegative = true;
@@ -34,12 +34,13 @@ public class JostleSnatcherCommand extends Command{
     //this is one possible solution for ensuring the intake goes back down after jostleing but we can allso just run extendintake command on false when we bind to buttons
     @Override
     public void end(boolean isInterrupted){
-        if (!(snatcherSubsystem.snatcherMotor.getAngle() >= 90)) {
+        /*if (!(snatcherSubsystem.snatcherMotor.getAngle() >= 90)) {
             snatcherSubsystem.snatcherMotor.setSpeedPercent(1);
             while(!(snatcherSubsystem.snatcherMotor.getAngle() >= 90)) {}
             snatcherSubsystem.snatcherMotor.stopTurning();
         } else {
             snatcherSubsystem.snatcherMotor.stopTurning();
-        }
+        }*/
+        snatcherSubsystem.snatcherMotor.set(90);
     }
 }
