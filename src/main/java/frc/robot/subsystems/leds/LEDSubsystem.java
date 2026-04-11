@@ -26,13 +26,30 @@ public class LEDSubsystem extends SubsystemBase {
     //no, the type "double" is not a mistake
     //note: must make each false condition set it to a UNIQUE out of bounds spot
     
-    public static double isSnatching = 0.0;
-    public static double isSliding = 0.25;
-    public static double isShooting = 0.5;
-    public static double isDriving = 0.75;
+    public static double isSnatching = 1.0;
+    public static double isSliding = 1.1;
+    public static double isShooting = 1.2;
+    public static double isDriving = 1.3;
 
     private LEDPattern previousPattern;
-    private LEDPattern currentPattern;
+    public static LEDPattern currentPattern;
+
+    public enum LEDMode {
+        SOLID,
+        BLINK_SLOW,
+        BLINK_FAST
+    }
+
+    //In a simulation, the R and G values will be switched, as that is how we correctly display it on the robot
+    //example: Color = ERROR -> displays green instead of red
+    public enum LEDColor{
+        ERROR,
+        WARNING,
+        INFO,
+        SUCCESS,
+        NONE
+    }
+
         
     // We will have a 16x1 strip
 
@@ -40,15 +57,15 @@ public class LEDSubsystem extends SubsystemBase {
     // also ask/tell me about any other problems or conflicts this subsystem makes
 
     /** Available LED patterns:
-     * <p> LEDs that have a certain part light up a certain color when one or more functions are being performed. also displays a color on elastic. 
-     *     Current functions needed: Shoot, Intake
+     * <p> LEDs that have a certain part light up a certain color when one or more functions are being performed.
+     * <p> LEDs that either blink or stay solid for a certain color, which is explicitly defined in the code (for now)
+     * <p> lights that move across the strip, and change to a random color when bounce off the edge (finished, but not yet migrated to this repository)
      * <p> LED patterns that aren't finished:
      * <p> Rickroll (any dimensions)
      */
     
     public LEDSubsystem() {
         // Comment out patterns that aren't being used
-
         leds = new AddressableLED(Constants.LEDs.LEDS_PORT);
         buffer = new AddressableLEDBuffer(Constants.LEDs.NUMBER_OF_LEDS); // 16 LEDs in a straight line
         leds.setLength(Constants.LEDs.NUMBER_OF_LEDS);
@@ -67,22 +84,43 @@ public class LEDSubsystem extends SubsystemBase {
     */
 
 
-    
-    // This pattern is for debugging. lights up a certain part of the LEDs with a color corresponding with a certain robot function, if said function is running.
-    public LEDPattern debugFunctions = LEDPattern.steps(Map.of(
-        isSnatching, new StupidColor(Color.kRed),
-        isSliding, new StupidColor(Color.kGreen), 
-        isShooting, new StupidColor(Color.kBlue), //currently no command to shoot
-        isDriving, new StupidColor(Color.kYellow)  //currently no driving functionality
-    ));
-    //[TODO] remake stupid color, but it halves the R, G, and B values
-        
+
+    public static StupidColor setPatternColor(LEDColor color) {
+        if(color == LEDColor.ERROR){
+            return new StupidColor(Color.kRed);
+        }
+        else if(color == LEDColor.WARNING){
+            return new StupidColor(Color.kYellow);
+        }
+        else if(color == LEDColor.INFO){
+            return new StupidColor(Color.kBlue);
+        }
+        else if(color == LEDColor.SUCCESS){
+            return new StupidColor(Color.kGreen);
+        }
+        else{
+            return new StupidColor(Color.kBlanchedAlmond);
+        }
+    } 
+
+    public static LEDPattern setPatternMode(LEDMode mode){
+        RobocketsLEDPatterns.setSingleColor = LEDPattern.solid(setPatternColor(RobocketsLEDPatterns.currentColor));
+        if(mode == LEDMode.SOLID){
+            return RobocketsLEDPatterns.setSingleColor = LEDPattern.solid(setPatternColor(RobocketsLEDPatterns.currentColor));
+        }
+        else if(mode == LEDMode.BLINK_SLOW){
+            return RobocketsLEDPatterns.setSingleColor = RobocketsLEDPatterns.setSingleColor.blink(Seconds.of(1));
+        }
+        else{
+            return RobocketsLEDPatterns.setSingleColor = RobocketsLEDPatterns.setSingleColor.blink(Seconds.of(0.15));
+        }
+    }
     
     //int[][][][] testVideoAsCompressedArrayComingToTheatersMarch32_2111 = compressVideo(loadVideoAsMultipleImages("C:/Users/alex/Documents/CODINF/RickrollFragments/frame.png", 1, 100, true),32,8);
     //public static double freme = 0;
     public void periodic(){
-
-        
+        setPatternMode(RobocketsLEDPatterns.currentMode);
+        setPattern(RobocketsLEDPatterns.setSingleColor);
         // This pattern emulates a Rickroll, with the height and width of it being adjustable
         // this will unfourtunately not be run during matches due to power concerns, and the fact that it is way too slow to load
         /**
