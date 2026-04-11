@@ -166,18 +166,21 @@ public final class Constants {
             private ShootConfig() {}
         }
 
-        public static final class Vertical {
+        public static final class Hood {
             public static final double MOTOR_ROTATIONS_PER_HOOD_ROTATION = 325.0 / 18.0; // [TODO] Find this value
             public static final double HOOD_ROTATIONS_PER_MOTOR_ROTATION = 18.0 / 325.0; // [TODO] Find this value
 
-            public static final double MIN_HOOD_ANGLE_DEGREES = -31.0; // [TODO] Find this value
-            public static final double MAX_HOOD_ANGLE_DEGREES = 0.0; // [TODO] Find this value
+            public static final double MIN_HOOD_ANGLE_DEGREES = 45.0; // [TODO] Find this value
+            public static final double MAX_HOOD_ANGLE_DEGREES = 10.0; // [TODO] Find this value
+
+             public static final int BACKSPIN_MOTOR_PORT = -1; //[TODO] Find this value
+             
 
             public static final double MIN_LAUNCH_ANGLE_DEGREES = 22.0; // [TODO] Find this value
             public static final double MAX_LAUNCH_ANGLE_DEGREES =
                 MIN_LAUNCH_ANGLE_DEGREES + (MAX_HOOD_ANGLE_DEGREES - MIN_HOOD_ANGLE_DEGREES); // [TODO] Find this value
 
-            private Vertical() {}
+            private Hood() {}
         }
 
         public static final class Offset {
@@ -194,7 +197,7 @@ public final class Constants {
     public static final class Slider {
         public static final int SLIDER_MOTOR_PORT = -1;//[TODO]
         public static final double SLIDER_RPM = -1; // [TODO] Tune this value (in RPM)
-        public static final int BACKSPIN_MOTOR_PORT = -1; //[TODO]
+       
     }
 
     public static final class Snatcher {
