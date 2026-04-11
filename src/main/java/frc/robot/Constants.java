@@ -15,9 +15,7 @@ public final class Constants {
     public static final class Robot {
         public static final double ROBOT_WIDTH = Units.inchesToMeters(27.0);
         public static final double ROBOT_LENGTH = Units.inchesToMeters(27.0);
-        public static final double ROBOT_HEIGHT_WITHOUT_TURRET = -1; // [TODO] Ask Zach for this value
-
-        public static final double ROBOT_HEIGHT_WITH_TURRET = -1; // [TODO] Ask Zach for this value
+        public static final double ROBOT_HEIGHT = -1; // [TODO] Ask Zach for this value
 
         private Robot() {}
     }
