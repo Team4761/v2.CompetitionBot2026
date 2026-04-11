@@ -57,7 +57,6 @@ public class LEDSubsystem extends SubsystemBase {
     }
 
 
-
     /*
        !!!!IMPORTANT!!!!
        DO NOT SET ANY COLOR ABOVE 127. IT USES A SHIT TON OF POWER. AND STROUT WILL FUCKIONG KILL YOU.
