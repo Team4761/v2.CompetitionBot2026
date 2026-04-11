@@ -14,6 +14,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.leds.StupidColor;
+import frc.robot.subsystems.leds.StoopidColors;
 
 
 @SuppressWarnings("unused")
@@ -68,10 +70,10 @@ public class LEDSubsystem extends SubsystemBase {
     
     // This pattern is for debugging. lights up a certain part of the LEDs with a color corresponding with a certain robot function, if said function is running.
     public LEDPattern debugFunctions = LEDPattern.steps(Map.of(
-        isSnatching, Color.kRed,
-        isSliding, Color.kBlue, 
-        isShooting, Color.kGreen, //currently no command to shoot
-        isDriving, Color.kYellow  //currently no driving functionality
+        isSnatching, new StupidColor(Color.kRed),
+        isSliding, new StupidColor(Color.kGreen), 
+        isShooting, new StupidColor(Color.kBlue), //currently no command to shoot
+        isDriving, new StupidColor(Color.kYellow)  //currently no driving functionality
     ));
     //[TODO] remake stupid color, but it halves the R, G, and B values
         

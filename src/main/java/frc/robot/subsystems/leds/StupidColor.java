@@ -3,11 +3,11 @@ package frc.robot.subsystems.leds;
 import edu.wpi.first.wpilibj.util.Color;
 
 /**
- * Accounts for if we are
+ * Accounts for if we are using GRB LEDs instead of RGB LEDs (and divides the brightness by 2)
  */
 public class StupidColor extends Color {
 
-    private static double ledBrightness = 0.5;
+    private static double ledBrightness = 0.5;//sets the brightness to half the declared values, in compliance with Strout's orders
 
     /**
      * Just use this like a normal Color, but when the code is sent off the to bot, the R & G channels will be switched.
