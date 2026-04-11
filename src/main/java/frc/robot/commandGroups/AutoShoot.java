@@ -1,4 +1,4 @@
-package frc.robot.commandGroups;
+/*package frc.robot.commandGroups;
 
 import java.util.Arrays;
 import java.util.function.DoubleSupplier;
@@ -116,4 +116,4 @@ public class AutoShoot extends SequentialCommandGroup {
             new ShootWithPowerCommand(shooter, () -> getPower(distSupplier.getAsDouble())) // [TODO]: Shoot With Power Command should exist
         );
     }
-}
+}*/
