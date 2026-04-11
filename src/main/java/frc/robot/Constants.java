@@ -159,6 +159,9 @@ public final class Constants {
             public static final double SNATCHER_SPEED = -1.0; // [TODO] Tune this value
             public static final double SNATCHER_SPEED_RPM = -1.0; // [TODO] Tune this value (in RPM)
 
+            public static final int BACKSPIN_MOTOR_PORT = -1; //[TODO] Find this value
+            public static final double BACKSPIN_MOTOR_MAX_SPEED = 1.0;
+
             public static final double KICKER_INIT_DELAY = 0.5; // [TODO] Tune this value (in seconds)
             public static final double KICKER_MOTOR_ROTATIONS_PER_ROTATION = 3.0; // [TODO] Tune this value
 
@@ -174,7 +177,7 @@ public final class Constants {
             public static final double MIN_HOOD_ANGLE_DEGREES = 45.0; // [TODO] Find this value
             public static final double MAX_HOOD_ANGLE_DEGREES = 10.0; // [TODO] Find this value
 
-             public static final int BACKSPIN_MOTOR_PORT = -1; //[TODO] Find this value
+             
              
 
             public static final double MIN_LAUNCH_ANGLE_DEGREES = 22.0; // [TODO] Find this value

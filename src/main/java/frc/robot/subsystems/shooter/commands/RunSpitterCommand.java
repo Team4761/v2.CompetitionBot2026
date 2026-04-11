@@ -18,6 +18,7 @@ public class RunSpitterCommand extends Command {
     public void initialize() {
         this.shooterSubsystem.spitterMotorLeft.setRawSpeed(Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
         this.shooterSubsystem.spitterMotorRight.setRawSpeed(Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
+        this.shooterSubsystem.backspinMotor.setSpeedPercent(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_MAX_SPEED);
         
     }
 
@@ -35,5 +36,6 @@ public class RunSpitterCommand extends Command {
     public void end(boolean isInterrupted) {
         this.shooterSubsystem.spitterMotorLeft.stopTurning();
         this.shooterSubsystem.spitterMotorRight.stopTurning();
+        this.shooterSubsystem.backspinMotor.stopTurning();
     }
 }
