@@ -16,10 +16,14 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     m_robotContainer = new RobotContainer();
+    
+  }
+
+  @Override
+  public void robotInit() {
     ledSubsystem = new LEDSubsystem();
     ledSubsystem.setPattern(ledSubsystem.debugFunctions);
   }
-
   @Override
   public void robotPeriodic() {
     CommandScheduler.getInstance().run();
