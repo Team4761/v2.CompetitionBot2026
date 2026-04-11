@@ -11,6 +11,7 @@ import java.util.function.DoubleSupplier;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.MathUtil;
@@ -52,6 +53,8 @@ public class RobotContainer {
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
 
+    private final Telemetry logger = new Telemetry(MaxSpeed);
+
     private final CommandXboxController controller_drive =
         new CommandXboxController(Constants.Controller.DRIVER_PORT);
     private final CommandXboxController controller_operator =
@@ -67,10 +70,15 @@ public class RobotContainer {
     }
     private void configurePathPlannerAutos() {
         NamedCommands.registerCommand("Do Nothing", Commands.none());
+        AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
     }
 
     private void configureBindings() {
-      configureDefaultDrive();
+        configureDefaultDrive();
+        configureDisabledBehavior();
+        configureDriverBindings();
+        configureOperatorBindings();
+        drivetrain.registerTelemetry(logger::telemeterize);
     }
     
     private void configureDefaultDrive() {
@@ -110,7 +118,8 @@ public class RobotContainer {
             drivetrain.runOnce(() -> rotationLimiter.reset(0.0)).ignoringDisable(true)
         );
     }
-    private void configureDriveBindings() {
+    private void configureDriverBindings() {
+        controller_drive.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
         controller_drive.leftBumper().whileTrue(new SnatchCommand(snatcher));
     }
     private void configureOperatorBindings() {

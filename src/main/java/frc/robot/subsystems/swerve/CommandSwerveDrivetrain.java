@@ -10,12 +10,18 @@ import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.swerve.SwerveDrivetrainConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.config.ModuleConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
+import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
@@ -37,6 +43,8 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private static final double kSimLoopPeriod = 0.004; // 4 ms
     private Notifier m_simNotifier = null;
     private double m_lastSimTime;
+    
+    private final SwerveRequest.ApplyRobotSpeeds autoRequest = new SwerveRequest.ApplyRobotSpeeds();
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
@@ -188,6 +196,50 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
     }
 
+    public void initializeAutoBuilder() {
+        //#region Path Planner Initialization
+        ///* 
+        RobotConfig config;
+        try {
+            config = RobotConfig.fromGUISettings();
+        } catch (Exception e) {
+            e.printStackTrace();
+            config = new RobotConfig(
+            51.71, // Mass in kg
+            7.136,  // MOI in kg*m^2
+            new ModuleConfig(
+                0.051, // Wheel radius in meters
+                5.0,  // Max drive speed in m/s
+                1.2,  // Friction coefficient
+                DCMotor.getFalcon500(1), // Drive motor
+                40,   // Current limit
+                1     // Motors per module
+            ),
+            this.getModuleLocations()
+        );
+        }
+        //System.out.println("I AM CONFIGURING AUTO BUILDER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        AutoBuilder.configure(
+            () -> this.getState().Pose,      // Robot pose supplier
+            this::resetPose,                 // Method to reset odometry
+            () -> this.getState().Speeds,    // ChassisSpeeds supplier (MUST BE ROBOT RELATIVE)
+            (speeds, feedforwards) -> this.setControl(
+                autoRequest.withSpeeds(speeds) // Method that drives the robot
+            ),
+            new PPHolonomicDriveController(   // Holonomic path follower config
+                new PIDConstants(0.05, 0, 0.02),  // Translation PID constants
+                new PIDConstants(20, 0, 1.5)   // Rotation PID constants
+            ),
+            config,                          // RobotConfig loaded from GUI
+            () -> {
+                // Boolean supplier to flip path for Red alliance
+                var alliance = DriverStation.getAlliance();
+                return alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red;
+            },
+            this                             // Reference to this subsystem
+        );//*/
+        //#endregion Path Planner Initialization
+    }
     /**
      * Returns a command that applies the specified control request to this swerve drivetrain.
      *

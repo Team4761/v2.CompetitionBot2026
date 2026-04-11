@@ -29,7 +29,7 @@ public final class Constants {
         public static final double TRANSLATION_INPUT_DEADBAND = 0.10; // [TODO] Tune this value
         public static final double ROTATION_INPUT_DEADBAND = 0.12; // [TODO] Tune this value
         public static final double TURRET_INPUT_DEADBAND = 0.10; // [TODO] Tune this value
-        public static final double ROTATION_SLEW_RATE_RAD_PER_SEC_SQ = -1; // [TODO] Tune this value
+        public static final double ROTATION_SLEW_RATE_RAD_PER_SEC_SQ = 12.0; // [TODO] Tune this value
         public static final double ROTATION_MULTIPLIER = 2.0; // [TODO] Tune this value
 
         public static final double TEST_VORTEX_OUTPUT = -1; // [TODO] Tune this value
