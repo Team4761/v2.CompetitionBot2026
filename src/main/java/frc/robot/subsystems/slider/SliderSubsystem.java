@@ -7,7 +7,7 @@ import frc.robot.util.SmartTalonMotor;
 public class SliderSubsystem extends SubsystemBase{
 
     public final SmartTalonMotor sliderMotor;
-    public final SmartTalonMotor backspinMotor;
+  
 
     public SliderSubsystem() {
         this.sliderMotor = SmartTalonMotor.Builder.newInstance()
