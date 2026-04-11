@@ -1,4 +1,4 @@
-/*package frc.robot.commandGroups;
+package frc.robot.commandGroups;
 
 import java.util.Arrays;
 import java.util.function.DoubleSupplier;
@@ -108,12 +108,12 @@ public class AutoShoot extends SequentialCommandGroup {
         
         return new DriveCommand(swerve, 0, 0, angleToHub);
     }
-
+    /* 
     public AutoShoot(ShooterSubsystem shooter, CommandSwerveDrivetrain swerve, DoubleSupplier distSupplier) {
         super(
             new InstantCommand(() -> shooter.setLaunchAngleDegrees(getLaunchAngle(distSupplier.getAsDouble())), shooter), // [TODO]: Change Launch Angle DEgrees Command should exist
             pointToHub(swerve, getFuturePose(swerve, getTime(distSupplier.getAsDouble()))),
             new ShootWithPowerCommand(shooter, () -> getPower(distSupplier.getAsDouble())) // [TODO]: Shoot With Power Command should exist
         );
-    }
-}*/
+    }*/
+}

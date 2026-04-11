@@ -1,4 +1,4 @@
-/*package frc.robot.subsystems.vision;
+package frc.robot.subsystems.vision;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +38,7 @@ public class VisionSubsystem extends SubsystemBase {
     // blend in instead of snapping.
     private static final Matrix<N3, N1> MULTI_TAG_STD_DEVS = VecBuilder.fill(0.35, 0.35, 0.75);
 
-    //private final CommandSwerveDrivetrain drivetrain; [TODO] Set correct drivetrain
+    private final CommandSwerveDrivetrain drivetrain;
     private final AprilTagFieldLayout fieldLayout;
     private final List<CameraContext> cameras;
     private final Field2d visionField = new Field2d();
@@ -67,7 +67,7 @@ public class VisionSubsystem extends SubsystemBase {
 
     public VisionSubsystem(CommandSwerveDrivetrain drivetrain, List<CameraConfig> cameraConfigs) {
         this.drivetrain = Objects.requireNonNull(drivetrain, "drivetrain");
-        this.fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltWelded);
+        this.fieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2026RebuiltAndymark);
         this.cameras = new ArrayList<>();
 
         for (CameraConfig cameraConfig : cameraConfigs) {
@@ -349,4 +349,4 @@ public class VisionSubsystem extends SubsystemBase {
             this.poseEstimator = new PhotonPoseEstimator(fieldLayout, config.robotToCamera());
         }
     }
-}*/
+}

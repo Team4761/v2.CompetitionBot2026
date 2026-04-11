@@ -4,8 +4,12 @@
 
 package frc.robot;
 
+import static edu.wpi.first.units.Units.*;
+
 import java.util.function.DoubleSupplier;
 
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.NamedCommands;
 
@@ -17,31 +21,37 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;
 import frc.robot.subsystems.snatcher.commands.SnatchCommand;
+import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.whirligig.WhirligigSubsystem;
 
 public class RobotContainer {
     public final SnatcherSubsystem snatcher = new SnatcherSubsystem();
-    //private final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    //private final VisionSubsystem vision = new VisionSubsystem(drivetrain);
+    private final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    private final VisionSubsystem vision = new VisionSubsystem(drivetrain);
     public final ShooterSubsystem shooter = new ShooterSubsystem();
     public final KickerSubsystem kicker = new KickerSubsystem();
     public final SliderSubsystem slider = new SliderSubsystem();
     public final WhirligigSubsystem whirligig = new WhirligigSubsystem();
 
-    /* Setting up bindings for necessary control of the swerve drive platform 8 * /
+    private final double MaxSpeed = 0.55 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // practice-safe top speed cap
+    private final double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond); // reduced max angular velocity
+    
+    /* Setting up bindings for necessary control of the swerve drive platform 8 */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1)
             .withDriveRequestType(DriveRequestType.Velocity)
             .withSteerRequestType(SteerRequestType.MotionMagicExpo);
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-    */
+
     private final CommandXboxController controller_drive =
         new CommandXboxController(Constants.Controller.DRIVER_PORT);
     private final CommandXboxController controller_operator =
@@ -63,7 +73,7 @@ public class RobotContainer {
       configureDefaultDrive();
     }
     
-    private void configureDefaultDrive() {}/*
+    private void configureDefaultDrive() {
         drivetrain.setDefaultCommand(
             drivetrain.applyRequest(() -> {
                 double xInput = -1 * applyDeadband(
@@ -91,16 +101,14 @@ public class RobotContainer {
             })
         );
     }
-    */
     private void configureDisabledBehavior() {
         final var idle = new SwerveRequest.Idle();
-        /* 
         RobotModeTriggers.disabled().whileTrue(
             drivetrain.applyRequest(() -> idle).ignoringDisable(true)
         );
         RobotModeTriggers.disabled().onTrue(
             drivetrain.runOnce(() -> rotationLimiter.reset(0.0)).ignoringDisable(true)
-        );*/
+        );
     }
     private void configureDriveBindings() {
         controller_drive.leftBumper().whileTrue(new SnatchCommand(snatcher));
