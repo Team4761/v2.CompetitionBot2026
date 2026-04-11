@@ -9,16 +9,20 @@ public class ShooterSubsystem extends SubsystemBase {
     public final SmartTalonMotor hoodMotor;
     public final SmartTalonMotor spitterMotorLeft;
     public final SmartTalonMotor spitterMotorRight;
+    public final SmartTalonMotor backspinMotor;
 
-    //[TODO]Set correct values for PID, output & angle range, gear ratio, motor mode for all motors
+    //[TODO]Set correct values for PID, output & angle limits, gear ratio, motor mode for all motors
     public ShooterSubsystem() {
         this.hoodMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Shooter.HOOD_MOTOR_PORT)
             .PID(1,0,0)
             .outputRange(-1,-1)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
-            .mechanismAngleLimits(10, 45)
-            //.gearRatio()
+            .mechanismAngleLimits(
+                Constants.Shooter.Hood.MIN_HOOD_ANGLE_DEGREES, 
+                Constants.Shooter.Hood.MAX_HOOD_ANGLE_DEGREES
+                )
+            .gearRatio(Constants.Shooter.Hood.HOOD_ROTATIONS_PER_MOTOR_ROTATION)
             .build();
         this.spitterMotorLeft = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Shooter.LEFT_SPITTER_MOTOR_PORT)
@@ -34,6 +38,17 @@ public class ShooterSubsystem extends SubsystemBase {
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
             //.gearRatio()
             .build();
+        this.backspinMotor = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_PORT) // 
+            .PID(0.1, 0.0, 0.0) // Temp Values
+            .outputRange(-1.0, 1.0) // Duty cycle output limits
+            .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
+            //.gearRatio()
+            .build();
+        
     }
+
+    
+    
 
 }
