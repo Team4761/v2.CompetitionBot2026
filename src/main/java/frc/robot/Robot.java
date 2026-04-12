@@ -6,14 +6,44 @@ package frc.robot;
 
 import com.ctre.phoenix6.HootAutoReplay;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
-    private final RobotContainer m_robotContainer;
+    final boolean win = true; //THIS IS ESSENTIAL DO NOT DELETE.
+
+    private final RobotContainer robotContainer;
+    private final Timer matchTimer;
+    private final Timer phaseTimer;
+    private final CommandSwerveDrivetrain drivetrain;
+    private final SendableChooser<String> positionChooser = new SendableChooser<>();
+    private final Field2d field = new Field2d();
+
+    private enum MatchPhase {
+        AUTONOMOUS,
+        TRANSITION,
+        TELEOP_FIRST_SHIFT,
+        TELEOP_SECOND_SHIFT,
+        TELEOP_THIRD_SHIFT,
+        TELEOP_FOURTH_SHIFT,
+        ENDGAME
+    }
+
+    private MatchPhase currentPhase;
+    private double phaseDuration;
+    private Pose2d autoStartPosition = new Pose2d();
 
     /* log and replay timestamp and joystick data */
     private final HootAutoReplay m_timeAndJoystickReplay = new HootAutoReplay()
@@ -21,14 +51,24 @@ public class Robot extends TimedRobot {
         .withJoystickReplay();
 
     public Robot() {
-        m_robotContainer = new RobotContainer();
-        
+        robotContainer = new RobotContainer();
+        drivetrain = robotContainer.drivetrain;
+        matchTimer = new Timer();
+        phaseTimer = new Timer();
+        currentPhase = MatchPhase.AUTONOMOUS;
+        phaseDuration = FieldConstants.Match.AUTONOMOUS_DURATION;
+    }
+
+    @Override
+    public void robotInit() {
+        configureDashboard();
     }
 
     @Override
     public void robotPeriodic() {
         m_timeAndJoystickReplay.update();
-        CommandScheduler.getInstance().run(); 
+        CommandScheduler.getInstance().run();
+        updateDashboard();
     }
 
     @Override
@@ -42,11 +82,20 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
+        Constants.Field.STARTING_POSITION = positionChooser.getSelected();
+        autoStartPosition = calculateAutoStartPosition();
+        phaseDuration = FieldConstants.Match.AUTONOMOUS_DURATION;
+        currentPhase = MatchPhase.AUTONOMOUS;
 
+        m_autonomousCommand = robotContainer.getAutonomousCommand();
         if (m_autonomousCommand != null) {
             CommandScheduler.getInstance().schedule(m_autonomousCommand);
         }
+
+        matchTimer.reset();
+        matchTimer.start();
+        phaseTimer.reset();
+        phaseTimer.start();
     }
 
     @Override
@@ -57,13 +106,19 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopInit() {
+        currentPhase = MatchPhase.TRANSITION;
+        phaseTimer.reset();
+        phaseDuration = FieldConstants.Match.TRANSITION_DURATION;
         if (m_autonomousCommand != null) {
-            CommandScheduler.getInstance().cancel(m_autonomousCommand);
+            m_autonomousCommand.cancel();
+            m_autonomousCommand = null;
         }
     }
 
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        updateMatchPhase();
+    }
 
     @Override
     public void teleopExit() {}
@@ -81,4 +136,161 @@ public class Robot extends TimedRobot {
 
     @Override
     public void simulationPeriodic() {}
+
+    private void configureDashboard() {
+        SmartDashboard.putNumber("TURRET HORIZONTAL ANGLE", 0.0);
+        SmartDashboard.putNumber("TURRET VERTICAL ANGLE", 0.0);
+        SmartDashboard.putBoolean("Manual Turret Control", false);
+        SmartDashboard.putNumber(Constants.Dashboard.DISTANCE_FROM_HUB_METERS, 0.0);
+        SmartDashboard.putBoolean(Constants.Dashboard.ELASTIC_SHOOTER_TUNING_ENABLED, false);
+        SmartDashboard.putNumber(
+            Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM,
+            Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED
+        );
+        SmartDashboard.putNumber(
+            Constants.Dashboard.ELASTIC_TEST_HOOD_ANGLE_DEGREES,
+            Constants.Shooter.Hood.MIN_LAUNCH_ANGLE_DEGREES
+        );
+        positionChooser.addOption("LEFT", "LEFT");
+        positionChooser.addOption("CENTER", "CENTER");
+        positionChooser.addOption("RIGHT", "RIGHT");
+        positionChooser.setDefaultOption("CENTER", "CENTER");
+        SmartDashboard.putData("Position", positionChooser);
+        SmartDashboard.putString(
+            "Driver Controller Bindings",
+            "Left Joystick: Move the Robot (field oriented)\n"
+                + "Right Joystick: Turn (Right Clockwise, Left Counter-Clockwise)\n"
+                + "Right Trigger: Run the Intake\n"
+                + "Left Trigger: Run the Outtake\n"
+                + "Back Button: Reset Field Orientation"
+        );
+        SmartDashboard.putString(
+            "Operator Controller Bindings",
+            "Right Trigger: Short Shoot (Hold to Shoot)\n"
+                + "Left Trigger: Long Shoot (Hold to Shoot)\n"
+                + "Right Bumper: Jostle the Intake\n"
+                + "Left Bumper: Initiate Manual Override (Hold to Override)\n"
+                + "Manual Override Controls (While Manual Override is Active):\n"
+                + "MO: Left Joystick: Control the Turret's Vertical Aim\n"
+                + "MO: Right Joystick: Control the Turret's Horizontal Aim\n"
+                + "MO: Right Trigger: Shoot Wihout Safeties (Hold to Shoot)\n"
+                + "MO: B Button: Run the Spindexer Backwards\n"
+                + "MO: A Button: Run the Kicker/Upinator Backwards\n"
+                + "Elastic Tuning: Enable the Elastic Tuning tab override to use its RPM and hood angle\n"
+        );
+        SmartDashboard.putData("Field", field);
+    }
+
+    private void updateDashboard() {
+        field.setRobotPose(drivetrain.getEstimatedPose());
+        SmartDashboard.putNumber(Constants.Dashboard.DISTANCE_FROM_HUB_METERS, drivetrain.getDistanceToHubMeters());
+        SmartDashboard.putNumber(
+            "Match Time Left",
+            Math.round((FieldConstants.Match.MATCH_DURATION - matchTimer.get()) * 10) / 10.0
+        );
+        SmartDashboard.putNumber(
+            "TURRET VERTICAL ANGLE",
+            robotContainer.shooter.hoodMotor.getAngle()
+        );
+        SmartDashboard.putString("Current Match Phase", currentPhase.toString());
+        SmartDashboard.putNumber(
+            "Phase Time Left",
+            Math.round((phaseDuration - phaseTimer.get()) * 10) / 10.0
+        );
+
+        double elasticShooterRpm = MathUtil.clamp(
+            SmartDashboard.getNumber(
+                Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM,
+                Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED
+            ),
+            Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MIN,
+            Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MAX
+        );
+        SmartDashboard.putNumber(Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM, elasticShooterRpm);
+
+        double elasticHoodAngleDegrees = MathUtil.clamp(
+            SmartDashboard.getNumber(
+                Constants.Dashboard.ELASTIC_TEST_HOOD_ANGLE_DEGREES,
+                Constants.Shooter.Hood.MIN_LAUNCH_ANGLE_DEGREES
+            ),
+            Constants.Dashboard.ELASTIC_TEST_HOOD_ANGLE_MIN,
+            Constants.Dashboard.ELASTIC_TEST_HOOD_ANGLE_MAX
+        );
+        SmartDashboard.putNumber(Constants.Dashboard.ELASTIC_TEST_HOOD_ANGLE_DEGREES, elasticHoodAngleDegrees);
+
+        if (DriverStation.isEnabled()
+            && SmartDashboard.getBoolean(Constants.Dashboard.ELASTIC_SHOOTER_TUNING_ENABLED, false)
+            && !SmartDashboard.getBoolean("Manual Turret Control", false)) {
+            //robotContainer.shooter.SetHoodAngleCommand(robotContainer.shooter, () -> elasticHoodAngleDegrees);
+        }
+    }
+
+    private Pose2d calculateAutoStartPosition() {
+        double autoStartX;
+        double autoStartY;
+        Rotation2d autoStartRot;
+        DriverStation.Alliance alliance = DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue);
+
+        if (alliance == DriverStation.Alliance.Blue) {
+            autoStartX = FieldConstants.Field.ALLIANCE_ZONE_LENGTH - Constants.Robot.ROBOT_WIDTH / 2.0;
+            autoStartRot = new Rotation2d(0);
+        } else {
+            autoStartX = FieldConstants.Field.FIELD_LENGTH
+                - (FieldConstants.Field.ALLIANCE_ZONE_LENGTH - Constants.Robot.ROBOT_WIDTH / 2.0);
+            autoStartRot = new Rotation2d(Math.PI);
+        }
+
+        if (Constants.Field.STARTING_POSITION.equals("LEFT")) {
+            autoStartY = FieldConstants.Field.ALLIANCE_ZONE_WIDTH - FieldConstants.Trench.TRENCH_WIDTH / 2.0;
+        } else if (Constants.Field.STARTING_POSITION.equals("CENTER")) {
+            autoStartY = FieldConstants.Field.ALLIANCE_ZONE_WIDTH / 2.0;
+        } else {
+            autoStartY = FieldConstants.Trench.TRENCH_WIDTH / 2.0;
+        }
+
+        return new Pose2d(autoStartX, autoStartY, autoStartRot);
+    }
+
+    private void updateMatchPhase() {
+        switch (currentPhase) {
+            case TRANSITION:
+                if (phaseTimer.get() >= FieldConstants.Match.TRANSITION_DURATION) {
+                    currentPhase = MatchPhase.TELEOP_FIRST_SHIFT;
+                    phaseTimer.reset();
+                    phaseDuration = FieldConstants.Match.ALLIANCE_SHIFT_DURATION;
+                }
+                break;
+            case TELEOP_FIRST_SHIFT:
+                if (phaseTimer.get() >= FieldConstants.Match.ALLIANCE_SHIFT_DURATION) {
+                    currentPhase = MatchPhase.TELEOP_SECOND_SHIFT;
+                    phaseTimer.reset();
+                    phaseDuration = FieldConstants.Match.ALLIANCE_SHIFT_DURATION;
+                }
+                break;
+            case TELEOP_SECOND_SHIFT:
+                if (phaseTimer.get() >= FieldConstants.Match.ALLIANCE_SHIFT_DURATION) {
+                    currentPhase = MatchPhase.TELEOP_THIRD_SHIFT;
+                    phaseTimer.reset();
+                    phaseDuration = FieldConstants.Match.ALLIANCE_SHIFT_DURATION;
+                }
+                break;
+            case TELEOP_THIRD_SHIFT:
+                if (phaseTimer.get() >= FieldConstants.Match.ALLIANCE_SHIFT_DURATION) {
+                    currentPhase = MatchPhase.TELEOP_FOURTH_SHIFT;
+                    phaseTimer.reset();
+                    phaseDuration = FieldConstants.Match.ALLIANCE_SHIFT_DURATION;
+                }
+                break;
+            case TELEOP_FOURTH_SHIFT:
+                if (phaseTimer.get() >= FieldConstants.Match.ALLIANCE_SHIFT_DURATION) {
+                    currentPhase = MatchPhase.ENDGAME;
+                    phaseTimer.reset();
+                    phaseDuration = FieldConstants.Match.ENDGAME_DURATION;
+                }
+                break;
+            case AUTONOMOUS:
+            case ENDGAME:
+                break;
+        }
+    }
 }
