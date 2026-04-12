@@ -145,7 +145,7 @@ public final class Constants {
     public static final class Kicker {
         public static final int FAT_KICKER_INNER_MOTOR_PORT = 37;
         public static final int FAT_KICKER_OUTER_MOTOR_PORT = 36;
-        public static final int KICKER_SPEED = 1;
+        public static final int KICKER_SPEED = 100;
 
         private Kicker() {}
     }
@@ -157,7 +157,7 @@ public final class Constants {
 
     public static final class Shooter {
         public static final int HOOD_MOTOR_PORT = 38;
-        public static final double BACKSPIN_RPM = 0;
+        public static final double BACKSPIN_RPM = 100;
         public static final int SPITTER_MOTOR_LEAD_PORT = 31;
         public static final int SPITTER_MOTOR_FOLLOWER_PORT = 35;
 
@@ -213,7 +213,7 @@ public final class Constants {
 
     public static final class Slider {
         public static final int SLIDER_MOTOR_PORT = 33;//[TODO]
-        public static final double SLIDER_RPM = -1; // [TODO] Tune this value (in RPM)
+        public static final double SLIDER_RPM = 100; // [TODO] Tune this value (in RPM)
        
     }
 
