@@ -9,15 +9,16 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants;
 import frc.robot.FieldConstants;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 public class AutoShootCommand extends SequentialCommandGroup {
-    private static Double[] powerBandRanges = {1.36, 1.85, 2.496, 3.118, 3.643, 4.123, 4.562, 4.991, 5.055}; // low < dist <= high
-    private static Double[] anglePoints = {22.0, 22.0, 22.0, 25.03, 26.51, 22.0, 26.11, 27.36, 30.21, 27.08, 28.16, 30.33, 34.31, 36.08, 38.07, 32.0, 35.05, 36.53, 38.01, 38.01, 31.12, 32.32, 33.06, 37.67, 36.13, 36.13, 39.09, 41.0, 35.73, 35.73, 38.07, 42.45, 35.45, 36.82};
-    private static Double[] distPoints = {1.36, 1.49, 1.595, 1.754, 1.85, 1.967, 2.192, 2.338, 2.496, 2.623, 2.738, 2.841, 2.911, 3.009, 3.118, 3.207, 3.296, 3.407, 3.531, 3.643, 3.751, 3.861, 3.959, 4.123, 4.256, 4.386, 4.513, 4.562, 4.641, 4.767, 4.826, 4.978, 4.991, 5.055};
-    private static Double[] timePoints = {};
+    private static Double[] powerBandRanges = Constants.CollectedData.powerBandRanges;
+    private static Double[] anglePoints = Constants.CollectedData.anglePoints;
+    private static Double[] distPoints = Constants.CollectedData.distPoints;
+    private static Double[] timePoints = Constants.CollectedData.timePoints;
 
     private final CommandSwerveDrivetrain m_swerve;
     private final ShooterSubsystem m_shooter;
@@ -138,5 +139,4 @@ public class AutoShootCommand extends SequentialCommandGroup {
             new ShootWithPowerCommand(shooter, () -> this.capturedPower)
         );
     }
-
 }
