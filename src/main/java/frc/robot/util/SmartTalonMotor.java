@@ -39,7 +39,7 @@ public class SmartTalonMotor {
     private final TalonFXConfiguration config = new TalonFXConfiguration();
     private final PositionDutyCycle positionRequest = new PositionDutyCycle(0);
     private final DutyCycleOut dutyCycleRequest = new DutyCycleOut(0);
-    private final TalonFX motor;
+    public final TalonFX motor;
 
     /** motorRotations / mechanismRotations */
     private final double gearRatio;

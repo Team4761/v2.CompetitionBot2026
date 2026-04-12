@@ -159,6 +159,7 @@ public final class Constants {
         public static final int LEFT_SPITTER_MOTOR_PORT = -1;
         public static final int RIGHT_SPITTER_MOTOR_PORT = -1;
         public static final int HOOD_MOTOR_PORT = -1;
+        public static final double BACKSPIN_RPM = 0;
 
         public static final class ShootConfig {
             public static final double INNER_KICKER_SPEED = -1.0; // [TODO] Tune this value

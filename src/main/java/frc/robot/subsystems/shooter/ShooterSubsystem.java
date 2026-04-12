@@ -3,12 +3,14 @@ package frc.robot.subsystems.shooter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.SmartTalonMotor;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 public class ShooterSubsystem extends SubsystemBase {
 
     public final SmartTalonMotor hoodMotor;
-    public final SmartTalonMotor spitterMotorLeft;
-    public final SmartTalonMotor spitterMotorRight;
+    public final SmartTalonMotor spitterMotor; // Left
+    public final SmartTalonMotor spitterMotor2; // Right
     public final SmartTalonMotor backspinMotor;
 
     //[TODO]Set correct values for PID, output & angle limits, gear ratio, motor mode for all motors
@@ -24,14 +26,14 @@ public class ShooterSubsystem extends SubsystemBase {
                 )
             .gearRatio(Constants.Shooter.Hood.HOOD_ROTATIONS_PER_MOTOR_ROTATION)
             .build();
-        this.spitterMotorLeft = SmartTalonMotor.Builder.newInstance()
+        this.spitterMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Shooter.LEFT_SPITTER_MOTOR_PORT)
             .PID(0.1,0,0)
             .outputRange(-1,-1)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
             //.gearRatio()
             .build();
-        this.spitterMotorRight = SmartTalonMotor.Builder.newInstance()
+        this.spitterMotor2 = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Shooter.RIGHT_SPITTER_MOTOR_PORT)
             .PID(0.1,0,0)
             .outputRange(-1,-1)
@@ -46,9 +48,11 @@ public class ShooterSubsystem extends SubsystemBase {
             //.gearRatio()
             .build();
         
+        this.spitterMotor2.motor.setControl(
+            new Follower(
+                this.spitterMotor.motor.getDeviceID(), 
+                MotorAlignmentValue.Opposed
+            )
+        );
     }
-
-    
-    
-
 }

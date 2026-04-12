@@ -17,8 +17,7 @@ public class UnRunSpitterCommand extends Command {
 
     @Override
     public void initialize() {
-        this.shooterSubsystem.spitterMotorLeft.setRawSpeed(-1 * Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
-        this.shooterSubsystem.spitterMotorRight.setRawSpeed(-1 * Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
+        this.shooterSubsystem.spitterMotor.setRawSpeed(-1 * Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
         this.shooterSubsystem.backspinMotor.setSpeedPercent(-1 * Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_MAX_SPEED);
         
     }
@@ -35,8 +34,7 @@ public class UnRunSpitterCommand extends Command {
 
     @Override
     public void end(boolean isInterrupted) {
-        this.shooterSubsystem.spitterMotorLeft.stopTurning();
-        this.shooterSubsystem.spitterMotorRight.stopTurning();
+        this.shooterSubsystem.spitterMotor.stopTurning();
         this.shooterSubsystem.backspinMotor.stopTurning();
     }
 }
