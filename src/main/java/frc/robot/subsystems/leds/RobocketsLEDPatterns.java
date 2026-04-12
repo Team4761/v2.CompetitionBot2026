@@ -30,4 +30,6 @@ public class RobocketsLEDPatterns {
     //set the color and mode of the pattern here
     public static LEDColor currentColor = LEDColor.INFO;
     public static LEDMode currentMode = LEDMode.BLINK_SLOW;
+
+    public static LEDPattern bouncePattern;
 }

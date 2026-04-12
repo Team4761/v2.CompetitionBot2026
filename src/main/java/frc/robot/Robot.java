@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     ledSubsystem = new LEDSubsystem();
     LEDSubsystem.setPatternMode(RobocketsLEDPatterns.currentMode);
-    ledSubsystem.runPattern(RobocketsLEDPatterns.setSingleColor);//change the currently used LEDPattern here
+    ledSubsystem.runPattern(RobocketsLEDPatterns.setSingleColor);//change the currently used LEDPattern here. NOTE: if you want to use the bounce pattern, comment this line out and replace currentPattern.applyTo(buffer); with RobocketsLEDPatterns.bouncePattern.applyTo(buffer); in periodic of the LEDSubsystem
   }
   @Override
   public void robotPeriodic() {

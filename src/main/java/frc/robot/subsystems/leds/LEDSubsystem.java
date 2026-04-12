@@ -52,16 +52,13 @@ public class LEDSubsystem extends SubsystemBase {
         NONE
     }
 
-    int ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
-    int ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
-    Color LEDColor1 = StoopidColors.LEDStupidColorList[ColorIndex1];
-    Color LEDColor2 = StoopidColors.LEDStupidColorList[ColorIndex2];
-    int LEDOffset = 0;
+    //int ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
+    //int ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
+    Color LEDColor1 = StoopidColors.LEDStupidColorList[97]; //red
+    Color LEDColor2 = StoopidColors.LEDStupidColorList[97]; //red
+    double LEDOffset = 0.0;
         
-    // We will have a 16x1 strip
-
-    // IMPORTANT: If the LEDs are in GRB instead of RGB again, please infom me (Alex Maniscalco). I already have a fix for it
-    // also ask/tell me about any other problems or conflicts this subsystem makes
+    // We have a 16x1 strip
 
     /** Available LED patterns:
      * <p> LEDs that have a certain part light up a certain color when one or more functions are being performed.
@@ -81,10 +78,10 @@ public class LEDSubsystem extends SubsystemBase {
         currentPattern = RobocketsLEDPatterns.OFF;
         previousPattern = RobocketsLEDPatterns.OFF;
 
-        //rightSide = leds;
-        //rightBuffer = new AddressableLEDBuffer(Constants.LEDs.NUMBER_OF_LEDS);
-        //rightSide.setLength(Constants.LEDs.NUMBER_OF_LEDS);
-        //rightSide.start();
+        rightSide = leds;
+        rightBuffer = new AddressableLEDBuffer(Constants.LEDs.NUMBER_OF_LEDS);
+        rightSide.setLength(Constants.LEDs.NUMBER_OF_LEDS);
+        rightSide.start();
     }
 
 
@@ -128,32 +125,30 @@ public class LEDSubsystem extends SubsystemBase {
     //int[][][][] testVideoAsCompressedArrayComingToTheatersMarch32_2111 = compressVideo(loadVideoAsMultipleImages("C:/Users/alex/Documents/CODINF/RickrollFragments/frame.png", 1, 100, true),32,8);
     //public static double freme = 0;
     public void periodic(){
-        // 2 solid colors that move towards the side opposite from where they started. every time the colors bounce off a wall, the colors change to a new random one.
-            //IMPORTANT NOTE FOR ME: Only works on an ?x1 strip
-            // colors always start as random
-            /*LEDPattern rightBaseBase = LEDPattern.steps(Map.of(0, LEDColor1, 0.125, Color.kBlack));
+            // 2 solid colors that move towards the side opposite from where they started. When they reach the opposite side, they bounce. gets darker when it approches the edge
+            LEDPattern rightBaseBase = LEDPattern.steps(Map.of(0, LEDColor1, 0.125, Color.kBlack));
             LEDPattern leftBase = LEDPattern.steps(Map.of(0, LEDColor2, 0.125, Color.kBlack));
             LEDPattern rightBase = rightBaseBase.reversed();
-            LEDPattern left = leftBase.offsetBy(LEDOffset);
-            LEDPattern right = rightBase.offsetBy(-LEDOffset);
-            LEDPattern pattern = left.overlayOn(right);
-            pattern.applyTo(buffer);
-            pattern.applyTo(rightBuffer);
+            LEDPattern left = leftBase.offsetBy((int)LEDOffset);
+            LEDPattern right = rightBase.offsetBy((int)-LEDOffset);
+            RobocketsLEDPatterns.bouncePattern = left.overlayOn(right);
+            RobocketsLEDPatterns.bouncePattern.applyTo(buffer);
+            RobocketsLEDPatterns.bouncePattern.applyTo(rightBuffer);
             leds.setData(buffer);
             rightSide.setData(rightBuffer);
 
-            // moves the LEDs at a speed of 1 LEDs/tick
-            // the strips doesn't actually "bounce" off the walls, they just return to their start positions. However, it looks like they are bouncing because of the color change.
+            // moves the LEDs at a speed of 1 LED/2 ticks
+            // the strips doesn't actually "bounce" off the walls, they just return to their start positions.
             if (LEDOffset < (Constants.LEDs.NUMBER_OF_LEDS - ((int)(Constants.LEDs.NUMBER_OF_LEDS * 0.125)))) {
-                LEDOffset++;                
+                LEDOffset += 0.5;                
             }
             else {
                 LEDOffset = 0;
-                ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
-                ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
-                LEDColor1 = StoopidColors.LEDColorList[ColorIndex1];
-                LEDColor2 = StoopidColors.LEDColorList[ColorIndex2];
-            }*/
+                //ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
+                //ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
+                //LEDColor1 = StoopidColors.LEDColorList[ColorIndex1];
+                //LEDColor2 = StoopidColors.LEDColorList[ColorIndex2];
+            }
         
         // This pattern emulates a Rickroll, with the height and width of it being adjustable
         // this will unfourtunately not be run during matches due to power concerns, and the fact that it is way too slow to load
