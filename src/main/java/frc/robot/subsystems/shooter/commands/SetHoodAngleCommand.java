@@ -1,5 +1,7 @@
 package frc.robot.subsystems.shooter.commands;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 
@@ -11,6 +13,12 @@ public class SetHoodAngleCommand extends Command {
     public SetHoodAngleCommand(ShooterSubsystem sub, double degrees) {
         this.shooterSubsystem = sub;
         this.degrees = degrees;
+        addRequirements(sub);
+    }
+
+    public SetHoodAngleCommand(ShooterSubsystem sub, DoubleSupplier angleSupplier) {
+        this.shooterSubsystem = sub;
+        this.degrees = angleSupplier.getAsDouble();
         addRequirements(sub);
     }
 
