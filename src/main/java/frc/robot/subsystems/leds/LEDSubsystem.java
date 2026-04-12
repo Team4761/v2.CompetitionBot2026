@@ -20,8 +20,10 @@ import frc.robot.subsystems.leds.StoopidColors;
 
 @SuppressWarnings("unused")
 public class LEDSubsystem extends SubsystemBase {
-    public static AddressableLED leds;
-    public static AddressableLEDBuffer buffer;
+    private AddressableLED leds;
+    private AddressableLEDBuffer buffer;
+    private AddressableLED rightSide;
+    private AddressableLEDBuffer rightBuffer;
 
     //no, the type "double" is not a mistake
     //note: must make each false condition set it to a UNIQUE out of bounds spot
@@ -50,6 +52,11 @@ public class LEDSubsystem extends SubsystemBase {
         NONE
     }
 
+    int ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
+    int ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
+    Color LEDColor1 = StoopidColors.LEDStupidColorList[ColorIndex1];
+    Color LEDColor2 = StoopidColors.LEDStupidColorList[ColorIndex2];
+    int LEDOffset = 0;
         
     // We will have a 16x1 strip
 
@@ -74,16 +81,18 @@ public class LEDSubsystem extends SubsystemBase {
         currentPattern = RobocketsLEDPatterns.OFF;
         previousPattern = RobocketsLEDPatterns.OFF;
 
+        //rightSide = leds;
+        //rightBuffer = new AddressableLEDBuffer(Constants.LEDs.NUMBER_OF_LEDS);
+        //rightSide.setLength(Constants.LEDs.NUMBER_OF_LEDS);
+        //rightSide.start();
     }
 
 
     /*
        !!!!IMPORTANT!!!!
-       DO NOT SET ANY COLOR ABOVE 127. IT USES A SHIT TON OF POWER. AND STROUT WILL FUCKIONG KILL YOU.
+       DO NOT APPLY A PATTERN THAT DOES NOT USE A STUPIDCOLOR. IT USES TOO MUCH POWER (according to Strout)
        !!!!IMPORTANT!!!!
     */
-
-
 
     public static StupidColor setPatternColor(LEDColor color) {
         if(color == LEDColor.ERROR){
@@ -119,8 +128,33 @@ public class LEDSubsystem extends SubsystemBase {
     //int[][][][] testVideoAsCompressedArrayComingToTheatersMarch32_2111 = compressVideo(loadVideoAsMultipleImages("C:/Users/alex/Documents/CODINF/RickrollFragments/frame.png", 1, 100, true),32,8);
     //public static double freme = 0;
     public void periodic(){
-        setPatternMode(RobocketsLEDPatterns.currentMode);
-        setPattern(RobocketsLEDPatterns.setSingleColor);
+        // 2 solid colors that move towards the side opposite from where they started. every time the colors bounce off a wall, the colors change to a new random one.
+            //IMPORTANT NOTE FOR ME: Only works on an ?x1 strip
+            // colors always start as random
+            /*LEDPattern rightBaseBase = LEDPattern.steps(Map.of(0, LEDColor1, 0.125, Color.kBlack));
+            LEDPattern leftBase = LEDPattern.steps(Map.of(0, LEDColor2, 0.125, Color.kBlack));
+            LEDPattern rightBase = rightBaseBase.reversed();
+            LEDPattern left = leftBase.offsetBy(LEDOffset);
+            LEDPattern right = rightBase.offsetBy(-LEDOffset);
+            LEDPattern pattern = left.overlayOn(right);
+            pattern.applyTo(buffer);
+            pattern.applyTo(rightBuffer);
+            leds.setData(buffer);
+            rightSide.setData(rightBuffer);
+
+            // moves the LEDs at a speed of 1 LEDs/tick
+            // the strips doesn't actually "bounce" off the walls, they just return to their start positions. However, it looks like they are bouncing because of the color change.
+            if (LEDOffset < (Constants.LEDs.NUMBER_OF_LEDS - ((int)(Constants.LEDs.NUMBER_OF_LEDS * 0.125)))) {
+                LEDOffset++;                
+            }
+            else {
+                LEDOffset = 0;
+                ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
+                ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
+                LEDColor1 = StoopidColors.LEDColorList[ColorIndex1];
+                LEDColor2 = StoopidColors.LEDColorList[ColorIndex2];
+            }*/
+        
         // This pattern emulates a Rickroll, with the height and width of it being adjustable
         // this will unfourtunately not be run during matches due to power concerns, and the fact that it is way too slow to load
         /**
