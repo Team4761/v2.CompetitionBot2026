@@ -1,4 +1,4 @@
-package frc.robot.subsystems.shooter.commands;
+package frc.robot.commandGroups;
 
 import java.util.Arrays;
 
@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.FieldConstants;
+import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.subsystems.shooter.commands.SetHoodAngleCommand;
+import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
 public class AutoShootCommand extends SequentialCommandGroup {
@@ -22,6 +25,8 @@ public class AutoShootCommand extends SequentialCommandGroup {
 
     private final CommandSwerveDrivetrain m_swerve;
     private final ShooterSubsystem m_shooter;
+    private final SliderSubsystem m_slider;
+    private final KickerSubsystem m_kicker;
 
     private double capturedPower;
     private double capturedAngle;
@@ -121,9 +126,11 @@ public class AutoShootCommand extends SequentialCommandGroup {
         return distanceToHub;
     }
 
-    public AutoShootCommand(CommandSwerveDrivetrain swerve, ShooterSubsystem shooter) {
+    public AutoShootCommand(CommandSwerveDrivetrain swerve, ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker) {
         this.m_swerve = swerve;
         this.m_shooter = shooter;
+        this.m_slider = slider;
+        this.m_kicker = kicker;
 
         addCommands(
             new InstantCommand(() -> {
@@ -136,7 +143,7 @@ public class AutoShootCommand extends SequentialCommandGroup {
                 this.capturedAngle = angleInner;
             }),
             new SetHoodAngleCommand(shooter, () -> this.capturedAngle),
-            new ShootWithPowerCommand(shooter, () -> this.capturedPower)
+            new ShootWithPowerCommand(shooter, slider, kicker, () -> this.capturedPower)
         );
     }
 }

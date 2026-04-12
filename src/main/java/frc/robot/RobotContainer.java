@@ -8,8 +8,8 @@ import static edu.wpi.first.units.Units.*;
 
 import java.util.function.DoubleSupplier;
 
-import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveModule.SteerRequestType;
+import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
@@ -22,14 +22,14 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
+import frc.robot.commandGroups.AutoShootCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.kicker.commands.KickCommand;
 import frc.robot.subsystems.kicker.commands.UnKickCommand;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
-import frc.robot.subsystems.shooter.commands.AutoShootCommand;
 import frc.robot.subsystems.shooter.commands.RunSpitterCommand;
-import frc.robot.subsystems.shooter.commands.ShootWithPowerCommand;
+import frc.robot.commandGroups.ShootWithPowerCommand;
 import frc.robot.subsystems.shooter.commands.UnRunSpitterCommand;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
@@ -136,7 +136,7 @@ public class RobotContainer {
     }
     private void configureOperatorBindings() {
         controller_operator.rightTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //faces the robot towards the hub on right trigger press
-        controller_operator.leftTrigger().whileTrue(new AutoShootCommand(drivetrain, shooter)); //shoots when left trigger is pressed. automatically sets correct power and angle
+        controller_operator.leftTrigger().whileTrue(new AutoShootCommand(drivetrain, shooter, slider, kicker)); //shoots when left trigger is pressed. automatically sets correct power and angle
 
         //Manual override bindings
         controller_operator.a().whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press
