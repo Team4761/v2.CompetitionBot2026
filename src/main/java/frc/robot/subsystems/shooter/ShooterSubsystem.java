@@ -27,14 +27,14 @@ public class ShooterSubsystem extends SubsystemBase {
             .gearRatio(Constants.Shooter.Hood.HOOD_ROTATIONS_PER_MOTOR_ROTATION)
             .build();
         this.spitterMotor = SmartTalonMotor.Builder.newInstance()
-            .port(Constants.Shooter.LEFT_SPITTER_MOTOR_PORT)
+            .port(Constants.Shooter.SPITTER_MOTOR_LEAD_PORT)
             .PID(0.1,0,0)
             .outputRange(-1,-1)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
             //.gearRatio()
             .build();
         this.spitterMotor2 = SmartTalonMotor.Builder.newInstance()
-            .port(Constants.Shooter.RIGHT_SPITTER_MOTOR_PORT)
+            .port(Constants.Shooter.SPITTER_MOTOR_FOLLOWER_PORT)
             .PID(0.1,0,0)
             .outputRange(-1,-1)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
