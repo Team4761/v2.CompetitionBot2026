@@ -73,7 +73,6 @@ public class LEDSubsystem extends SubsystemBase {
         isShooting, Color.kGreen, //currently no command to shoot
         isDriving, Color.kYellow  //currently no driving functionality
     ));
-    //[TODO] remake stupid color, but it halves the R, G, and B values
         
     
     //int[][][][] testVideoAsCompressedArrayComingToTheatersMarch32_2111 = compressVideo(loadVideoAsMultipleImages("C:/Users/alex/Documents/CODINF/RickrollFragments/frame.png", 1, 100, true),32,8);

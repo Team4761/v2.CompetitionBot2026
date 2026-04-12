@@ -39,7 +39,7 @@ public class ShooterSubsystem extends SubsystemBase {
             //.gearRatio()
             .build();
         this.backspinMotor = SmartTalonMotor.Builder.newInstance()
-            .port(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_PORT) // 
+            .port(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_PORT)
             .PID(0.1, 0.0, 0.0) // Temp Values
             .outputRange(-1.0, 1.0) // Duty cycle output limits
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)

@@ -24,12 +24,21 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.kicker.KickerSubsystem;
+import frc.robot.subsystems.kicker.commands.KickCommand;
+import frc.robot.subsystems.kicker.commands.UnKickCommand;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
+import frc.robot.subsystems.shooter.commands.AutoShootCommand;
+import frc.robot.subsystems.shooter.commands.RunSpitterCommand;
+import frc.robot.subsystems.shooter.commands.ShootWithPowerCommand;
+import frc.robot.subsystems.shooter.commands.UnRunSpitterCommand;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
+import frc.robot.subsystems.slider.commands.UnSpinSliderCommand;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;
 import frc.robot.subsystems.snatcher.commands.SnatchCommand;
+import frc.robot.subsystems.snatcher.commands.UnSnatchCommand;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import frc.robot.subsystems.swerve.commands.AutoOrientCommand;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.whirligig.WhirligigSubsystem;
 
@@ -64,10 +73,12 @@ public class RobotContainer {
 
 
     private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+
     public RobotContainer() {
         configureBindings();
         configurePathPlannerAutos();
     }
+
     private void configurePathPlannerAutos() {
         NamedCommands.registerCommand("Do Nothing", Commands.none());
         AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
@@ -119,11 +130,21 @@ public class RobotContainer {
         );
     }
     private void configureDriverBindings() {
-        controller_drive.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
-        controller_drive.leftBumper().whileTrue(new SnatchCommand(snatcher));
+        controller_drive.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric)); //Resets the field-centric heading when the driver presses the left bumper 
+        controller_drive.rightTrigger().whileTrue(new SnatchCommand(snatcher)); //intakes on right trigger press
+        controller_drive.leftTrigger().whileTrue(new UnSnatchCommand(snatcher)); //outtakes on left trigger press
     }
     private void configureOperatorBindings() {
-        controller_operator.a().whileTrue(new SpinSliderCommand(slider));
+        controller_operator.rightTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //faces the robot towards the hub on right trigger press
+        controller_operator.leftTrigger().whileTrue(new AutoShootCommand(drivetrain, shooter)); //shoots when left trigger is pressed. automatically sets correct power and angle
+
+        //Manual override bindings
+        controller_operator.a().whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press
+        controller_operator.b().whileTrue(new UnSpinSliderCommand(slider)); //spins just the slider (in reverse) on B Button press
+        controller_operator.x().whileTrue(new RunSpitterCommand(shooter)); //spins just the spitter on X Button press
+        controller_operator.y().whileTrue(new UnRunSpitterCommand(shooter)); //spins just the spitter (in reverse) on Y Button press
+        controller_operator.rightBumper().whileTrue(new KickCommand(kicker)); //spins just the kicker on right bumper press
+        controller_operator.leftBumper().whileTrue(new UnKickCommand(kicker)); //spins just the kicker (in reverse) on left bumper press
     }
 
     private double shapeTurnInput(double rawTurn) {

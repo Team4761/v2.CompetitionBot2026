@@ -17,11 +17,11 @@ public class JostleSnatcherCommand extends Command{
         snatcherSubsystem.snatcherMotor.setSpeedPercent(-1);
     }
 
-    public void execute() {//can mabey use set angle
-        if (snatcherSubsystem.snatcherMotor.getAngle() >= 90 && !runningNegative) {//90 is temp value might need to be negative cuase gear ratio 
+    public void execute() {//can maybe use set angle
+        if (snatcherSubsystem.snatcherMotor.getAngle() >= 90 && !runningNegative) {//90 is temp value might need to be negative because gear ratio 
             snatcherSubsystem.snatcherMotor.setSpeedPercent(-1);
             runningNegative = true;
-        } else if (snatcherSubsystem.snatcherMotor.getAngle() <= 40 && runningNegative){//50 is a temp value might need to be negative cuase gear ratio 
+        } else if (snatcherSubsystem.snatcherMotor.getAngle() <= 40 && runningNegative){//50 is a temp value might need to be negative because gear ratio 
             snatcherSubsystem.snatcherMotor.setSpeedPercent(1);
             runningNegative = false;
         }
@@ -31,7 +31,7 @@ public class JostleSnatcherCommand extends Command{
     public boolean isFinished() {
         return false;
     }
-    //this is one possible solution for ensuring the intake goes back down after jostleing but we can allso just run extendintake command on false when we bind to buttons
+    //this is one possible solution for ensuring the intake goes back down after jostling but we can also just run extendintake command on false when we bind to buttons
     @Override
     public void end(boolean isInterrupted){
         /*if (!(snatcherSubsystem.snatcherMotor.getAngle() >= 90)) {
