@@ -79,7 +79,7 @@ public class AutoOrientCommand extends Command {
         double hubX = alliance == DriverStation.Alliance.Blue ? FieldConstants.Hub.HUB_BLUE_X : FieldConstants.Hub.HUB_RED_X;
         double hubY = alliance == DriverStation.Alliance.Blue ? FieldConstants.Hub.HUB_BLUE_Y : FieldConstants.Hub.HUB_RED_Y;
 
-        double angleToHub = Math.atan2(hubY - pose.getY(), hubX - pose.getX());
+        double angleToHub = Math.toDegrees(Math.atan2(hubY - pose.getY(), hubX - pose.getX()));
 
         return angleToHub;
     }
