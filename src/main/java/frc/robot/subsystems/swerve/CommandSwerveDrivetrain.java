@@ -19,6 +19,7 @@ import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import edu.wpi.first.math.Matrix;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.system.plant.DCMotor;
@@ -29,7 +30,7 @@ import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
-
+import frc.robot.FieldConstants;
 import frc.robot.generated.TunerConstants.TunerSwerveDrivetrain;
 
 /**
@@ -135,6 +136,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
         super(drivetrainConstants, modules);
+        initializeAutoBuilder();   
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -159,6 +161,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
         super(drivetrainConstants, odometryUpdateFrequency, modules);
+        initializeAutoBuilder();   
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -191,6 +194,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         SwerveModuleConstants<?, ?, ?>... modules
     ) {
         super(drivetrainConstants, odometryUpdateFrequency, odometryStandardDeviation, visionStandardDeviation, modules);
+        initializeAutoBuilder();   
         if (Utils.isSimulation()) {
             startSimThread();
         }
@@ -249,7 +253,31 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     public Command applyRequest(Supplier<SwerveRequest> request) {
         return run(() -> this.setControl(request.get()));
     }
+    public Pose2d getEstimatedPose() {
+        return getState().Pose;
+    }
 
+    public Rotation2d getHubAimHeading() {
+        Translation2d hubCenter = getAllianceHubCenter();
+        Translation2d robotToHub = hubCenter.minus(getEstimatedPose().getTranslation());
+        return robotToHub.getAngle();
+    }
+
+    public double getHubAimHeadingDegrees() {
+        return getHubAimHeading().getDegrees();
+    }
+
+    public Rotation2d getHubAimError() {
+        return getHubAimHeading().minus(getEstimatedPose().getRotation());
+    }
+
+    public double getHubAimErrorDegrees() {
+        return getHubAimError().getDegrees();
+    }
+
+    public double getDistanceToHubMeters() {
+        return getEstimatedPose().getTranslation().getDistance(getAllianceHubCenter());
+    }
     /**
      * Runs the SysId Quasistatic test in the given direction for the routine
      * specified by {@link #m_sysIdRoutineToApply}.
@@ -351,5 +379,13 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     @Override
     public Optional<Pose2d> samplePoseAt(double timestampSeconds) {
         return super.samplePoseAt(Utils.fpgaToCurrentTime(timestampSeconds));
+    }
+
+    private Translation2d getAllianceHubCenter() {
+        Alliance alliance = DriverStation.getAlliance().orElse(Alliance.Blue);
+        double hubX = alliance == Alliance.Red
+            ? FieldConstants.Field.FIELD_LENGTH - FieldConstants.Hub.HUB_TO_ALLIANCE_WALL
+            : FieldConstants.Hub.HUB_TO_ALLIANCE_WALL;
+        return new Translation2d(hubX, FieldConstants.Field.FIELD_WIDTH / 2.0);
     }
 }

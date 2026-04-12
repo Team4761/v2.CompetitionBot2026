@@ -44,8 +44,8 @@ import frc.robot.subsystems.whirligig.WhirligigSubsystem;
 
 public class RobotContainer {
     public final SnatcherSubsystem snatcher = new SnatcherSubsystem();
-    private final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
-    private final VisionSubsystem vision = new VisionSubsystem(drivetrain);
+    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final VisionSubsystem vision = new VisionSubsystem(drivetrain);
     public final ShooterSubsystem shooter = new ShooterSubsystem();
     public final KickerSubsystem kicker = new KickerSubsystem();
     public final SliderSubsystem slider = new SliderSubsystem();
