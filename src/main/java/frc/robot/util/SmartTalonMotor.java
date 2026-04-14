@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.controls.VelocityDutyCycle;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 
 import java.util.logging.Logger;
@@ -111,7 +112,10 @@ public class SmartTalonMotor {
      */
     public void setRawSpeed(double motorRPM) {
         // TalonFX VelocityDutyCycle takes rotations-per-second.
-        this.motor.setControl(new VelocityDutyCycle(motorRPM / 60.0));
+        //this.motor.setControl(this.dutyCycleRequest.withOutput(speed));
+        //this.motor.setControl(new VelocityDutyCycle(motorRPM / 60.0));
+        VelocityVoltage velocityRequest = new VelocityVoltage(0);
+        this.motor.setControl(velocityRequest.withVelocity(motorRPM / 60.0 ));
     }
 
     /**
