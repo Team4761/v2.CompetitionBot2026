@@ -54,8 +54,8 @@ public class LEDSubsystem extends SubsystemBase {
 
     //int ColorIndex1 = (int)(Math.random() * (117 - 0 + 1) + 0);
     //int ColorIndex2 = (int)(Math.random() * (117 - 0 + 1) + 0);
-    Color LEDColor1 = StoopidColors.LEDStupidColorList[97]; //red
-    Color LEDColor2 = StoopidColors.LEDStupidColorList[97]; //red
+    Color LEDColor1 = new StupidColor(Color.kRed); //red
+    Color LEDColor2 = new StupidColor(Color.kRed); //red
     double LEDOffset = 0.0;
         
     // We have a 16x1 strip
@@ -164,7 +164,7 @@ public class LEDSubsystem extends SubsystemBase {
             freme += 0.5;
         }
         */
-        currentPattern.applyTo(buffer);
+        RobocketsLEDPatterns.bouncePattern.applyTo(buffer);
         leds.setData(buffer);
     }
 

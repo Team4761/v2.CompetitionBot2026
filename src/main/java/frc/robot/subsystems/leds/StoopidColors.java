@@ -130,10 +130,14 @@ public class StoopidColors {
         Color.kWheat,
         Color.kWhite,
         Color.kYellow,
-        Color.kYellowGreen
-        };
+        Color.kYellowGreen,
 
-    // Here's a bullshit list of colors that we can use for the LEDs (Now in stupid flavor!)
+        //custom colors
+        StoopidColors.kAlistairBlue,
+        StoopidColors.kAlmostBlack
+    };
+
+    //Here's a bullshit list of colors that we can use for the LEDs (Now in stupid flavor!)
     static StupidColor[] LEDStupidColorList = {
         new StupidColor(Color.kDenim),
         new StupidColor(Color.kFirstBlue),
@@ -255,6 +259,15 @@ public class StoopidColors {
         new StupidColor(Color.kWheat),
         new StupidColor(Color.kWhite),
         new StupidColor(Color.kYellow),
-        new StupidColor(Color.kYellowGreen)
-        };
+        new StupidColor(Color.kYellowGreen),
+
+        //custom colors
+        new StupidColor(StoopidColors.kAlistairBlue),
+        new StupidColor(StoopidColors.kAlmostBlack)
+    };
+
+    //here are some custom colors 
+    public static final StupidColor kAlistairBlue = new StupidColor(4, 44, 244);
+    public static final StupidColor kAlmostBlack = new StupidColor(1, 1, 1);
+
 }

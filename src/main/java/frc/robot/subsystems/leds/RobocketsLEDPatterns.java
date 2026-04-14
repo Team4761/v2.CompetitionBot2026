@@ -1,5 +1,8 @@
 package frc.robot.subsystems.leds;
 
+import static edu.wpi.first.units.Units.Percent;
+import static edu.wpi.first.units.Units.Second;
+
 import java.util.Map;
 
 import edu.wpi.first.wpilibj.LEDPattern;
@@ -32,4 +35,5 @@ public class RobocketsLEDPatterns {
     public static LEDMode currentMode = LEDMode.BLINK_SLOW;
 
     public static LEDPattern bouncePattern;
+    public static LEDPattern continuousGradientScroll = LEDPattern.gradient(LEDPattern.GradientType.kContinuous, Color.kRed, StoopidColors.kAlmostBlack).scrollAtRelativeSpeed(Percent.per(Second).of(25));
 }
