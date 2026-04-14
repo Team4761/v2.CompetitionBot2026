@@ -16,6 +16,7 @@ public class SmackdownSnatcherCommand extends Command {
 
     @Override
     public void initialize() {
+        isStable = 0;
         snatcherSubsystem.snatcherMotor.set(90);
     }
 
