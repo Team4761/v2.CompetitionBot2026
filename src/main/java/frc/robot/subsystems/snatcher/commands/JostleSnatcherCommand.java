@@ -14,7 +14,7 @@ public class JostleSnatcherCommand extends Command{
 
     @Override
     public void initialize() {
-        snatcherSubsystem.snatcherMotor.setSpeedPercent(-1);
+        snatcherSubsystem.snatcherMotor.set(90);
     }
 
     public void execute() {//can maybe use set angle
