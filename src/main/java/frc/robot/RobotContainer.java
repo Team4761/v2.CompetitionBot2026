@@ -35,12 +35,14 @@ import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
 import frc.robot.subsystems.slider.commands.UnSpinSliderCommand;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;
+import frc.robot.subsystems.snatcher.commands.SmackdownSnatcherCommand;
 import frc.robot.subsystems.snatcher.commands.SnatchCommand;
 import frc.robot.subsystems.snatcher.commands.UnSnatchCommand;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.commands.AutoOrientCommand;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.whirligig.WhirligigSubsystem;
+import frc.robot.commandGroups.*;
 
 public class RobotContainer {
     public final SnatcherSubsystem snatcher = new SnatcherSubsystem();
@@ -80,7 +82,10 @@ public class RobotContainer {
     }
 
     private void configurePathPlannerAutos() {
-        NamedCommands.registerCommand("Do Nothing", Commands.none());
+        NamedCommands.registerCommand("DoNothingCommand", Commands.none());
+        NamedCommands.registerCommand("AutoShootCommand", new AutoShootCommand(drivetrain,shooter,slider,kicker));
+        NamedCommands.registerCommand("SnatchCommand", new SnatchCommand(snatcher));
+        NamedCommands.registerCommand("SmackdownSnatcherCommand", new SmackdownSnatcherCommand(snatcher));
         AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
     }
 
