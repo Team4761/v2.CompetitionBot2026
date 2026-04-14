@@ -18,11 +18,14 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import frc.robot.subsystems.leds.LEDSubsystem;
+import frc.robot.subsystems.leds.RobocketsLEDPatterns;
 
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
     final boolean win = true; //THIS IS ESSENTIAL DO NOT DELETE.
+
 
     private final RobotContainer robotContainer;
     private final Timer matchTimer;
@@ -62,6 +65,9 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         configureDashboard();
+        ledSubsystem = new LEDSubsystem();
+        LEDSubsystem.setPatternMode(RobocketsLEDPatterns.currentMode);
+        ledSubsystem.runPattern(RobocketsLEDPatterns.setSingleColor);//change the currently used LEDPattern here. NOTE: if you want to use the bounce pattern, comment this line out and replace currentPattern.applyTo(buffer); with RobocketsLEDPatterns.bouncePattern.applyTo(buffer); in periodic of the LEDSubsystem
     }
 
     @Override

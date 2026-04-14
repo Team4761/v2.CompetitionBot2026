@@ -151,7 +151,7 @@ public final class Constants {
     }
 
     public static final class LEDs{
-        public static final int LEDS_PORT = -1; //TODO: find the port ID
+        public static final int LEDS_PORT = 0;
         public static final int NUMBER_OF_LEDS = 16;
     }
 
