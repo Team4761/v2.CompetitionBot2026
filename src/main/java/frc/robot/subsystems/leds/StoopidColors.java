@@ -8,6 +8,10 @@ import edu.wpi.first.wpilibj.util.Color;
 
 /** just listing the colors we can use, mainly for patterns that require randomness, and other non-standard color uses*/
 public class StoopidColors {
+    //here are some custom colors — declared first so they are non-null when the lists below reference them
+    public static final StupidColor kAlistairBlue = new StupidColor(4, 44, 244);
+    public static final StupidColor kAlmostBlack = new StupidColor(1, 1, 1);
+
     // Here's a bullshit list of colors that we can use for the LEDs
     static Color[] LEDColorList = {
         Color.kDenim,
@@ -265,9 +269,5 @@ public class StoopidColors {
         new StupidColor(StoopidColors.kAlistairBlue),
         new StupidColor(StoopidColors.kAlmostBlack)
     };
-
-    //here are some custom colors 
-    public static final StupidColor kAlistairBlue = new StupidColor(4, 44, 244);
-    public static final StupidColor kAlmostBlack = new StupidColor(1, 1, 1);
 
 }

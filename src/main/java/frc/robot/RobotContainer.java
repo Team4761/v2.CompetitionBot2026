@@ -74,7 +74,7 @@ public class RobotContainer {
         new SlewRateLimiter(Constants.Controller.ROTATION_SLEW_RATE_RAD_PER_SEC_SQ);
 
 
-    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     public RobotContainer() {
         configureBindings();
@@ -82,11 +82,12 @@ public class RobotContainer {
     }
 
     private void configurePathPlannerAutos() {
+        drivetrain.initializeAutoBuilder(); // guarantee AutoBuilder.configure() runs before buildAutoChooser()
         NamedCommands.registerCommand("DoNothingCommand", Commands.none());
         NamedCommands.registerCommand("AutoShootCommand", new AutoShootCommand(drivetrain,shooter,slider,kicker));
         NamedCommands.registerCommand("SnatchCommand", new SnatchCommand(snatcher));
         NamedCommands.registerCommand("SmackdownSnatcherCommand", new SmackdownSnatcherCommand(snatcher));
-        AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
+        autoChooser = AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
     }
 
     private void configureBindings() {
