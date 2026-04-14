@@ -46,6 +46,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private double m_lastSimTime;
     
     private final SwerveRequest.ApplyRobotSpeeds autoRequest = new SwerveRequest.ApplyRobotSpeeds();
+    private boolean m_autoBuilderConfigured = false;
 
     /* Blue alliance sees forward as 0 degrees (toward red alliance wall) */
     private static final Rotation2d kBlueAlliancePerspectiveRotation = Rotation2d.kZero;
@@ -201,8 +202,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     }
 
     public void initializeAutoBuilder() {
+        if (m_autoBuilderConfigured) return;
+        m_autoBuilderConfigured = true;
         //#region Path Planner Initialization
-        ///* 
+        ///*
         RobotConfig config;
         try {
             config = RobotConfig.fromGUISettings();
