@@ -1,4 +1,4 @@
-package frc.robot.subsystems.shooter.commands;
+package frc.robot.subsystems.shooter.commands.spitter;
 
 
 
@@ -8,18 +8,17 @@ import frc.robot.subsystems.shooter.ShooterSubsystem;
 
 public class RunSpitterCommand extends Command {
     private final ShooterSubsystem shooterSubsystem;
+    private final double spitterSpeed;
 
-
-    public RunSpitterCommand(ShooterSubsystem sub) {
+    public RunSpitterCommand(ShooterSubsystem sub, double spitterSpeed) {
         this.shooterSubsystem = sub;
+        this.spitterSpeed = spitterSpeed;
         addRequirements(sub);
     }
 
     @Override
     public void initialize() {
-        this.shooterSubsystem.spitterMotor.setRawSpeed(Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
-        this.shooterSubsystem.backspinMotor.setSpeedPercent(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_MAX_SPEED);
-        
+        this.shooterSubsystem.spitterMotor.setRawSpeed(this.spitterSpeed);
     }
 
     @Override
@@ -35,6 +34,5 @@ public class RunSpitterCommand extends Command {
     @Override
     public void end(boolean isInterrupted) {
         this.shooterSubsystem.spitterMotor.stopTurning();
-        this.shooterSubsystem.backspinMotor.stopTurning();
     }
 }
