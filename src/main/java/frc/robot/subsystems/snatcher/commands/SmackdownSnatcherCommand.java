@@ -16,7 +16,7 @@ public class SmackdownSnatcherCommand extends Command {
 
     @Override
     public void initialize() {
-        snatcherSubsystem.snatcherMotor.setSpeedPercent(1);
+        snatcherSubsystem.snatcherMotor.set(90);
     }
 
     public void execute() {

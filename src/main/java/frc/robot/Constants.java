@@ -219,11 +219,11 @@ public final class Constants {
     }
 
     public static final class Snatcher {
-        public static final int SMACKDOWN_MOTOR_PORT = 32;//[TODO]
-        public static final int SNATCHER_MOTOR_PORT = 39;//[TODO]
+        public static final int SMACKDOWN_MOTOR_PORT = 32;
+        public static final int SNATCHER_MOTOR_PORT = 39;
         public static final double MIN_SMACKDOWN_ANGLE = 0;
-        public static final double MAX_SMACKDOWN_ANGLE = 90;//might need to be negative
-        public static final double MOTOR_ROTATIONS_PER_EXTENDER_ROTATION = 125;
+        public static final double MAX_SMACKDOWN_ANGLE = 92;//[TODO]might need to be negative
+        public static final double MOTOR_ROTATIONS_PER_EXTENDER_ROTATION = (1 / (125 * (25/24)));//its a 1:125 intop a 24:25 gear ratio[TODO] zack said might change slightly
     }
 
     public class Field {
