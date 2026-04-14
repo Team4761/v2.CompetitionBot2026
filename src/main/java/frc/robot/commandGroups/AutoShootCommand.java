@@ -13,7 +13,7 @@ import frc.robot.Constants;
 import frc.robot.FieldConstants;
 import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
-import frc.robot.subsystems.shooter.commands.SetHoodAngleCommand;
+import frc.robot.subsystems.shooter.commands.hood.SetHoodAngleCommand;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 
