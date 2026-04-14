@@ -28,6 +28,7 @@ public class Robot extends TimedRobot {
 
 
     private final RobotContainer robotContainer;
+    private LEDSubsystem ledSubsystem;
     private final Timer matchTimer;
     private final Timer phaseTimer;
     private final CommandSwerveDrivetrain drivetrain;
