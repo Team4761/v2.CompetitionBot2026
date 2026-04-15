@@ -1,0 +1,67 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "DoNothingCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmackdownSnatcherCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Go To Center R"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TRENCH Pick Up Then Shoot R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShootCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Return From Shoot To Start R"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Go To Center R"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TRENCH Pick Up Then Shoot R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShootCommand"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
