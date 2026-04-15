@@ -213,7 +213,7 @@ public final class Constants {
     }
 
     public static final class Slider {
-        public static final int SLIDER_MOTOR_PORT = 33;//[TODO]
+        public static final int SLIDER_MOTOR_PORT = 33;//
         public static final double SLIDER_RPM = 2000; // [TODO] Tune this value (in RPM)
        
     }
