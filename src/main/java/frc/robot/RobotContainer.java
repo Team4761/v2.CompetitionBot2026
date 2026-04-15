@@ -42,6 +42,7 @@ import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.commands.AutoOrientCommand;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.whirligig.WhirligigSubsystem;
+import frc.robot.subsystems.win.WinSubsystem;
 import frc.robot.commandGroups.*;
 
 public class RobotContainer {
@@ -52,6 +53,7 @@ public class RobotContainer {
     public final KickerSubsystem kicker = new KickerSubsystem();
     public final SliderSubsystem slider = new SliderSubsystem();
     public final WhirligigSubsystem whirligig = new WhirligigSubsystem();
+    public final static WinSubsystem win = new WinSubsystem();
 
     private final double MaxSpeed = 0.55 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // practice-safe top speed cap
     private final double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond); // reduced max angular velocity
