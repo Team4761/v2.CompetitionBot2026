@@ -71,6 +71,7 @@ public class FixShootWithPowerCommand extends Command {
     @Override
     public void end(boolean isInterrupted){
         feederDelayTimer.stop();
+        this.shooterSubsystem.spitterMotor.stopTurning();
         this.kickerSubsystem.fatKickerInnerMotor.stopTurning();
         this.kickerSubsystem.fatKickerOuterMotor.stopTurning();
         this.shooterSubsystem.backspinMotor.stopTurning();

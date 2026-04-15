@@ -146,8 +146,8 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {}
 
-    public DoubleSupplier degreesOverride;
-    public DoubleSupplier powerOverride;
+    public DoubleSupplier degreesOverride = () -> 0.0;
+    public DoubleSupplier powerOverride = () -> 0.0;
     private void configureDashboard() {
         SmartDashboard.putNumber("TURRET HORIZONTAL ANGLE", 0.0);
         SmartDashboard.putNumber("TURRET VERTICAL ANGLE", 0.0);
@@ -192,7 +192,7 @@ public class Robot extends TimedRobot {
                 + "Manual Override Controls (While Manual Override is Active):\n"
                 + "MO: Left Joystick: Control the Turret's Vertical Aim\n"
                 + "MO: Right Joystick: Control the Turret's Horizontal Aim\n"
-                + "MO: Right Trigger: Shoot Wihout Safeties (Hold to Shoot)\n"
+                + "MO: Right Trigger: Shoot Without Safeties (Hold to Shoot)\n"
                 + "MO: B Button: Run the Spindexer Backwards\n"
                 + "MO: A Button: Run the Kicker/Upinator Backwards\n"
                 + "Elastic Tuning: Enable the Elastic Tuning tab override to use its RPM and hood angle\n"

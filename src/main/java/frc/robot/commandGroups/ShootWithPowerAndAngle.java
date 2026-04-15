@@ -10,7 +10,7 @@ import frc.robot.subsystems.shooter.commands.hood.SetHoodAngleCommand;
 public class ShootWithPowerAndAngle extends SequentialCommandGroup{
     public ShootWithPowerAndAngle(ShooterSubsystem sub, DoubleSupplier degrees, DoubleSupplier power){
         addCommands(
-            SetHoodAngleCommand(sub, degrees);
+            new SetHoodAngleCommand(sub, degrees)
         );
     }
 }
