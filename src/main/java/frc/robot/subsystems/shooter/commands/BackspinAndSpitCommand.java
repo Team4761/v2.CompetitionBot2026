@@ -6,20 +6,22 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 
-public class RunSpitterCommand extends Command {
+public class BackspinAndSpitCommand extends Command {
     private final ShooterSubsystem shooterSubsystem;
+    private final double spitterSpeed;
+    private final double backspinSpeed;
 
-
-    public RunSpitterCommand(ShooterSubsystem sub) {
+    public BackspinAndSpitCommand(ShooterSubsystem sub, double backspinSpeed, double spitterSpeed) {
         this.shooterSubsystem = sub;
+        this.backspinSpeed = backspinSpeed;
+        this.spitterSpeed = spitterSpeed;
         addRequirements(sub);
     }
 
     @Override
     public void initialize() {
-        this.shooterSubsystem.spitterMotor.setRawSpeed(Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED);
-        this.shooterSubsystem.backspinMotor.setSpeedPercent(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_MAX_SPEED);
-        
+        this.shooterSubsystem.backspinMotor.setRawSpeed(this.backspinSpeed);
+        this.shooterSubsystem.spitterMotor.setRawSpeed(this.spitterSpeed);
     }
 
     @Override

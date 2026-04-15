@@ -28,9 +28,9 @@ import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.kicker.commands.KickCommand;
 import frc.robot.subsystems.kicker.commands.UnKickCommand;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
-import frc.robot.subsystems.shooter.commands.RunSpitterCommand;
+import frc.robot.subsystems.shooter.commands.spitter.RunSpitterCommand;
 import frc.robot.commandGroups.ShootWithPowerCommand;
-import frc.robot.subsystems.shooter.commands.UnRunSpitterCommand;
+import frc.robot.subsystems.shooter.commands.spitter.UnRunSpitterCommand;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
 import frc.robot.subsystems.slider.commands.UnSpinSliderCommand;
@@ -74,7 +74,7 @@ public class RobotContainer {
         new SlewRateLimiter(Constants.Controller.ROTATION_SLEW_RATE_RAD_PER_SEC_SQ);
 
 
-    private final SendableChooser<Command> autoChooser = new SendableChooser<>();
+    private SendableChooser<Command> autoChooser = new SendableChooser<>();
 
     public RobotContainer() {
         configureBindings();
@@ -82,11 +82,12 @@ public class RobotContainer {
     }
 
     private void configurePathPlannerAutos() {
+        drivetrain.initializeAutoBuilder(); // guarantee AutoBuilder.configure() runs before buildAutoChooser()
         NamedCommands.registerCommand("DoNothingCommand", Commands.none());
         NamedCommands.registerCommand("AutoShootCommand", new AutoShootCommand(drivetrain,shooter,slider,kicker));
         NamedCommands.registerCommand("SnatchCommand", new SnatchCommand(snatcher));
         NamedCommands.registerCommand("SmackdownSnatcherCommand", new SmackdownSnatcherCommand(snatcher));
-        AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
+        autoChooser = AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
     }
 
     private void configureBindings() {
@@ -146,8 +147,8 @@ public class RobotContainer {
         //Manual override bindings
         controller_operator.a().whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press
         controller_operator.b().whileTrue(new UnSpinSliderCommand(slider)); //spins just the slider (in reverse) on B Button press
-        controller_operator.x().whileTrue(new RunSpitterCommand(shooter)); //spins just the spitter on X Button press
-        controller_operator.y().whileTrue(new UnRunSpitterCommand(shooter)); //spins just the spitter (in reverse) on Y Button press
+        controller_operator.x().whileTrue(new RunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter on X Button press
+        controller_operator.y().whileTrue(new UnRunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter (in reverse) on Y Button press
         controller_operator.rightBumper().whileTrue(new KickCommand(kicker)); //spins just the kicker on right bumper press
         controller_operator.leftBumper().whileTrue(new UnKickCommand(kicker)); //spins just the kicker (in reverse) on left bumper press
     }
