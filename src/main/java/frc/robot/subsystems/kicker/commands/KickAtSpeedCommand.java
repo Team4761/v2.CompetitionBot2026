@@ -27,7 +27,7 @@ public class KickAtSpeedCommand extends Command{
     @Override
     public void end(boolean interrupted) {
         kickerSubsystem.fatKickerInnerMotor.stopTurning();
-        kickerSubsystem.fatKickerInnerMotor.stopTurning();
+        kickerSubsystem.fatKickerOuterMotor.stopTurning();
     }
 
     @Override

@@ -22,11 +22,12 @@ public class BackspinAndSpitCommand extends Command {
     public void initialize() {
         this.shooterSubsystem.backspinMotor.setRawSpeed(this.backspinSpeed);
         this.shooterSubsystem.spitterMotor.setRawSpeed(this.spitterSpeed);
+        System.out.println("INIT");
     }
 
     @Override
     public void execute() {
-
+            System.out.println("EXECUTE");
     }
 
     @Override
@@ -36,6 +37,7 @@ public class BackspinAndSpitCommand extends Command {
 
     @Override
     public void end(boolean isInterrupted) {
+        System.out.println("END");
         this.shooterSubsystem.spitterMotor.stopTurning();
         this.shooterSubsystem.backspinMotor.stopTurning();
     }
