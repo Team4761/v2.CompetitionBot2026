@@ -26,7 +26,7 @@ import frc.robot.subsystems.leds.RobocketsLEDPatterns;
 public class Robot extends TimedRobot {
     private Command m_autonomousCommand;
 
-    final boolean win = true; //THIS IS ESSENTIAL DO NOT DELETE.
+    public static final boolean win = true; //THIS IS ESSENTIAL DO NOT DELETE.
 
 
     private final RobotContainer robotContainer;
