@@ -141,7 +141,7 @@ public class RobotContainer {
         controller_drive.leftTrigger().whileTrue(new UnSnatchCommand(snatcher)); //outtakes on left trigger press
     }
     private void configureOperatorBindings() {
-        controller_operator.rightTrigger().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 3000)); //faces the robot towards the hub on left trigger press
+        controller_operator.rightTrigger().whileTrue(new FixShootWithPowerCommand(shooter, slider, kicker, () -> 3000)); //faces the robot towards the hub on left trigger press
         controller_operator.leftTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //shoots when right trigger is pressed. automatically sets correct power and angle
 
         //Manual override bindings
