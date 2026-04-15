@@ -3,32 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.803574725115741,
-        "y": 7.394652922453704
+        "x": 7.35,
+        "y": 7.4
       },
       "prevControl": null,
       "nextControl": {
-        "x": 8.05356068582799,
-        "y": 7.397302346310825
+        "x": 7.599985960712248,
+        "y": 7.402649423857121
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Pre-intake center"
     },
     {
       "anchor": {
-        "x": 7.803574725115741,
-        "y": 4.5853411458333335
+        "x": 7.647120481927709,
+        "y": 4.450253012048193
       },
       "prevControl": {
-        "x": 7.786384765625,
-        "y": 5.741398726851854
+        "x": 7.629930522436968,
+        "y": 5.606310593066713
       },
       "nextControl": {
-        "x": 7.807291680855903,
-        "y": 4.33536877888045
+        "x": 7.650837437667872,
+        "y": 4.200280645095309
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "End ball collection"
     },
     {
       "anchor": {
@@ -48,26 +48,26 @@
     },
     {
       "anchor": {
-        "x": 2.645,
-        "y": 5.027
+        "x": 2.6606168831168833,
+        "y": 4.995998376623377
       },
       "prevControl": {
-        "x": 3.288245659722222,
-        "y": 5.5942030526620385
+        "x": 3.3038625428391053,
+        "y": 5.5632014292854155
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Shooting Point"
     }
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.0,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 1.6947674418604652,
+      "rotationDegrees": 180.0
     },
     {
-      "waypointRelativePos": 2.0,
-      "rotationDegrees": 0.0
+      "waypointRelativePos": 2.5319767441860472,
+      "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [
@@ -102,7 +102,7 @@
         "y": 4.012
       },
       "rotationOffset": 180.0,
-      "minWaypointRelativePos": 2.2234738372093026,
+      "minWaypointRelativePos": 2.915005246589718,
       "maxWaypointRelativePos": 3.0,
       "name": "Point Towards Zone"
     }
@@ -130,7 +130,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 146.837
+    "rotation": 150.0
   },
   "reversed": false,
   "folder": null,
