@@ -173,7 +173,7 @@ public final class Constants {
             public static final double SNATCHER_SPEED_RPM = -1.0; // [TODO] Tune this value (in RPM)
 
             public static final int BACKSPIN_MOTOR_PORT = 34; //[TODO] Find this value
-            public static final double BACKSPIN_RPM = 3000.0; // [TODO] Tune this value (in RPM)
+            public static final double BACKSPIN_RPM = 6000.0; // [TODO] Tune this value (in RPM)
             public static final double BACKSPIN_MOTOR_MAX_SPEED = 1.0;
 
             public static final double KICKER_INIT_DELAY = 0.5; // [TODO] Tune this value (in seconds)

@@ -53,8 +53,8 @@ public class FixShootWithPowerCommand extends Command {
     public void execute() {
         // Delay feeding without stalling the scheduler thread.
         if (!feedersStarted && feederDelayTimer.hasElapsed(0.5)) {
-            kickerSubsystem.fatKickerInnerMotor.setRawSpeed(Constants.Kicker.KICKER_SPEED);
-            kickerSubsystem.fatKickerOuterMotor.setRawSpeed(Constants.Kicker.KICKER_SPEED);
+            kickerSubsystem.fatKickerInnerMotor.setRawSpeed(-Constants.Kicker.KICKER_SPEED);
+            kickerSubsystem.fatKickerOuterMotor.setRawSpeed(-Constants.Kicker.KICKER_SPEED);
 
             shooterSubsystem.backspinMotor.setRawSpeed(-Constants.Shooter.ShootConfig.BACKSPIN_RPM);
 

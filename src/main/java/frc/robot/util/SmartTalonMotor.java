@@ -250,14 +250,15 @@ public class SmartTalonMotor {
      * If coasting is enabled, the motor will coast to a stop.
      */
     public void stopTurning() {
-        if (this.coastingEnabled) {
-            this.motor.setControl(this.dutyCycleRequest.withOutput(0.0));
-        } else {
-            // Hold position by commanding the current motor position.
-            this.motor.setControl(
-                this.positionRequest.withPosition(this.motor.getPosition().getValueAsDouble())
-            );
-        }
+        // if (this.coastingEnabled) {
+        //     this.motor.setControl(this.dutyCycleRequest.withOutput(0.0));
+        // } else {
+        //     // Hold position by commanding the current motor position.
+        //     this.motor.setControl(
+        //         this.positionRequest.withPosition(this.motor.getPosition().getValueAsDouble())
+        //     );
+        // }
+        this.setRawSpeed(0.0);
     }
 
     public void enableCoasting() {
