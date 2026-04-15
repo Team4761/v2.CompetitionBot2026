@@ -125,6 +125,7 @@ public class LEDSubsystem extends SubsystemBase {
     //int[][][][] testVideoAsCompressedArrayComingToTheatersMarch32_2111 = compressVideo(loadVideoAsMultipleImages("C:/Users/alex/Documents/CODINF/RickrollFragments/frame.png", 1, 100, true),32,8);
     //public static double freme = 0;
     public void periodic(){
+        
             // 2 solid colors that move towards the side opposite from where they started. When they reach the opposite side, they bounce. gets darker when it approches the edge
             LEDPattern rightBaseBase = LEDPattern.steps(Map.of(0, LEDColor1, 0.125, Color.kBlack));
             LEDPattern leftBase = LEDPattern.steps(Map.of(0, LEDColor2, 0.125, Color.kBlack));
@@ -149,21 +150,6 @@ public class LEDSubsystem extends SubsystemBase {
                 //LEDColor1 = StoopidColors.LEDColorList[ColorIndex1];
                 //LEDColor2 = StoopidColors.LEDColorList[ColorIndex2];
             }
-        
-        // This pattern emulates a Rickroll, with the height and width of it being adjustable
-        // this will unfourtunately not be run during matches due to power concerns, and the fact that it is way too slow to load
-        /**
-        for (int y = 0; y < testVideoAsCompressedArrayComingToTheatersMarch32_2111[(int) freme].length; y++)
-        {
-            for (int x = 0; x < testVideoAsCompressedArrayComingToTheatersMarch32_2111[(int) freme][y].length; x++)
-            {
-                buffer.setRGB(x + (y * Constants.LEDS_WIDTH), testVideoAsCompressedArrayComingToTheatersMarch32_2111[(int) freme][y][x][0], testVideoAsCompressedArrayComingToTheatersMarch32_2111[(int) freme][y][x][1], testVideoAsCompressedArrayComingToTheatersMarch32_2111[(int) freme][y][x][2]);
-            }
-        }
-        if(freme < testVideoAsCompressedArrayComingToTheatersMarch32_2111.length-1){
-            freme += 0.5;
-        }
-        */
         RobocketsLEDPatterns.bouncePattern.applyTo(buffer);
         leds.setData(buffer);
     }

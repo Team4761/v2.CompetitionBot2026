@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.function.DoubleSupplier;
+
 import com.ctre.phoenix6.HootAutoReplay;
 
 import edu.wpi.first.math.MathUtil;
@@ -68,7 +70,7 @@ public class Robot extends TimedRobot {
         configureDashboard();
         ledSubsystem = new LEDSubsystem();
         LEDSubsystem.setPatternMode(RobocketsLEDPatterns.currentMode);
-        ledSubsystem.runPattern(RobocketsLEDPatterns.setSingleColor);//change the currently used LEDPattern here. NOTE: if you want to use the bounce pattern, comment this line out and replace currentPattern.applyTo(buffer); with RobocketsLEDPatterns.bouncePattern.applyTo(buffer); in periodic of the LEDSubsystem
+        ledSubsystem.runPattern(RobocketsLEDPatterns.setSingleColor);//change the currently used LEDPattern here. NOTE: if you want to use the bouncePattern or switch it out, it will be a bit more complicated than just changing the pattern. talk to me for more details (Alex)
     }
 
     @Override
@@ -144,6 +146,8 @@ public class Robot extends TimedRobot {
     @Override
     public void simulationPeriodic() {}
 
+    public DoubleSupplier degreesOverride;
+    public DoubleSupplier powerOverride;
     private void configureDashboard() {
         SmartDashboard.putNumber("TURRET HORIZONTAL ANGLE", 0.0);
         SmartDashboard.putNumber("TURRET VERTICAL ANGLE", 0.0);
@@ -157,6 +161,14 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber(
             Constants.Dashboard.ELASTIC_TEST_HOOD_ANGLE_DEGREES,
             Constants.Shooter.Hood.MIN_LAUNCH_ANGLE_DEGREES
+        );
+        SmartDashboard.putNumber(
+            "override angle degrees",
+            degreesOverride.getAsDouble()
+        );
+        SmartDashboard.putNumber(
+            "override shoot power",
+            powerOverride.getAsDouble()
         );
         positionChooser.addOption("LEFT", "LEFT");
         positionChooser.addOption("CENTER", "CENTER");
