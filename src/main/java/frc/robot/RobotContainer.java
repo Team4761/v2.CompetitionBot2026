@@ -141,14 +141,35 @@ public class RobotContainer {
         controller_drive.leftTrigger().whileTrue(new UnSnatchCommand(snatcher)); //outtakes on left trigger press
     }
     private void configureOperatorBindings() {
-        controller_operator.rightTrigger().whileTrue(new FixShootWithPowerCommand(shooter, slider, kicker, () -> 10000)); //faces the robot towards the hub on left trigger press
+        // Right trigger: shoot using the RPM dialed in on the Elastic Tuning tab's power slider.
+        // Supplier is re-read each loop so moving the slider mid-press updates the setpoint live.
+        controller_operator.rightTrigger().whileTrue(
+            new FixShootWithPowerCommand(
+                shooter,
+                slider,
+                kicker,
+                () -> MathUtil.clamp(
+                    SmartDashboard.getNumber(
+                        Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM,
+                        Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED
+                    ),
+                    Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MIN,
+                    Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MAX
+                )
+            )
+        );
         controller_operator.leftTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //shoots when right trigger is pressed. automatically sets correct power and angle
 
+        // 3 Shooting levels
+        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000));
+        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 8000));
+        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000));
+
         //Manual override bindings
-        controller_operator.a().whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press
-        controller_operator.b().whileTrue(new UnSpinSliderCommand(slider)); //spins just the slider (in reverse) on B Button press
-        controller_operator.x().whileTrue(new RunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter on X Button press
-        controller_operator.y().whileTrue(new UnRunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter (in reverse) on Y Button press
+        controller_operator.leftTrigger().and(controller_operator.a()).whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press
+        controller_operator.leftTrigger().and(controller_operator.b()).whileTrue(new UnSpinSliderCommand(slider)); //spins just the slider (in reverse) on B Button press
+        controller_operator.leftTrigger().and(controller_operator.x()).whileTrue(new RunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter on X Button press
+        controller_operator.leftTrigger().and(controller_operator.y()).whileTrue(new UnRunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter (in reverse) on Y Button press
         controller_operator.rightBumper().whileTrue(new KickCommand(kicker)); //spins just the kicker on right bumper press
         controller_operator.leftBumper().whileTrue(new UnKickCommand(kicker)); //spins just the kicker (in reverse) on left bumper press
     }
@@ -187,3 +208,4 @@ public class RobotContainer {
     }
 
 }
+      

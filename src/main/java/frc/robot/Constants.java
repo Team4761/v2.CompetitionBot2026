@@ -54,8 +54,8 @@ public final class Constants {
         public static final String ELASTIC_TEST_SHOOTER_RPM = "Elastic Test Shooter RPM";
         public static final String ELASTIC_TEST_HOOD_ANGLE_DEGREES = "Elastic Test Hood Launch Angle";
 
-        public static final double ELASTIC_TEST_SHOOTER_RPM_MIN = -1.0; // [TODO] Tune this value
-        public static final double ELASTIC_TEST_SHOOTER_RPM_MAX = -1.0; // [TODO] Tune this value
+        public static final double ELASTIC_TEST_SHOOTER_RPM_MIN = 3000.0; // matches Elastic slider min
+        public static final double ELASTIC_TEST_SHOOTER_RPM_MAX = 6500.0; // matches Elastic slider max
         public static final double ELASTIC_TEST_HOOD_ANGLE_MIN = Shooter.Hood.MIN_LAUNCH_ANGLE_DEGREES;
         public static final double ELASTIC_TEST_HOOD_ANGLE_MAX = Shooter.Hood.MAX_LAUNCH_ANGLE_DEGREES;
 
@@ -157,7 +157,6 @@ public final class Constants {
 
     public static final class Shooter {
         public static final int HOOD_MOTOR_PORT = 38;
-        public static final double BACKSPIN_RPM = 100;
         public static final int SPITTER_MOTOR_LEAD_PORT = 31;
         public static final int SPITTER_MOTOR_FOLLOWER_PORT = 35;
 
@@ -188,13 +187,13 @@ public final class Constants {
             public static final double MOTOR_ROTATIONS_PER_HOOD_ROTATION = 325.0 / 18.0; // [TODO] Find this value
             public static final double HOOD_ROTATIONS_PER_MOTOR_ROTATION = 18.0 / 325.0; // [TODO] Find this value
 
-            public static final double MIN_HOOD_ANGLE_DEGREES = 45.0; // [TODO] Find this value
-            public static final double MAX_HOOD_ANGLE_DEGREES = 10.0; // [TODO] Find this value
+            public static final double MIN_HOOD_ANGLE_DEGREES = 0.0; // [TODO] Find this value
+            public static final double MAX_HOOD_ANGLE_DEGREES = 12.5; // [TODO] Find this value
 
              
              
 
-            public static final double MIN_LAUNCH_ANGLE_DEGREES = 22.0; // [TODO] Find this value
+            public static final double MIN_LAUNCH_ANGLE_DEGREES = 0.0; // [TODO] Find this value
             public static final double MAX_LAUNCH_ANGLE_DEGREES =
                 MIN_LAUNCH_ANGLE_DEGREES + (MAX_HOOD_ANGLE_DEGREES - MIN_HOOD_ANGLE_DEGREES); // [TODO] Find this value
 

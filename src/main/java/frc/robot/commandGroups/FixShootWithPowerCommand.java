@@ -56,8 +56,8 @@ public class FixShootWithPowerCommand extends Command {
             kickerSubsystem.fatKickerInnerMotor.setRawSpeed(-Constants.Kicker.KICKER_SPEED);
             kickerSubsystem.fatKickerOuterMotor.setRawSpeed(-Constants.Kicker.KICKER_SPEED);
 
-            shooterSubsystem.backspinMotor.setRawSpeed(-Constants.Shooter.ShootConfig.BACKSPIN_RPM);
-
+            shooterSubsystem.backspinMotor.setRawSpeed(-1 * Math.max(0.0, this.rpmSupplier.getAsDouble() - 2000.0));
+            
             this.sliderSubsystem.sliderMotor.setRawSpeed(Constants.Slider.SLIDER_RPM);
             feedersStarted = true;
         }

@@ -240,7 +240,10 @@ public class Robot extends TimedRobot {
         if (DriverStation.isEnabled()
             && SmartDashboard.getBoolean(Constants.Dashboard.ELASTIC_SHOOTER_TUNING_ENABLED, false)
             && !SmartDashboard.getBoolean("Manual Turret Control", false)) {
-            //robotContainer.shooter.SetHoodAngleCommand(robotContainer.shooter, () -> elasticHoodAngleDegrees);
+            // Snap hood directly to slider value every loop while tuning is enabled.
+            // Bypass SetHoodAngleCommand so we don't fight the subsystem scheduler by
+            // spamming new commands each frame.
+            robotContainer.shooter.hoodMotor.set(elasticHoodAngleDegrees);
         }
     }
 

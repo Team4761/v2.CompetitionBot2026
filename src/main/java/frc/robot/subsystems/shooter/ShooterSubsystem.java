@@ -3,7 +3,11 @@ package frc.robot.subsystems.shooter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.util.SmartTalonMotor;
+
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.MotorAlignmentValue;
 
 public class ShooterSubsystem extends SubsystemBase {
@@ -18,13 +22,13 @@ public class ShooterSubsystem extends SubsystemBase {
         this.hoodMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Shooter.HOOD_MOTOR_PORT)
             .PID(1,0,0)
-            .outputRange(-1,-1)
+            .outputRange(-1,1)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
             .mechanismAngleLimits(
                 Constants.Shooter.Hood.MIN_HOOD_ANGLE_DEGREES, 
                 Constants.Shooter.Hood.MAX_HOOD_ANGLE_DEGREES
-                )
-            .gearRatio(Constants.Shooter.Hood.HOOD_ROTATIONS_PER_MOTOR_ROTATION)
+            )
+            .gearRatio(Constants.Shooter.Hood.MOTOR_ROTATIONS_PER_HOOD_ROTATION)
             .build();
         this.spitterMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Shooter.SPITTER_MOTOR_LEAD_PORT)

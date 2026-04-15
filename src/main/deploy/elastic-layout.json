@@ -1519,8 +1519,8 @@
               "topic": "/SmartDashboard/Elastic Test Hood Launch Angle",
               "period": 0.06,
               "data_type": "double",
-              "min_value": 22.0,
-              "max_value": 53.0,
+              "min_value": 0.0,
+              "max_value": 30.0,
               "divisions": 31,
               "update_continuously": false
             }

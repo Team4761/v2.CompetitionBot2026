@@ -14,7 +14,7 @@ public class KickCommand extends Command{
 
     @Override
     public void initialize() {
-        kickerSubsystem.fatKickerInnerMotor.setSpeed(Constants.Kicker.KICKER_SPEED);
+        kickerSubsystem.fatKickerInnerMotor.setSpeed(-1 * Constants.Kicker.KICKER_SPEED);
         kickerSubsystem.fatKickerOuterMotor.setSpeed(-1 * Constants.Kicker.KICKER_SPEED);
     }
     
@@ -25,7 +25,7 @@ public class KickCommand extends Command{
     @Override
     public void end(boolean interrupted) {
         kickerSubsystem.fatKickerInnerMotor.stopTurning();
-        kickerSubsystem.fatKickerInnerMotor.stopTurning();
+        kickerSubsystem.fatKickerOuterMotor.stopTurning();
     }
 
     @Override
