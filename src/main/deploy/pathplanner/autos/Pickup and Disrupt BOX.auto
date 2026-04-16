@@ -19,13 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Turn To Hub R"
+            "pathName": "Enter TRENCH Neutral"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "AutoShootCommand"
+            "pathName": "Pickup Neutral"
           }
         }
       ]

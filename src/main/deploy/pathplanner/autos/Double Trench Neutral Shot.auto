@@ -1,0 +1,67 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "DoNothingCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmackdownSnatcherCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Enter TRENCH Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TRENCH Pick Up Then Shoot R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShootCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Shoot to TRENCH Pos"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Enter TRENCH Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "TRENCH Pick Up Then Shoot R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShootCommand"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

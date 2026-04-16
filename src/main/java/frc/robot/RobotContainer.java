@@ -13,23 +13,23 @@ import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
-import frc.robot.commandGroups.AutoShootCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.kicker.commands.KickCommand;
 import frc.robot.subsystems.kicker.commands.UnKickCommand;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.shooter.commands.spitter.RunSpitterCommand;
-import frc.robot.commandGroups.ShootWithPowerCommand;
 import frc.robot.subsystems.shooter.commands.spitter.UnRunSpitterCommand;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
@@ -81,6 +81,7 @@ public class RobotContainer {
     public RobotContainer() {
         configureBindings();
         configurePathPlannerAutos();
+        SmartDashboard.putData("PathPlanner Auto Chooser", autoChooser);
     }
 
     private void configurePathPlannerAutos() {
@@ -89,7 +90,27 @@ public class RobotContainer {
         NamedCommands.registerCommand("AutoShootCommand", new AutoShootCommand(drivetrain,shooter,slider,kicker));
         NamedCommands.registerCommand("SnatchCommand", new SnatchCommand(snatcher));
         NamedCommands.registerCommand("SmackdownSnatcherCommand", new SmackdownSnatcherCommand(snatcher));
-        autoChooser = AutoBuilder.buildAutoChooser(); // [TODO] Pass in actual auto paths and event map once they are created
+        NamedCommands.registerCommand("Shoot Long", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.LONG_SHOOT_RPM));
+        NamedCommands.registerCommand("Shoot Medium", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.MEDIUM_SHOOT_RPM));//8000));
+        NamedCommands.registerCommand("Shoot Short", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.SHORT_SHOOT_RPM));//5000));
+        autoChooser.setDefaultOption("None", Commands.none());
+        for (String autoName : AutoBuilder.getAllAutoNames()) {
+            try {
+                if (!autoName.startsWith("UNM")) {
+                    String suffix = autoName.substring(4);
+                    autoChooser.addOption("LEFT" + suffix, new PathPlannerAuto(autoName, false));
+                    autoChooser.addOption("RIGHT" + suffix, new PathPlannerAuto(autoName, true));
+                } else {
+                    autoChooser.addOption(autoName, new PathPlannerAuto(autoName));
+                }
+            } catch (Exception e) {
+                DriverStation.reportError(
+                    "Skipping invalid PathPlanner auto '" + autoName + "': " + e.getMessage(),
+                    e.getStackTrace()
+                );
+            }
+        }
+
     }
 
     private void configureBindings() {
@@ -165,9 +186,9 @@ public class RobotContainer {
         controller_operator.leftTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //shoots when right trigger is pressed. automatically sets correct power and angle
 
         // 3 Shooting levels
-        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000));
-        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 8000));
-        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000));
+        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.LONG_SHOOT_RPM));//10000));
+        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.MEDIUM_SHOOT_RPM));//8000));
+        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.SHORT_SHOOT_RPM));//5000));
 
         //Manual override bindings
         controller_operator.leftTrigger().and(controller_operator.a()).whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press

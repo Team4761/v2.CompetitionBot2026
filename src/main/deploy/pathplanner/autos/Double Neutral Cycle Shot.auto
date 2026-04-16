@@ -19,13 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Go To Center R"
+            "pathName": "Enter TRENCH Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TRENCH Pick Up Then Shoot R"
+            "pathName": "Pickup Exit NEUTRAL and Shoot"
           }
         },
         {
@@ -37,19 +37,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Return From Shoot To Start R"
+            "pathName": "Shoot to TRENCH Pos"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Go To Center R"
+            "pathName": "Enter TRENCH Neutral"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "TRENCH Pick Up Then Shoot R"
+            "pathName": "Pickup Exit NEUTRAL and Shoot"
           }
         },
         {

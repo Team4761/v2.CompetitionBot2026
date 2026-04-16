@@ -1,0 +1,31 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Move 20 cm"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Rotate"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Medium"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

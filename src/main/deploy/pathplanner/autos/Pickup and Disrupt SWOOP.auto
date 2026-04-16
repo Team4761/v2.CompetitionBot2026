@@ -19,13 +19,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Go Back C"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "AutoShootCommand"
+            "pathName": "ENTER Pickup Neutral"
           }
         }
       ]

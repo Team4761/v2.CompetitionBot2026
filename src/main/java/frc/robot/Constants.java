@@ -178,6 +178,10 @@ public final class Constants {
             public static final double KICKER_INIT_DELAY = 0.5; // [TODO] Tune this value (in seconds)
             public static final double KICKER_MOTOR_ROTATIONS_PER_ROTATION = 3.0; // [TODO] Tune this value
 
+            public static final double LONG_SHOOT_RPM = 10000.0;
+            public static final double MEDIUM_SHOOT_RPM = 8000.0;
+            public static final double SHORT_SHOOT_RPM = 5000.0;
+            
             public static final double TURRET_VERTICAL_MULTIPLIER = 1.95;
 
             private ShootConfig() {}

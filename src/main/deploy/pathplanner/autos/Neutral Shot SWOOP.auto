@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "DoNothingCommand"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "SmackdownSnatcherCommand"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "ENTER Pickup Neutral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "EXIT Neutral Shoot Pos"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Medium"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
