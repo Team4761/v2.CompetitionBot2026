@@ -19,19 +19,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Go To Center R"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BUMP Pick Up Then Shoot R"
+            "pathName": "Turn to Hub"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": "AutoShootCommand"
+            "name": "Shoot Long"
           }
         }
       ]

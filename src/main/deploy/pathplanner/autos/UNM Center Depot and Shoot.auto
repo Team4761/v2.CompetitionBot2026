@@ -26,7 +26,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Center to Collcet 24 and Shoot C"
+            "pathName": "Depot Collect"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Shoot Long"
           }
         }
       ]

@@ -63,17 +63,6 @@
           "name": "fdshfg"
         }
       }
-    },
-    {
-      "name": "AutoShootCommand",
-      "waypointRelativePos": 2.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "AutoShootCommand"
-        }
-      }
     }
   ],
   "globalConstraints": {
