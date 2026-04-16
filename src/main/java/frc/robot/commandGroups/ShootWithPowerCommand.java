@@ -14,16 +14,16 @@ import frc.robot.subsystems.kicker.KickerSubsystem;
 import frc.robot.subsystems.kicker.commands.KickAtSpeedCommand;
 import frc.robot.subsystems.kicker.commands.RunKickerAtPercentCommand;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
-import frc.robot.subsystems.shooter.commands.BackspinAndSpitCommand;
+import frc.robot.subsystems.shooter.commands.SetUpperShooterCommand;
 import frc.robot.subsystems.shooter.commands.backspin.RunBackspinCommand;
 import frc.robot.subsystems.shooter.commands.spitter.RunSpitterCommand;
 import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.RunSliderAtSpeedCommand;
 
 public class ShootWithPowerCommand extends ParallelCommandGroup {
-    public ShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker, DoubleSupplier powerSupplier) {
+    public ShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker, DoubleSupplier powerSupplier, DoubleSupplier angleSupplier) {
         super(
-            new BackspinAndSpitCommand(shooter, -Constants.Shooter.ShootConfig.BACKSPIN_RPM, powerSupplier.getAsDouble()),
+            new SetUpperShooterCommand(shooter, -Constants.Shooter.ShootConfig.BACKSPIN_RPM, powerSupplier.getAsDouble(), angleSupplier.getAsDouble()),
             new SequentialCommandGroup(
                 new WaitCommand(0.5), // [TODO] Remove this and make the above command into a real command that times out when its up to speed
                 new ParallelCommandGroup(

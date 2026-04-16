@@ -6,15 +6,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 
-public class BackspinAndSpitCommand extends Command {
+public class SetUpperShooterCommand extends Command {
     private final ShooterSubsystem shooterSubsystem;
     private final double spitterSpeed;
     private final double backspinSpeed;
+    private final double hoodAngle;
 
-    public BackspinAndSpitCommand(ShooterSubsystem sub, double backspinSpeed, double spitterSpeed) {
+    public SetUpperShooterCommand(ShooterSubsystem sub, double backspinSpeed, double spitterSpeed, double hoodAngle) {
         this.shooterSubsystem = sub;
         this.backspinSpeed = backspinSpeed;
         this.spitterSpeed = spitterSpeed;
+        this.hoodAngle = hoodAngle;
         addRequirements(sub);
     }
 
@@ -22,6 +24,7 @@ public class BackspinAndSpitCommand extends Command {
     public void initialize() {
         this.shooterSubsystem.backspinMotor.setRawSpeed(this.backspinSpeed);
         this.shooterSubsystem.spitterMotor.setRawSpeed(this.spitterSpeed);
+        this.shooterSubsystem.hoodMotor.set(this.hoodAngle);
     }
 
     @Override

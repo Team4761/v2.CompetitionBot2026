@@ -14,22 +14,17 @@ public class JostleSnatcherCommand extends Command{
 
     @Override
     public void initialize() {
-        snatcherSubsystem.snatcherMotor.set(90);
-    }
-
-    public void execute() {//can maybe use set angle
-        if (snatcherSubsystem.snatcherMotor.getAngle() >= 90 && !runningNegative) {//90 is temp value might need to be negative because gear ratio 
-            snatcherSubsystem.snatcherMotor.setSpeedPercent(-1);
-            runningNegative = true;
-        } else if (snatcherSubsystem.snatcherMotor.getAngle() <= 40 && runningNegative){//50 is a temp value might need to be negative because gear ratio 
-            snatcherSubsystem.snatcherMotor.setSpeedPercent(1);
-            runningNegative = false;
+        for (int i = 0; i < 2; i++) {
+            snatcherSubsystem.snatcherMotor.set(-50);
+            snatcherSubsystem.snatcherMotor.set(-70);
         }
     }
 
+    public void execute() {}
+
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
     //this is one possible solution for ensuring the intake goes back down after jostling but we can also just run extendintake command on false when we bind to buttons
     @Override
@@ -41,6 +36,6 @@ public class JostleSnatcherCommand extends Command{
         } else {
             snatcherSubsystem.snatcherMotor.stopTurning();
         }*/
-        snatcherSubsystem.snatcherMotor.set(90);
+        snatcherSubsystem.snatcherMotor.set(-70);
     }
 }

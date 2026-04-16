@@ -15,7 +15,7 @@ public class SnatchCommand extends Command{
     @Override
     public void initialize() {
         snatcherSubsystem.snatcherMotor.disableCoasting();
-        snatcherSubsystem.snatcherMotor.setSpeedPercent(1);
+        snatcherSubsystem.snatcherMotor.setSpeedPercent(0.5);
         LEDSubsystem.isSnatching = 0.0;
     }
 

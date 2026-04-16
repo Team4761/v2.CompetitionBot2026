@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.FieldConstants;
 import frc.robot.Constants;
+import frc.robot.Constants.Swerve;
 import frc.robot.Constants.Swerve.Auto;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -92,7 +93,8 @@ public class AutoOrientCommand extends Command {
 
     public Command getCommand() {
         return Commands.defer(() -> {
-            Pose2d futurePose = getFuturePose(getTime(getDistance()));
+            //Pose2d futurePose = getFuturePose(getTime(getDistance()));
+            Pose2d futurePose = this.m_swerve.getState().Pose;
 
             return new DriveCommand(this.m_swerve, 0, 0, getOrientation(futurePose));
         }, Set.of(this.m_swerve));

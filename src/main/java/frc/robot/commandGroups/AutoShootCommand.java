@@ -142,8 +142,7 @@ public class AutoShootCommand extends SequentialCommandGroup {
                 this.capturedPower = powerInner;
                 this.capturedAngle = angleInner;
             }),
-            new SetHoodAngleCommand(shooter, () -> this.capturedAngle),
-            new ShootWithPowerCommand(shooter, slider, kicker, () -> this.capturedPower)
+            new FixShootWithPowerCommand(shooter, slider, kicker, () -> this.capturedPower, () -> this.capturedAngle) 
         );
     }
 }

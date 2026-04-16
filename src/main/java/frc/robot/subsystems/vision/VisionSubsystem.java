@@ -81,9 +81,9 @@ public class VisionSubsystem extends SubsystemBase {
     private static List<CameraConfig> defaultCameraConfigs() {
         return List.of(
             new CameraConfig(Constants.Vision.LEFT_CAMERA_NAME, Constants.Vision.LEFT_CAMERA_TRANSFORM),
-            new CameraConfig(Constants.Vision.RIGHT_CAMERA_NAME, Constants.Vision.RIGHT_CAMERA_TRANSFORM),
-            new CameraConfig(Constants.Vision.NORTH_CAMERA_NAME, Constants.Vision.NORTH_CAMERA_TRANSFORM),
-            new CameraConfig(Constants.Vision.SOUTH_CAMERA_NAME, Constants.Vision.SOUTH_CAMERA_TRANSFORM)
+            new CameraConfig(Constants.Vision.RIGHT_CAMERA_NAME, Constants.Vision.RIGHT_CAMERA_TRANSFORM)
+            //new CameraConfig(Constants.Vision.NORTH_CAMERA_NAME, Constants.Vision.NORTH_CAMERA_TRANSFORM),
+            //new CameraConfig(Constants.Vision.SOUTH_CAMERA_NAME, Constants.Vision.SOUTH_CAMERA_TRANSFORM)
         );
     }
 

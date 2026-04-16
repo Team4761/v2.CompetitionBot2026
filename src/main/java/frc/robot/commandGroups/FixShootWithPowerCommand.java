@@ -19,6 +19,7 @@ public class FixShootWithPowerCommand extends Command {
     private final SliderSubsystem sliderSubsystem;
     
     private final DoubleSupplier rpmSupplier;
+    private final DoubleSupplier angleSupplier;
     private final Timer feederDelayTimer = new Timer();
     private boolean feedersStarted;
 
@@ -27,15 +28,16 @@ public class FixShootWithPowerCommand extends Command {
      * @param spitterSpeed Speed for the main flywheel/shooter
      * @param kickerSpeed Speed for the feed mechanism (kicker)
      */
-    public FixShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker, double rpm) {
-        this(shooter, slider, kicker, () -> rpm);
+    public FixShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker, double rpm, double angle) {
+        this(shooter, slider, kicker, () -> rpm, () -> angle);
     }
 
-    public FixShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker, DoubleSupplier rpmSupplier) {
+    public FixShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider, KickerSubsystem kicker, DoubleSupplier rpmSupplier, DoubleSupplier angleSupplier) {
         this.shooterSubsystem = shooter;
         this.sliderSubsystem = slider;
         this.kickerSubsystem = kicker;
         this.rpmSupplier = rpmSupplier;
+        this.angleSupplier = angleSupplier;
         
         // IMPORTANT: Intentionally NOT use addRequirements(sub) here.
         // If require the TurretSubsystem, will interrupt the TurretManualAimCommand,
@@ -47,6 +49,7 @@ public class FixShootWithPowerCommand extends Command {
         feedersStarted = false;
         feederDelayTimer.restart();
         this.shooterSubsystem.spitterMotor.setRawSpeed(this.rpmSupplier.getAsDouble());
+        this.shooterSubsystem.hoodMotor.set(this.angleSupplier.getAsDouble());
     }
 
     @Override

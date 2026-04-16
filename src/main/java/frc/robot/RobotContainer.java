@@ -35,6 +35,7 @@ import frc.robot.subsystems.slider.SliderSubsystem;
 import frc.robot.subsystems.slider.commands.SpinSliderCommand;
 import frc.robot.subsystems.slider.commands.UnSpinSliderCommand;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;
+import frc.robot.subsystems.snatcher.commands.JostleSnatcherCommand;
 import frc.robot.subsystems.snatcher.commands.SmackdownSnatcherCommand;
 import frc.robot.subsystems.snatcher.commands.SnatchCommand;
 import frc.robot.subsystems.snatcher.commands.UnSnatchCommand;
@@ -141,8 +142,12 @@ public class RobotContainer {
         controller_drive.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric)); //Resets the field-centric heading when the driver presses the left bumper 
         
         controller_drive.rightBumper().onTrue(new SmackdownSnatcherCommand(snatcher));
+        controller_drive.leftBumper().onTrue(new JostleSnatcherCommand(snatcher));
+
         controller_drive.rightTrigger().whileTrue(new SnatchCommand(snatcher)); //intakes on right trigger press
         controller_drive.leftTrigger().whileTrue(new UnSnatchCommand(snatcher)); //outtakes on left trigger press
+
+        controller_operator.a().whileTrue(new AutoOrientCommand(drivetrain));
     }
     private void configureOperatorBindings() {
         // Right trigger: shoot using the RPM dialed in on the Elastic Tuning tab's power slider.
@@ -159,23 +164,25 @@ public class RobotContainer {
                     ),
                     Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MIN,
                     Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MAX
-                )
+                ),
+                () -> 0.0
             )
         );
-        controller_operator.leftTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //shoots when right trigger is pressed. automatically sets correct power and angle
+        //controller_operator.leftTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //shoots when right trigger is pressed. automatically sets correct power and angle
 
         // 3 Shooting levels
-        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000));
-        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 8000));
-        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000));
+        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000, () -> 10.0));
+        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 8000, () -> 0.0));
+        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000, () -> 0.0));
 
         //Manual override bindings
         controller_operator.leftTrigger().and(controller_operator.a()).whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press
         controller_operator.leftTrigger().and(controller_operator.b()).whileTrue(new UnSpinSliderCommand(slider)); //spins just the slider (in reverse) on B Button press
         controller_operator.leftTrigger().and(controller_operator.x()).whileTrue(new RunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter on X Button press
         controller_operator.leftTrigger().and(controller_operator.y()).whileTrue(new UnRunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED)); //spins just the spitter (in reverse) on Y Button press
-        controller_operator.rightBumper().whileTrue(new KickCommand(kicker)); //spins just the kicker on right bumper press
-        controller_operator.leftBumper().whileTrue(new UnKickCommand(kicker)); //spins just the kicker (in reverse) on left bumper press
+        
+        controller_operator.leftTrigger().and(controller_operator.rightBumper()).whileTrue(new KickCommand(kicker)); //spins just the kicker on right bumper press
+        controller_operator.leftTrigger().and(controller_operator.leftBumper()).whileTrue(new UnKickCommand(kicker)); //spins just the kicker (in reverse) on left bumper press
     }
 
     private double shapeTurnInput(double rawTurn) {
