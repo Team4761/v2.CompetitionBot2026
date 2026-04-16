@@ -14,9 +14,9 @@ public class SnatcherSubsystem extends SubsystemBase{
     public SnatcherSubsystem() {
         this.smackdownMotor = SmartTalonMotor.Builder.newInstance()
             .port(Constants.Snatcher.SMACKDOWN_MOTOR_PORT)
-            .PID(0.5, 0.0, 0.0) // Temp Values
+            .PID(0.01, 0.0, 0.0) // Temp Values
             .outputRange(-1.0, 1.0) // Duty cycle output limits
-            .mechanismAngleLimits(Constants.Snatcher.MIN_SMACKDOWN_ANGLE, Constants.Snatcher.MAX_SMACKDOWN_ANGLE)
+            //.mechanismAngleLimits(Constants.Snatcher.MIN_SMACKDOWN_ANGLE, Constants.Snatcher.MAX_SMACKDOWN_ANGLE)
             .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
             .gearRatio(Constants.Snatcher.MOTOR_ROTATIONS_PER_EXTENDER_ROTATION)
             .build();

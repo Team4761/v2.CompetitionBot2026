@@ -7,7 +7,6 @@ import frc.robot.subsystems.snatcher.SnatcherSubsystem;
 
 public class SmackdownSnatcherCommand extends Command {
     private SnatcherSubsystem snatcherSubsystem;
-    private int isStable = 0;
     
     public SmackdownSnatcherCommand(SnatcherSubsystem sub) {
         this.snatcherSubsystem = sub;
@@ -16,25 +15,18 @@ public class SmackdownSnatcherCommand extends Command {
 
     @Override
     public void initialize() {
-        isStable = 0;
-        snatcherSubsystem.snatcherMotor.set(90);
+        snatcherSubsystem.smackdownMotor.set(-70);
     }
 
-    public void execute() {
-        if (snatcherSubsystem.snatcherMotor.getAngle() >= 90) {//90 is temp value we need the angle for down
-            isStable++;
-        } else {
-            isStable = 0;
-        }
-    }
+    public void execute() {}
 
     @Override
     public boolean isFinished() {
-        return (isStable >= 10);
+        return false;
     }
 
     @Override
     public void end(boolean isInterrupted){
-        snatcherSubsystem.snatcherMotor.stopTurning();
+        snatcherSubsystem.smackdownMotor.stopTurning();
     } 
 }

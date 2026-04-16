@@ -139,6 +139,8 @@ public class RobotContainer {
     }
     private void configureDriverBindings() {
         controller_drive.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric)); //Resets the field-centric heading when the driver presses the left bumper 
+        
+        controller_drive.rightBumper().onTrue(new SmackdownSnatcherCommand(snatcher));
         controller_drive.rightTrigger().whileTrue(new SnatchCommand(snatcher)); //intakes on right trigger press
         controller_drive.leftTrigger().whileTrue(new UnSnatchCommand(snatcher)); //outtakes on left trigger press
     }
