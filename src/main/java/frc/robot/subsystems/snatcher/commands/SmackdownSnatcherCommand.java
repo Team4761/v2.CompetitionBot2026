@@ -15,18 +15,16 @@ public class SmackdownSnatcherCommand extends Command {
 
     @Override
     public void initialize() {
-        snatcherSubsystem.smackdownMotor.set(-70);
+        snatcherSubsystem.smackdownMotor.turn(-70);
     }
 
     public void execute() {}
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 
     @Override
-    public void end(boolean isInterrupted){
-        snatcherSubsystem.smackdownMotor.stopTurning();
-    } 
+    public void end(boolean isInterrupted){} 
 }

@@ -44,31 +44,10 @@
       "linkedName": "End Pickup"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.43496801705756943,
-      "rotationDegrees": 0.0
-    },
-    {
-      "waypointRelativePos": 1.1727078891257978,
-      "rotationDegrees": -75.0
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "intake",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": 2.0,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "SnatchCommand"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
     "maxAcceleration": 3.0,
@@ -85,7 +64,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

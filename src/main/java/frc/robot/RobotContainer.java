@@ -56,7 +56,7 @@ public class RobotContainer {
     public final WhirligigSubsystem whirligig = new WhirligigSubsystem();
     public final static WinSubsystem win = new WinSubsystem();
 
-    private final double MaxSpeed = 0.55 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // practice-safe top speed cap
+    private final double MaxSpeed = 1 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // screw it
     private final double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond); // reduced max angular velocity
     
     /* Setting up bindings for necessary control of the swerve drive platform 8 */
@@ -90,17 +90,18 @@ public class RobotContainer {
         NamedCommands.registerCommand("DoNothingCommand", Commands.none());
         NamedCommands.registerCommand("AutoShootCommand", new AutoShootCommand(drivetrain,shooter,slider,kicker));
         NamedCommands.registerCommand("SnatchCommand", new SnatchCommand(snatcher));
+        NamedCommands.registerCommand("UnSnatchCommand", new UnSnatchCommand(snatcher));
         NamedCommands.registerCommand("SmackdownSnatcherCommand", new SmackdownSnatcherCommand(snatcher));
         NamedCommands.registerCommand("Shoot Long", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.LONG_SHOOT_RPM, () -> 10.0));//12000));
-        NamedCommands.registerCommand("Shoot Medium", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.MEDIUM_SHOOT_RPM, () -> 0.0));//8000));
-        NamedCommands.registerCommand("Shoot Short", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.SHORT_SHOOT_RPM, () -> 0.0));//5000));
+        NamedCommands.registerCommand("Shoot Medium", new FixShootWithPowerCommand(shooter, slider, kicker, () -> Constants.Shooter.ShootConfig.MEDIUM_SHOOT_RPM, () -> 12.5));//8000));
+        NamedCommands.registerCommand("Shoot Short", new FixShootWithPowerCommand(shooter, slider, kicker, () -> 5000.0, () -> 10.0));//5000));
         autoChooser.setDefaultOption("None", Commands.none());
         for (String autoName : AutoBuilder.getAllAutoNames()) {
             try {
                 if (!autoName.startsWith("UNM")) {
-                    String suffix = autoName.substring(4);
-                    autoChooser.addOption("LEFT" + suffix, new PathPlannerAuto(autoName, false));
-                    autoChooser.addOption("RIGHT" + suffix, new PathPlannerAuto(autoName, true));
+                    String suffix = autoName;
+                    autoChooser.addOption("LEFT " + suffix, new PathPlannerAuto(autoName, false));
+                    autoChooser.addOption("RIGHT " + suffix, new PathPlannerAuto(autoName, true));
                 } else {
                     autoChooser.addOption(autoName, new PathPlannerAuto(autoName));
                 }
@@ -192,9 +193,9 @@ public class RobotContainer {
         //controller_operator.leftTrigger().whileTrue(new AutoOrientCommand(drivetrain)); //shoots when right trigger is pressed. automatically sets correct power and angle
 
         // 3 Shooting levels
-        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000, () -> 10.0));
-        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 8000, () -> 0.0));
-        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000, () -> 0.0));
+        controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000, () -> 12.5));
+        controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 7000, () -> 10.0));
+        controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000, () -> 5.0));
 
         //Manual override bindings
         controller_operator.leftTrigger().and(controller_operator.a()).whileTrue(new SpinSliderCommand(slider)); //spins just the slider on A Button press

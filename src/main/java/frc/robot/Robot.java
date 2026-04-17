@@ -68,6 +68,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotInit() {
         configureDashboard();
+        drivetrain.seedFieldCentric();
         ledSubsystem = new LEDSubsystem();
         LEDSubsystem.setPatternMode(RobocketsLEDPatterns.currentMode);
         ledSubsystem.runPattern(RobocketsLEDPatterns.setSingleColor);//change the currently used LEDPattern here. NOTE: if you want to use the bouncePattern or switch it out, it will be a bit more complicated than just changing the pattern. talk to me for more details (Alex)

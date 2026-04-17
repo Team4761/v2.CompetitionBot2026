@@ -2,6 +2,7 @@ package frc.robot.subsystems.snatcher.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.snatcher.SnatcherSubsystem;
+import frc.robot.Constants;
 import frc.robot.subsystems.leds.LEDSubsystem;
 
 public class SnatchCommand extends Command{
@@ -15,7 +16,7 @@ public class SnatchCommand extends Command{
     @Override
     public void initialize() {
         snatcherSubsystem.snatcherMotor.disableCoasting();
-        snatcherSubsystem.snatcherMotor.setSpeedPercent(0.5);
+        snatcherSubsystem.snatcherMotor.setSpeedPercent(Constants.Snatcher.SNATCHER_SPEED_PERCENT);
         LEDSubsystem.isSnatching = 0.0;
     }
 

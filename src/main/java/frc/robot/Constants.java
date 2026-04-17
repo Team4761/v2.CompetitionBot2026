@@ -92,8 +92,8 @@ public final class Constants {
     public static final class Vision {
         public static final String NORTH_CAMERA_NAME = "cam1"; // [TODO] Set this to the correct camera name
         public static final String SOUTH_CAMERA_NAME = "cam2"; // [TODO] Set this to the correct camera name
-        public static final String LEFT_CAMERA_NAME = "cam3"; // [TODO] Set this to the correct camera name
-        public static final String RIGHT_CAMERA_NAME = "cam4"; // [TODO] Set this to the correct camera name
+        public static final String LEFT_CAMERA_NAME = "Back Right Cam"; // [TODO] Set this to the correct camera name
+        public static final String RIGHT_CAMERA_NAME = "Back Left Cam"; // [TODO] Set this to the correct camera name
 
         // [TODO] Set these to the correct translations and rotations for all 4 cameras.
         public static final Translation3d NORTH_CAMERA_TRANSLATION =
@@ -178,9 +178,9 @@ public final class Constants {
             public static final double KICKER_INIT_DELAY = 0.5; // [TODO] Tune this value (in seconds)
             public static final double KICKER_MOTOR_ROTATIONS_PER_ROTATION = 3.0; // [TODO] Tune this value
 
-            public static final double LONG_SHOOT_RPM = 10000.0;
-            public static final double MEDIUM_SHOOT_RPM = 8000.0;
-            public static final double SHORT_SHOOT_RPM = 5000.0;
+            public static final double LONG_SHOOT_RPM = 15000.0;
+            public static final double MEDIUM_SHOOT_RPM = 9000.0;
+            public static final double SHORT_SHOOT_RPM = 6000.0;
             
             public static final double TURRET_VERTICAL_MULTIPLIER = 1.95;
 

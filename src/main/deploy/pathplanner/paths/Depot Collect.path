@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5001142939814818,
+        "x": 3.0,
         "y": 4.001013744212964
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.941948051948052,
-        "y": 6.590543831168832
+        "x": 2.175891583452211,
+        "y": 4.015592011412268
       },
       "isLocked": false,
-      "linkedName": "Center Start"
+      "linkedName": "Center Back"
+    },
+    {
+      "anchor": {
+        "x": 1.9947503566333804,
+        "y": 5.98
+      },
+      "prevControl": {
+        "x": 2.7947503566333802,
+        "y": 5.98
+      },
+      "nextControl": {
+        "x": 0.9947503566333804,
+        "y": 5.98
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,24 +36,24 @@
         "y": 5.956996753246753
       },
       "prevControl": {
-        "x": 0.48305743412490904,
-        "y": 6.079408331457438
+        "x": 0.5158940302184457,
+        "y": 6.130124742727749
       },
       "nextControl": {
-        "x": 1.7067370129870132,
-        "y": 5.458701298701299
+        "x": 1.1925534950071324,
+        "y": 5.568231098430813
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.044715909090909,
-        "y": 4.974642857142857
+        "x": 1.710099857346647,
+        "y": 5.283580599144081
       },
       "prevControl": {
-        "x": 1.0020048701298703,
-        "y": 5.544123376623377
+        "x": 1.2054921540656205,
+        "y": 5.632924393723252
       },
       "nextControl": null,
       "isLocked": false,
@@ -46,17 +62,28 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 1.0,
+      "waypointRelativePos": 2.0,
       "rotationDegrees": 180.0
     }
   ],
   "constraintZones": [],
-  "pointTowardsZones": [],
+  "pointTowardsZones": [
+    {
+      "fieldPosition": {
+        "x": 4.63,
+        "y": 4.0
+      },
+      "rotationOffset": 180.0,
+      "minWaypointRelativePos": 2.414405010438421,
+      "maxWaypointRelativePos": 3.0,
+      "name": "Hub"
+    }
+  ],
   "eventMarkers": [
     {
       "name": "fdshfg",
-      "waypointRelativePos": 0.8394543546694648,
-      "endWaypointRelativePos": 1.011542497376705,
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": 1.2265135699373704,
       "command": {
         "type": "named",
         "data": {
@@ -74,8 +101,8 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
-    "rotation": 164.802
+    "velocity": 0.0,
+    "rotation": 156.0
   },
   "reversed": false,
   "folder": null,

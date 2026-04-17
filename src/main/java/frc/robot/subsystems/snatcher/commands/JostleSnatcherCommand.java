@@ -15,8 +15,8 @@ public class JostleSnatcherCommand extends Command{
     @Override
     public void initialize() {
         for (int i = 0; i < 2; i++) {
-            snatcherSubsystem.snatcherMotor.set(-50);
-            snatcherSubsystem.snatcherMotor.set(-70);
+            snatcherSubsystem.snatcherMotor.turn(20);
+            snatcherSubsystem.snatcherMotor.turn(-20);
         }
     }
 
