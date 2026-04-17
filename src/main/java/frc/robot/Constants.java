@@ -126,9 +126,9 @@ public final class Constants {
         public static final Rotation3d SOUTH_CAMERA_ROTATION =
             new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
         public static final Rotation3d LEFT_CAMERA_ROTATION =
-            new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
+            new Rotation3d(0.0, 0.0, Math.toRadians(90.0));
         public static final Rotation3d RIGHT_CAMERA_ROTATION =
-            new Rotation3d(0.0, 0.0, Math.toRadians(135.0));
+            new Rotation3d(0.0, 0.0, Math.toRadians(-90.0));
         
         public static final Transform3d NORTH_CAMERA_TRANSFORM =
             new Transform3d(NORTH_CAMERA_TRANSLATION, NORTH_CAMERA_ROTATION);
