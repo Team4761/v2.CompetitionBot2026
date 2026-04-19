@@ -15,7 +15,7 @@ public class SmackdownSnatcherCommand extends Command {
 
     @Override
     public void initialize() {
-        snatcherSubsystem.smackdownMotor.turn(-70);
+        snatcherSubsystem.smackdownMotor.turn(-30);
     }
 
     public void execute() {}
