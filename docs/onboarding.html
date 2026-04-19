@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robockets FRC 2026 — Programmer Onboarding</title>
+
+  <!-- highlight.js -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/gradle.min.js"></script>
+
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0f1117;
+      --bg-sidebar:  #1a1d27;
+      --bg-card:     #1e2130;
+      --bg-code:     #282c34;
+      --border:      #2d3148;
+      --accent:      #5b8cff;
+      --accent-hover:#7ba4ff;
+      --accent-soft: rgba(91,140,255,0.12);
+      --text:        #e2e8f0;
+      --text-muted:  #8892aa;
+      --text-heading:#f0f4ff;
+      --green:       #4ade80;
+      --yellow:      #fbbf24;
+      --red:         #f87171;
+      --sidebar-w:   280px;
+      --top-h:       60px;
+      --font-sans:   'Segoe UI', system-ui, -apple-system, sans-serif;
+      --font-mono:   'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+      --radius:      8px;
+      --shadow:      0 4px 24px rgba(0,0,0,0.4);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ─── Top Bar ──────────────────────────────────────────────────────────── */
+    #topbar {
+      position: fixed; top: 0; left: 0; right: 0;
+      height: var(--top-h);
+      background: var(--bg-sidebar);
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 14px;
+      padding: 0 24px;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    }
+    #topbar .logo {
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+    }
+    #topbar .logo span { color: var(--text-heading); }
+    #topbar .badge {
+      font-size: 0.7rem; padding: 2px 8px; border-radius: 20px;
+      background: var(--accent-soft); color: var(--accent);
+      border: 1px solid var(--accent);
+      font-weight: 600; letter-spacing: 0.5px;
+    }
+    #topbar .right {
+      margin-left: auto;
+      font-size: 0.8rem; color: var(--text-muted);
+    }
+
+    /* ─── Sidebar ──────────────────────────────────────────────────────────── */
+    #sidebar {
+      position: fixed; top: var(--top-h); left: 0; bottom: 0;
+      width: var(--sidebar-w);
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border);
+      overflow-y: auto; overflow-x: hidden;
+      padding: 20px 0;
+      z-index: 90;
+    }
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-track { background: transparent; }
+    #sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .nav-section {
+      padding: 0 16px 4px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 18px;
+    }
+    .nav-section:first-child { margin-top: 4px; }
+
+    #sidebar a {
+      display: flex; align-items: center; gap: 8px;
+      padding: 7px 20px;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+    }
+    #sidebar a:hover {
+      color: var(--text);
+      background: rgba(255,255,255,0.04);
+      border-left-color: var(--border);
+    }
+    #sidebar a.active {
+      color: var(--accent);
+      background: var(--accent-soft);
+      border-left-color: var(--accent);
+      font-weight: 600;
+    }
+    #sidebar .nav-icon { font-size: 1rem; width: 18px; text-align: center; }
+
+    /* ─── Main Content ─────────────────────────────────────────────────────── */
+    #main {
+      margin-left: var(--sidebar-w);
+      margin-top: var(--top-h);
+      min-height: calc(100vh - var(--top-h));
+      padding: 48px 52px;
+      max-width: 960px;
+    }
+
+    /* ─── Sections ─────────────────────────────────────────────────────────── */
+    .section {
+      margin-bottom: 80px;
+      scroll-margin-top: 80px;
+    }
+
+    /* ─── Typography ───────────────────────────────────────────────────────── */
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 800;
+      color: var(--text-heading);
+      line-height: 1.2;
+      letter-spacing: -0.5px;
+      margin-bottom: 14px;
+    }
+    h1 .dim { color: var(--text-muted); font-weight: 400; }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--text-heading);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+      scroll-margin-top: 80px;
+    }
+    h3 {
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--text-heading);
+      margin-top: 32px; margin-bottom: 12px;
+    }
+    h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 24px; margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    p { margin-bottom: 14px; color: var(--text); }
+    strong { color: var(--text-heading); font-weight: 600; }
+    em { color: var(--yellow); font-style: normal; }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { color: var(--accent-hover); text-decoration: underline; }
+
+    /* ─── Hero Banner ──────────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #1a1d27 0%, #0f1117 60%);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 44px;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(91,140,255,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero p { font-size: 1.05rem; color: var(--text-muted); max-width: 600px; }
+    .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .tag {
+      font-size: 0.75rem; padding: 3px 10px; border-radius: 20px;
+      font-weight: 600;
+    }
+    .tag-blue { background: rgba(91,140,255,0.15); color: #82a8ff; border: 1px solid rgba(91,140,255,0.3); }
+    .tag-green { background: rgba(74,222,128,0.1); color: #6ee7a0; border: 1px solid rgba(74,222,128,0.25); }
+    .tag-yellow { background: rgba(251,191,36,0.1); color: #fcd34d; border: 1px solid rgba(251,191,36,0.25); }
+    .tag-red { background: rgba(248,113,113,0.1); color: #fca5a5; border: 1px solid rgba(248,113,113,0.25); }
+
+    /* ─── Callout Boxes ────────────────────────────────────────────────────── */
+    .callout {
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 20px 0;
+      border-left: 4px solid;
+      display: flex; gap: 12px;
+    }
+    .callout-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 1px; }
+    .callout-body { flex: 1; }
+    .callout-body > *:last-child { margin-bottom: 0; }
+    .callout.info { background: rgba(91,140,255,0.08); border-color: var(--accent); }
+    .callout.warning { background: rgba(251,191,36,0.08); border-color: var(--yellow); }
+    .callout.tip { background: rgba(74,222,128,0.08); border-color: var(--green); }
+    .callout.danger { background: rgba(248,113,113,0.08); border-color: var(--red); }
+
+    /* ─── Code Blocks ──────────────────────────────────────────────────────── */
+    pre {
+      margin: 16px 0 24px;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+    pre code.hljs {
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      line-height: 1.65;
+      padding: 20px 24px;
+      border-radius: var(--radius);
+    }
+    .code-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 8px 16px 0;
+      background: var(--bg-code);
+      border-bottom: 1px solid var(--border);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    /* ─── Cards ────────────────────────────────────────────────────────────── */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 16px 0;
+      transition: border-color 0.2s;
+    }
+    .card:hover { border-color: rgba(91,140,255,0.35); }
+    .card h3 { margin-top: 0; }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin: 16px 0;
+    }
+
+    /* ─── File Tree ────────────────────────────────────────────────────────── */
+    .filetree {
+      background: var(--bg-code);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.9;
+      overflow-x: auto;
+    }
+    .filetree .dir { color: #82a8ff; font-weight: 600; }
+    .filetree .file { color: #b5c2d8; }
+    .filetree .ann { color: var(--text-muted); font-style: italic; font-size: 0.75rem; margin-left: 6px; }
+    .filetree .sep { color: var(--border); }
+
+    /* ─── Comparison Table ─────────────────────────────────────────────────── */
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: 0.875rem; margin: 20px 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    th {
+      background: var(--bg-card);
+      color: var(--text-heading);
+      font-weight: 700;
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 2px solid var(--border);
+    }
+    td {
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(255,255,255,0.02); }
+    td:first-child { font-weight: 600; color: var(--text-heading); white-space: nowrap; }
+
+    /* ─── Motor Port Table ─────────────────────────────────────────────────── */
+    .port-pill {
+      display: inline-block;
+      padding: 2px 8px; border-radius: 12px;
+      font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700;
+      background: rgba(91,140,255,0.15); color: var(--accent);
+      border: 1px solid rgba(91,140,255,0.25);
+    }
+
+    /* ─── Steps ────────────────────────────────────────────────────────────── */
+    .steps { counter-reset: step; list-style: none; padding: 0; }
+    .steps li {
+      counter-increment: step;
+      display: flex; gap: 16px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+    .steps li::before {
+      content: counter(step);
+      min-width: 28px; height: 28px;
+      background: var(--accent-soft); color: var(--accent);
+      border: 1px solid rgba(91,140,255,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 800;
+      flex-shrink: 0; margin-top: 2px;
+    }
+
+    /* ─── Divider ──────────────────────────────────────────────────────────── */
+    hr { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+
+    /* ─── Inline Code ──────────────────────────────────────────────────────── */
+    code:not(.hljs) {
+      font-family: var(--font-mono);
+      font-size: 0.82em;
+      background: rgba(91,140,255,0.1);
+      color: #a5c0ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(91,140,255,0.2);
+    }
+
+    /* ─── TOC Progress Indicator ───────────────────────────────────────────── */
+    #progress {
+      position: fixed; top: var(--top-h); left: 0; right: 0;
+      height: 2px; background: var(--border); z-index: 200;
+    }
+    #progress-bar {
+      height: 100%; background: linear-gradient(90deg, var(--accent), #a78bfa);
+      width: 0; transition: width 0.1s;
+    }
+
+    /* ─── Responsive ───────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      #sidebar { transform: translateX(-100%); transition: transform 0.2s; }
+      #sidebar.open { transform: translateX(0); }
+      #main { margin-left: 0; padding: 32px 24px; }
+      .grid-2 { grid-template-columns: 1fr; }
+    }
+
+    /* ─── Subsystem Pill Badges ────────────────────────────────────────────── */
+    .sub-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border-radius: 20px;
+      font-size: 0.78rem; font-weight: 700;
+      margin: 3px;
+    }
+    .sub-badge.drive  { background: rgba(91,140,255,0.15); color: #82a8ff; border: 1px solid rgba(91,140,255,0.3); }
+    .sub-badge.shoot  { background: rgba(248,113,113,0.12); color: #fca5a5; border: 1px solid rgba(248,113,113,0.3); }
+    .sub-badge.intake { background: rgba(74,222,128,0.1); color: #6ee7a0; border: 1px solid rgba(74,222,128,0.25); }
+    .sub-badge.vision { background: rgba(167,139,250,0.12); color: #c4b5fd; border: 1px solid rgba(167,139,250,0.3); }
+    .sub-badge.led    { background: rgba(251,191,36,0.1); color: #fcd34d; border: 1px solid rgba(251,191,36,0.25); }
+
+    /* ─── Diff highlight ───────────────────────────────────────────────────── */
+    .repo-v2 { color: #82a8ff; font-weight: 700; }
+    .repo-imp { color: #6ee7a0; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress"><div id="progress-bar"></div></div>
+
+<!-- Top Bar -->
+<div id="topbar">
+  <div class="logo">🚀 <span>Robockets</span> FRC</div>
+  <div class="badge">2026 SEASON</div>
+  <div class="right">Programmer Onboarding Guide</div>
+</div>
+
+<!-- Sidebar -->
+<nav id="sidebar">
+  <div class="nav-section">Getting Started</div>
+  <a href="#intro" class="active"><span class="nav-icon">🏠</span> Introduction</a>
+  <a href="#repos"><span class="nav-icon">📁</span> Repo Overview</a>
+  <a href="#structure"><span class="nav-icon">🗂️</span> Project Structure</a>
+
+  <div class="nav-section">Core Concepts</div>
+  <a href="#subsystems"><span class="nav-icon">⚙️</span> Subsystems</a>
+  <a href="#commands"><span class="nav-icon">▶️</span> Commands</a>
+  <a href="#robotcontainer"><span class="nav-icon">🎮</span> RobotContainer</a>
+
+  <div class="nav-section">Hardware</div>
+  <a href="#motors"><span class="nav-icon">🔧</span> Motors</a>
+  <a href="#vision"><span class="nav-icon">📷</span> Vision</a>
+
+  <div class="nav-section">Configuration</div>
+  <a href="#constants"><span class="nav-icon">🔢</span> Constants</a>
+  <a href="#autos"><span class="nav-icon">🤖</span> Autonomous</a>
+  <a href="#dashboard"><span class="nav-icon">📊</span> Dashboard</a>
+
+  <div class="nav-section">Reference</div>
+  <a href="#conventions"><span class="nav-icon">📐</span> Conventions</a>
+  <a href="#comparison"><span class="nav-icon">⚖️</span> Repo Comparison</a>
+  <a href="#newcode"><span class="nav-icon">✨</span> Adding New Code</a>
+</nav>
+
+<!-- Main Content -->
+<main id="main">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="intro">
+    <div class="hero">
+      <h1>Robockets <span class="dim">Programmer Onboarding</span></h1>
+      <p>Welcome to the team! This guide will walk you through the 2026 competition robot codebase end-to-end — from the folder layout all the way to writing new commands. Everything here is drawn directly from the real source code, so you can trust these examples.</p>
+      <div class="hero-tags">
+        <span class="tag tag-blue">WPILib Command-Based</span>
+        <span class="tag tag-blue">CTRE Phoenix 6</span>
+        <span class="tag tag-green">PathPlanner Autos</span>
+        <span class="tag tag-green">PhotonVision</span>
+        <span class="tag tag-yellow">Java 17</span>
+        <span class="tag tag-yellow">Gradle</span>
+        <span class="tag tag-red">Swerve Drive</span>
+      </div>
+    </div>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>New to FRC programming?</strong> This guide assumes you know basic Java (classes, methods, inheritance). You don't need to know anything about robots yet — every concept is explained from scratch.
+      </div>
+    </div>
+
+    <h3>What this guide covers</h3>
+    <p>We have two repos for the 2026 season. <span class="repo-v2">v2.CompetitionBot2026</span> is the active development branch — the code that went to competition. <span class="repo-imp">CompetitionBot2026-imported</span> is an earlier version that introduced the turret mechanism. Understanding both will give you the full picture of how the codebase evolved.</p>
+
+    <p>The robot uses the <strong>Command-Based framework</strong> provided by WPILib. The key idea is simple: the robot's hardware is organized into <strong>Subsystems</strong>, and everything the robot <em>does</em> is expressed as a <strong>Command</strong>. A <strong>Scheduler</strong> runs in the background, managing which commands run, and making sure two commands never fight over the same subsystem.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="repos">
+    <h2>📁 Repo Overview</h2>
+
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="color:#82a8ff">v2.CompetitionBot2026</h3>
+        <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:10px">Active competition code · modular subsystems</p>
+        <p>Separate subsystems for Shooter, Kicker, Slider, and Snatcher. Uses <code>SmartTalonMotor</code> wrapper. Full PathPlanner integration with LEFT/RIGHT auto mirroring.</p>
+        <div style="margin-top:12px">
+          <span class="sub-badge drive">Swerve</span>
+          <span class="sub-badge shoot">Shooter</span>
+          <span class="sub-badge shoot">Kicker</span>
+          <span class="sub-badge intake">Snatcher</span>
+          <span class="sub-badge vision">Vision</span>
+          <span class="sub-badge led">LEDs</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="color:#6ee7a0">CompetitionBot2026-imported</h3>
+        <p style="font-size:0.875rem;color:var(--text-muted);margin-bottom:10px">Earlier build · unified turret subsystem</p>
+        <p>Consolidates shooting hardware into a single <code>TurretSubsystem</code> with 2-DOF aiming (horizontal + vertical PID). Uses <code>SmartKrakenMotor</code> wrapper. More complex auto-aim commands.</p>
+        <div style="margin-top:12px">
+          <span class="sub-badge drive">Swerve</span>
+          <span class="sub-badge shoot">Turret</span>
+          <span class="sub-badge intake">Intake</span>
+          <span class="sub-badge vision">Vision</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout tip">
+      <div class="callout-icon">🎯</div>
+      <div class="callout-body">
+        <strong>Tip:</strong> Start with <span class="repo-v2">v2.CompetitionBot2026</span>. It's the cleaner, more modular version and the one that shipped. The imported repo is useful for understanding the turret evolution.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="structure">
+    <h2>🗂️ Project Structure</h2>
+
+    <p>Both repos follow the standard WPILib Gradle project layout. Everything you'll touch day-to-day lives under <code>src/main/java/frc/robot/</code>.</p>
+
+    <div class="filetree">
+      <div><span class="dir">v2.CompetitionBot2026/</span></div>
+      <div>├── <span class="dir">src/main/java/frc/robot/</span></div>
+      <div>│   ├── <span class="file">Main.java</span><span class="ann">// entry point — don't touch</span></div>
+      <div>│   ├── <span class="file">Robot.java</span><span class="ann">// match lifecycle (init/periodic hooks)</span></div>
+      <div>│   ├── <span class="file">RobotContainer.java</span><span class="ann">// subsystem instances + controller bindings</span></div>
+      <div>│   ├── <span class="file">Constants.java</span><span class="ann">// all tunable numbers in one place</span></div>
+      <div>│   ├── <span class="file">FieldConstants.java</span><span class="ann">// field geometry (wall positions, zone sizes)</span></div>
+      <div>│   ├── <span class="file">Telemetry.java</span><span class="ann">// NetworkTables / swerve telemetry</span></div>
+      <div>│   ├── <span class="dir">commandGroups/</span><span class="ann">// commands that span multiple subsystems</span></div>
+      <div>│   │   ├── <span class="file">AutoShootCommand.java</span></div>
+      <div>│   │   ├── <span class="file">FixShootWithPowerCommand.java</span><span class="ann">// main shoot command (used in teleop)</span></div>
+      <div>│   │   └── <span class="file">ShootWithPowerCommand.java</span><span class="ann">// parallel-command-group version</span></div>
+      <div>│   ├── <span class="dir">generated/</span><span class="ann">// auto-generated by CTRE Tuner X — do not hand-edit</span></div>
+      <div>│   │   └── <span class="file">TunerConstants.java</span></div>
+      <div>│   ├── <span class="dir">subsystems/</span></div>
+      <div>│   │   ├── <span class="dir">kicker/</span><span class="ann">// two-wheel kicker that feeds the spitter</span></div>
+      <div>│   │   │   ├── <span class="file">KickerSubsystem.java</span></div>
+      <div>│   │   │   └── <span class="dir">commands/</span></div>
+      <div>│   │   ├── <span class="dir">shooter/</span><span class="ann">// spitter wheels + hood angle motor</span></div>
+      <div>│   │   │   ├── <span class="file">ShooterSubsystem.java</span></div>
+      <div>│   │   │   └── <span class="dir">commands/</span></div>
+      <div>│   │   ├── <span class="dir">slider/</span><span class="ann">// indexing wheel between kicker and spitter</span></div>
+      <div>│   │   ├── <span class="dir">snatcher/</span><span class="ann">// intake: smackdown arm + roller</span></div>
+      <div>│   │   ├── <span class="dir">swerve/</span><span class="ann">// drivetrain (CTRE-generated + custom commands)</span></div>
+      <div>│   │   ├── <span class="dir">vision/</span><span class="ann">// PhotonVision AprilTag pose estimation</span></div>
+      <div>│   │   ├── <span class="dir">leds/</span><span class="ann">// addressable LED strip</span></div>
+      <div>│   │   ├── <span class="dir">whirligig/</span><span class="ann">// Pigeon 2 IMU wrapper</span></div>
+      <div>│   │   └── <span class="dir">win/</span><span class="ann">// win condition subsystem</span></div>
+      <div>│   └── <span class="dir">util/</span><span class="ann">// SmartTalonMotor / SmartVortexMotor wrappers</span></div>
+      <div>├── <span class="dir">src/main/deploy/</span><span class="ann">// files deployed to the roboRIO</span></div>
+      <div>│   ├── <span class="file">elastic-layout.json</span><span class="ann">// Elastic dashboard layout</span></div>
+      <div>│   └── <span class="dir">pathplanner/</span><span class="ann">// auto paths and settings</span></div>
+      <div>│       ├── <span class="dir">autos/</span><span class="ann">// .auto files (routine definitions)</span></div>
+      <div>│       ├── <span class="dir">paths/</span><span class="ann">// .path files (individual path segments)</span></div>
+      <div>│       └── <span class="file">settings.json</span></div>
+      <div>└── <span class="file">build.gradle</span><span class="ann">// dependencies + build configuration</span></div>
+    </div>
+
+    <h3>Key rule: subsystems own their commands</h3>
+    <p>Each subsystem folder has a <code>commands/</code> subfolder. Commands that only affect <em>one</em> subsystem live there. Commands that coordinate <em>multiple</em> subsystems live in the top-level <code>commandGroups/</code> folder. This keeps things organized as the codebase grows.</p>
+
+    <h3>The <code>generated/</code> folder</h3>
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>Never hand-edit <code>TunerConstants.java</code>.</strong> It's generated by CTRE Tuner X and will be overwritten. Swerve module geometry, motor IDs, and drive gains all live here and must be changed through the Tuner X app.
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="subsystems">
+    <h2>⚙️ Subsystems</h2>
+
+    <p>A <strong>Subsystem</strong> is a Java class that extends <code>SubsystemBase</code>. It represents a physical piece of the robot — a set of motors, sensors, and state that belong together. The Command Scheduler uses subsystems to prevent conflicts: only one command can control a given subsystem at a time.</p>
+
+    <h3>Anatomy of a Subsystem</h3>
+    <p>Every subsystem follows the same pattern: declare your hardware as <code>public final</code> fields (so commands can access them directly), configure everything in the constructor, and override <code>periodic()</code> if you need to run code every robot loop (every 20 ms).</p>
+
+    <div class="code-label">KickerSubsystem.java — simplest example</div>
+    <pre><code class="language-java">package frc.robot.subsystems.kicker;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.util.SmartTalonMotor;
+
+public class KickerSubsystem extends SubsystemBase {
+
+    // Hardware declared as public fields so commands can call motor methods
+    public final SmartTalonMotor fatKickerInnerMotor;
+    public final SmartTalonMotor fatKickerOuterMotor;
+
+    public KickerSubsystem() {
+        // Builder pattern — every motor is configured in one fluent chain
+        this.fatKickerInnerMotor = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Kicker.FAT_KICKER_INNER_MOTOR_PORT)  // CAN ID 37
+            .PID(.1, 0, 0)
+            .outputRange(-1, 1)
+            .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
+            .build();
+
+        this.fatKickerOuterMotor = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Kicker.FAT_KICKER_OUTER_MOTOR_PORT)  // CAN ID 36
+            .PID(.1, 0, 0)
+            .outputRange(-1, 1)
+            .build();
+    }
+    // No periodic() needed here — commands drive the motors directly
+}</code></pre>
+
+    <h3>A more complex example: ShooterSubsystem</h3>
+    <p>The shooter has four motors: a hood (angle), two spitter wheels (one is a follower), and a backspin wheel. Notice how the second spitter is configured as a <strong>Follower</strong> — it mirrors the lead motor automatically with no extra code in commands.</p>
+
+    <div class="code-label">ShooterSubsystem.java</div>
+    <pre><code class="language-java">public class ShooterSubsystem extends SubsystemBase {
+
+    public final SmartTalonMotor hoodMotor;       // adjusts launch angle
+    public final SmartTalonMotor spitterMotor;    // main flywheel (lead)
+    public final SmartTalonMotor spitterMotor2;   // second flywheel (follower)
+    public final SmartTalonMotor backspinMotor;   // puts backspin on note
+
+    public ShooterSubsystem() {
+        this.hoodMotor = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Shooter.HOOD_MOTOR_PORT)              // CAN ID 38
+            .PID(1, 0, 0)
+            .outputRange(-1, 1)
+            .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
+            .mechanismAngleLimits(
+                Constants.Shooter.Hood.MIN_HOOD_ANGLE_DEGREES,    // 0.0°
+                Constants.Shooter.Hood.MAX_HOOD_ANGLE_DEGREES     // 12.5°
+            )
+            .gearRatio(Constants.Shooter.Hood.MOTOR_ROTATIONS_PER_HOOD_ROTATION) // 325/18
+            .build();
+
+        this.spitterMotor = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Shooter.SPITTER_MOTOR_LEAD_PORT)      // CAN ID 31
+            .PID(0.1, 0, 0)
+            .outputRange(-1, 1)
+            .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
+            .build();
+
+        this.spitterMotor2 = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Shooter.SPITTER_MOTOR_FOLLOWER_PORT)  // CAN ID 35
+            .PID(0.1, 0, 0)
+            .outputRange(-1, 1)
+            .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
+            .build();
+
+        this.backspinMotor = SmartTalonMotor.Builder.newInstance()
+            .port(Constants.Shooter.ShootConfig.BACKSPIN_MOTOR_PORT) // CAN ID 34
+            .PID(0.1, 0.0, 0.0)
+            .outputRange(-1.0, 1.0)
+            .mode(SmartTalonMotor.MotorMode.CONTINUOUS)
+            .build();
+
+        // Follower: spitterMotor2 mirrors spitterMotor, but spins opposite direction
+        this.spitterMotor2.motor.setControl(
+            new Follower(
+                this.spitterMotor.motor.getDeviceID(),
+                MotorAlignmentValue.Opposed   // reversed so both push the note the same way
+            )
+        );
+    }
+}</code></pre>
+
+    <h3>Subsystem quick-reference (v2.CompetitionBot2026)</h3>
+    <table>
+      <tr><th>Subsystem</th><th>What it does</th><th>Key motors / sensors</th></tr>
+      <tr>
+        <td>SnatcherSubsystem</td>
+        <td>Intake: extends arm (<em>smackdown</em>) + spins roller (<em>snatcher</em>) to grab game pieces</td>
+        <td>TalonFX CAN 32 (extender), TalonFX CAN 39 (roller)</td>
+      </tr>
+      <tr>
+        <td>SliderSubsystem</td>
+        <td>Indexing wheel that moves game piece from intake toward kicker</td>
+        <td>TalonFX CAN 33</td>
+      </tr>
+      <tr>
+        <td>KickerSubsystem</td>
+        <td>Two wheels that accelerate game piece into spitter</td>
+        <td>TalonFX CAN 37 (inner), TalonFX CAN 36 (outer)</td>
+      </tr>
+      <tr>
+        <td>ShooterSubsystem</td>
+        <td>Flywheel + hood angle + backspin for launching</td>
+        <td>TalonFX CAN 31 (lead), 35 (follower), 38 (hood), 34 (backspin)</td>
+      </tr>
+      <tr>
+        <td>CommandSwerveDrivetrain</td>
+        <td>CTRE Phoenix 6 swerve drivetrain, field-centric, PathPlanner-enabled</td>
+        <td>8× TalonFX (drive + steer per module) via TunerConstants</td>
+      </tr>
+      <tr>
+        <td>VisionSubsystem</td>
+        <td>AprilTag pose estimation using two back-facing PhotonVision cameras</td>
+        <td>Back Left Cam, Back Right Cam (PhotonVision)</td>
+      </tr>
+      <tr>
+        <td>WhirligigSubsystem</td>
+        <td>IMU: yaw/pitch/roll + acceleration for odometry and heading control</td>
+        <td>Pigeon 2 CAN ID 0</td>
+      </tr>
+      <tr>
+        <td>LEDSubsystem</td>
+        <td>Addressable LED strip with animated patterns (bounce, solid, blink)</td>
+        <td>PWM port 0, 16 LEDs</td>
+      </tr>
+    </table>
+
+    <h3>The <code>periodic()</code> method</h3>
+    <p>WPILib calls <code>periodic()</code> on every subsystem exactly once per robot loop (every 20 ms), whether or not a command is running. Use it to publish telemetry, run control loops, or update LED patterns. The <code>LEDSubsystem</code> uses it to animate the bounce pattern:</p>
+
+    <div class="code-label">LEDSubsystem.java — periodic() for animation</div>
+    <pre><code class="language-java">@Override
+public void periodic() {
+    // Rebuild the pattern each loop to advance the animation offset
+    LEDPattern rightBase = LEDPattern.steps(Map.of(0, LEDColor1, 0.125, Color.kBlack)).reversed();
+    LEDPattern left      = LEDPattern.steps(Map.of(0, LEDColor2, 0.125, Color.kBlack))
+                                     .offsetBy((int) LEDOffset);
+    LEDPattern right     = rightBase.offsetBy((int) -LEDOffset);
+
+    RobocketsLEDPatterns.bouncePattern = left.overlayOn(right);
+    RobocketsLEDPatterns.bouncePattern.applyTo(buffer);
+    leds.setData(buffer);
+
+    // Advance the bounce offset each loop
+    if (LEDOffset < NUMBER_OF_LEDS - (int)(NUMBER_OF_LEDS * 0.125)) {
+        LEDOffset += 0.5;
+    } else {
+        LEDOffset = 0;
+    }
+}</code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="commands">
+    <h2>▶️ Commands</h2>
+
+    <p>A <strong>Command</strong> is a Java class that extends <code>Command</code>. It has four lifecycle methods: <code>initialize()</code> runs once when it starts, <code>execute()</code> runs every loop while it's active, <code>isFinished()</code> tells the scheduler when to stop, and <code>end(boolean interrupted)</code> runs once when it finishes (or is cancelled).</p>
+
+    <h3>Standard command pattern</h3>
+    <p>The canonical pattern in this codebase: store references to the subsystems you need in the constructor, call <code>addRequirements()</code> so the scheduler knows what you're using, then implement the four lifecycle methods.</p>
+
+    <div class="code-label">FixShootWithPowerCommand.java — a complete, real example</div>
+    <pre><code class="language-java">public class FixShootWithPowerCommand extends Command {
+    private final ShooterSubsystem shooterSubsystem;
+    private final KickerSubsystem  kickerSubsystem;
+    private final SliderSubsystem  sliderSubsystem;
+
+    private final DoubleSupplier rpmSupplier;    // live-updated from dashboard
+    private final DoubleSupplier angleSupplier;
+    private final Timer feederDelayTimer = new Timer();
+    private boolean feedersStarted;
+
+    // Convenience overload with fixed values
+    public FixShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider,
+                                    KickerSubsystem kicker, double rpm, double angle) {
+        this(shooter, slider, kicker, () -> rpm, () -> angle);
+    }
+
+    // Primary constructor — accepts suppliers for live dashboard overrides
+    public FixShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider,
+                                    KickerSubsystem kicker,
+                                    DoubleSupplier rpmSupplier, DoubleSupplier angleSupplier) {
+        this.shooterSubsystem = shooter;
+        this.sliderSubsystem  = slider;
+        this.kickerSubsystem  = kicker;
+        this.rpmSupplier      = rpmSupplier;
+        this.angleSupplier    = angleSupplier;
+        // NOTE: addRequirements() is intentionally omitted here so other commands
+        // can run concurrently. Be careful with this pattern!
+    }
+
+    @Override
+    public void initialize() {
+        feedersStarted = false;
+        feederDelayTimer.restart();
+        // Spin up the flywheel and move the hood immediately
+        shooterSubsystem.spitterMotor.setRawSpeed(rpmSupplier.getAsDouble());
+        shooterSubsystem.hoodMotor.set(angleSupplier.getAsDouble());
+    }
+
+    @Override
+    public void execute() {
+        // Wait 0.5 s for the flywheel to reach speed, then enable feeders
+        if (!feedersStarted && feederDelayTimer.hasElapsed(0.5)) {
+            kickerSubsystem.fatKickerInnerMotor.setRawSpeed(-Constants.Kicker.KICKER_SPEED);
+            kickerSubsystem.fatKickerOuterMotor.setRawSpeed(-Constants.Kicker.KICKER_SPEED);
+            shooterSubsystem.backspinMotor.setRawSpeed(
+                -1 * Math.max(0.0, rpmSupplier.getAsDouble() - 2000.0)
+            );
+            sliderSubsystem.sliderMotor.setRawSpeed(Constants.Slider.SLIDER_RPM);
+            feedersStarted = true;
+        }
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;  // runs until the button is released (whileTrue binding)
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        feederDelayTimer.stop();
+        // Always stop all motors on end — even if interrupted
+        shooterSubsystem.spitterMotor.stopTurning();
+        kickerSubsystem.fatKickerInnerMotor.stopTurning();
+        kickerSubsystem.fatKickerOuterMotor.stopTurning();
+        shooterSubsystem.backspinMotor.stopTurning();
+        sliderSubsystem.sliderMotor.stopTurning();
+    }
+}</code></pre>
+
+    <h3>Command Groups</h3>
+    <p>Sometimes you need to coordinate multiple actions. WPILib provides command group classes. These are the ones we use:</p>
+
+    <table>
+      <tr><th>Group type</th><th>Behavior</th><th>When to use</th></tr>
+      <tr><td>SequentialCommandGroup</td><td>Runs commands one after another</td><td>Do A, then B, then C</td></tr>
+      <tr><td>ParallelCommandGroup</td><td>Runs all commands simultaneously; ends when all finish</td><td>Spin up flywheel AND move hood at the same time</td></tr>
+      <tr><td>ParallelRaceGroup</td><td>Runs all simultaneously; ends when the first one finishes</td><td>Drive forward OR timeout after 3 seconds</td></tr>
+      <tr><td>ParallelDeadlineGroup</td><td>Runs all simultaneously; ends when the deadline command finishes</td><td>Run intake until sensor triggers</td></tr>
+    </table>
+
+    <p>Here's <code>ShootWithPowerCommand</code> using nesting to implement the same "delay feeders 0.5 s" pattern declaratively:</p>
+
+    <div class="code-label">ShootWithPowerCommand.java — ParallelCommandGroup example</div>
+    <pre><code class="language-java">public class ShootWithPowerCommand extends ParallelCommandGroup {
+    public ShootWithPowerCommand(ShooterSubsystem shooter, SliderSubsystem slider,
+                                  KickerSubsystem kicker,
+                                  DoubleSupplier powerSupplier, DoubleSupplier angleSupplier) {
+        super(
+            // Branch 1: spin up flywheel + hood immediately
+            new SetUpperShooterCommand(shooter,
+                -Constants.Shooter.ShootConfig.BACKSPIN_RPM,
+                powerSupplier.getAsDouble(),
+                angleSupplier.getAsDouble()),
+
+            // Branch 2: wait 0.5 s, THEN run kicker + slider in parallel
+            new SequentialCommandGroup(
+                new WaitCommand(0.5),
+                new ParallelCommandGroup(
+                    new KickAtSpeedCommand(kicker, -Constants.Kicker.KICKER_SPEED),
+                    new RunSliderAtSpeedCommand(slider, Constants.Slider.SLIDER_RPM)
+                )
+            )
+        );
+    }
+}</code></pre>
+
+    <h3>Simple on/off commands</h3>
+    <p>Most subsystem-level commands follow a dead simple pattern. The "on" command spins a motor; the "off" command stops it. Here's the pattern used throughout:</p>
+
+    <div class="code-label">SnatchCommand.java / UnSnatchCommand.java — typical on/off pair</div>
+    <pre><code class="language-java">// ON command
+public class SnatchCommand extends Command {
+    private final SnatcherSubsystem snatcher;
+    public SnatchCommand(SnatcherSubsystem snatcher) {
+        this.snatcher = snatcher;
+        addRequirements(snatcher);
+    }
+    @Override public void initialize() {
+        snatcher.snatcherMotor.setRawSpeedPercent(Constants.Snatcher.SNATCHER_SPEED_PERCENT);
+    }
+    @Override public boolean isFinished() { return false; }
+    @Override public void end(boolean interrupted) {
+        snatcher.snatcherMotor.stopTurning();
+    }
+}
+
+// OFF command — simply stops the motor
+public class UnSnatchCommand extends Command {
+    private final SnatcherSubsystem snatcher;
+    public UnSnatchCommand(SnatcherSubsystem snatcher) {
+        this.snatcher = snatcher;
+        addRequirements(snatcher);
+    }
+    @Override public void initialize() {
+        snatcher.snatcherMotor.setRawSpeedPercent(-Constants.Snatcher.SNATCHER_SPEED_PERCENT);
+    }
+    @Override public boolean isFinished() { return false; }
+    @Override public void end(boolean interrupted) {
+        snatcher.snatcherMotor.stopTurning();
+    }
+}</code></pre>
+
+    <div class="callout tip">
+      <div class="callout-icon">✅</div>
+      <div class="callout-body">
+        <strong>Always stop motors in <code>end()</code>.</strong> If a command is interrupted (e.g. by another command or by the robot disabling), <code>end(true)</code> is called. If you don't stop motors there, they'll keep spinning indefinitely.
+      </div>
+    </div>
+
+    <h3>DriveCommand — swerve position control</h3>
+    <p>The <code>DriveCommand</code> shows how to drive the swerve to a relative position using field-centric PID:</p>
+
+    <div class="code-label">DriveCommand.java</div>
+    <pre><code class="language-java">public class DriveCommand extends Command {
+    private final CommandSwerveDrivetrain drivetrain;
+    private final double metersX, metersY, degrees;
+    private Pose2d start;
+    private PIDController thetaPID;
+    private SwerveRequest.FieldCentric drive;
+
+    public DriveCommand(CommandSwerveDrivetrain drivetrain,
+                        double metersX, double metersY, double degrees) {
+        this.drivetrain = drivetrain;
+        this.metersX = metersX; this.metersY = metersY; this.degrees = degrees;
+        addRequirements(drivetrain);
+    }
+
+    @Override
+    public void initialize() {
+        start    = drivetrain.getState().Pose;
+        thetaPID = new PIDController(Constants.Swerve.Auto.ROTATION_KP, 0, 0);
+        drive    = new SwerveRequest.FieldCentric();
+    }
+
+    @Override
+    public void execute() {
+        Pose2d pose = drivetrain.getState().Pose;
+        double speedX = (metersX - (pose.getX() - start.getX())) * 2.0;
+        double speedY = (metersY - (pose.getY() - start.getY())) * 2.0;
+        double omega  = thetaPID.calculate(
+            pose.getRotation().getRadians(), Math.toRadians(degrees)
+        );
+        drivetrain.setControl(
+            drive.withVelocityX(speedX)
+                 .withVelocityY(speedY)
+                 .withRotationalRate(omega)
+        );
+    }
+
+    @Override
+    public boolean isFinished() {
+        Pose2d pose = drivetrain.getState().Pose;
+        return Math.abs(pose.getX() - start.getX() - metersX) &lt; 0.05
+            &amp;&amp; Math.abs(pose.getY() - start.getY() - metersY) &lt; 0.05
+            &amp;&amp; Math.abs(Math.toDegrees(pose.getRotation().getRadians()) - degrees) &lt; 2.0;
+    }
+
+    @Override
+    public void end(boolean interrupted) {
+        drivetrain.applyRequest(() -> new SwerveRequest.Idle());
+        thetaPID.close();
+    }
+}</code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="robotcontainer">
+    <h2>🎮 RobotContainer</h2>
+
+    <p><code>RobotContainer.java</code> is the heart of the robot's wiring. It has three jobs: <strong>instantiate all subsystems</strong>, <strong>bind controller buttons to commands</strong>, and <strong>register PathPlanner autos</strong>. Everything happens in the constructor.</p>
+
+    <div class="code-label">RobotContainer.java — subsystem instantiation</div>
+    <pre><code class="language-java">public class RobotContainer {
+    // All subsystems are public final fields
+    public final SnatcherSubsystem snatcher = new SnatcherSubsystem();
+    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final VisionSubsystem vision = new VisionSubsystem(drivetrain);
+    public final ShooterSubsystem shooter = new ShooterSubsystem();
+    public final KickerSubsystem kicker = new KickerSubsystem();
+    public final SliderSubsystem slider = new SliderSubsystem();
+    public final WhirligigSubsystem whirligig = new WhirligigSubsystem();
+    public final static WinSubsystem win = new WinSubsystem();
+
+    // Swerve drive config
+    private final double MaxSpeed = 1 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+    private final double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond);
+
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+        .withDeadband(MaxSpeed * 0.1)
+        .withRotationalDeadband(MaxAngularRate * 0.1)
+        .withDriveRequestType(DriveRequestType.Velocity)
+        .withSteerRequestType(SteerRequestType.MotionMagicExpo);
+
+    // Two controllers: driver (port 0) and operator (port 1)
+    private final CommandXboxController controller_drive =
+        new CommandXboxController(Constants.Controller.DRIVER_PORT);
+    private final CommandXboxController controller_operator =
+        new CommandXboxController(Constants.Controller.OPERATOR_PORT);
+
+    private final SlewRateLimiter rotationLimiter =
+        new SlewRateLimiter(Constants.Controller.ROTATION_SLEW_RATE_RAD_PER_SEC_SQ);
+
+    public RobotContainer() {
+        configureBindings();
+        configurePathPlannerAutos();
+        SmartDashboard.putData("PathPlanner Auto Chooser", autoChooser);
+    }
+}</code></pre>
+
+    <h3>Default drive command</h3>
+    <p>The swerve drivetrain's <strong>default command</strong> is the field-centric drive. It reads from the left joystick (translation) and right joystick (rotation) every loop. The <code>SlewRateLimiter</code> smooths rotation acceleration so the robot doesn't snap:</p>
+
+    <div class="code-label">RobotContainer.java — configureDefaultDrive()</div>
+    <pre><code class="language-java">private void configureDefaultDrive() {
+    drivetrain.setDefaultCommand(
+        drivetrain.applyRequest(() -> {
+            double xInput = -1 * applyDeadband(
+                controller_drive.getLeftY(),
+                Constants.Controller.TRANSLATION_INPUT_DEADBAND   // 10%
+            );
+            double yInput = -1 * applyDeadband(
+                controller_drive.getLeftX(),
+                Constants.Controller.TRANSLATION_INPUT_DEADBAND
+            );
+            double turnInput = shapeTurnInput(
+                -1 * applyDeadband(
+                    controller_drive.getRightX(),
+                    Constants.Controller.ROTATION_INPUT_DEADBAND  // 12%
+                )
+            );
+            return drive
+                .withVelocityX(xInput * MaxSpeed)
+                .withVelocityY(yInput * MaxSpeed)
+                .withRotationalRate(
+                    rotationLimiter.calculate(
+                        turnInput * Constants.Controller.ROTATION_MULTIPLIER * MaxAngularRate
+                    )
+                );
+        })
+    );
+}</code></pre>
+
+    <h3>Controller bindings</h3>
+    <p>WPILib's <code>CommandXboxController</code> exposes every button as a <code>Trigger</code> object. You attach commands using <code>.whileTrue()</code> (runs while held), <code>.onTrue()</code> (runs once on press), or <code>.toggleOnTrue()</code>.</p>
+
+    <div class="code-label">RobotContainer.java — driver and operator bindings</div>
+    <pre><code class="language-java">private void configureDriverBindings() {
+    // Back button: reset field-centric heading (useful after robot rotates)
+    controller_drive.back().onTrue(drivetrain.runOnce(drivetrain::seedFieldCentric));
+
+    // Right bumper: extend intake arm (runs once and holds position)
+    controller_drive.rightBumper().onTrue(new SmackdownSnatcherCommand(snatcher));
+    // Left bumper: jostle stuck game piece
+    controller_drive.leftBumper().onTrue(new JostleSnatcherCommand(snatcher));
+
+    // Triggers: intake / outtake (hold to run, release to stop)
+    controller_drive.rightTrigger().whileTrue(new SnatchCommand(snatcher));
+    controller_drive.leftTrigger().whileTrue(new UnSnatchCommand(snatcher));
+
+    // Operator A: auto-orient robot toward hub
+    controller_operator.a().whileTrue(new AutoOrientCommand(drivetrain));
+}
+
+private void configureOperatorBindings() {
+    // Right trigger: live-tunable shoot (RPM from Elastic dashboard slider)
+    controller_operator.rightTrigger().whileTrue(
+        new FixShootWithPowerCommand(
+            shooter, slider, kicker,
+            () -> MathUtil.clamp(
+                SmartDashboard.getNumber(
+                    Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM,
+                    Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED
+                ),
+                Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MIN,   // 3000 RPM
+                Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MAX    // 6500 RPM
+            ),
+            () -> 0.0
+        )
+    );
+
+    // Y/X/A: three preset shooting distances
+    controller_operator.y().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 10000, () -> 12.5)); // long
+    controller_operator.x().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 7000,  () -> 10.0)); // medium
+    controller_operator.a().whileTrue(new ShootWithPowerCommand(shooter, slider, kicker, () -> 5000,  () -> 5.0));  // short
+
+    // Manual overrides: hold left trigger + button to isolate individual motors
+    controller_operator.leftTrigger().and(controller_operator.a())
+        .whileTrue(new SpinSliderCommand(slider));
+    controller_operator.leftTrigger().and(controller_operator.x())
+        .whileTrue(new RunSpitterCommand(shooter, Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED));
+    controller_operator.leftTrigger().and(controller_operator.rightBumper())
+        .whileTrue(new KickCommand(kicker));
+}</code></pre>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>The <code>.and()</code> trick:</strong> <code>controller_operator.leftTrigger().and(controller_operator.a())</code> creates a Trigger that only fires when <em>both</em> are held. This is how manual override mode works — hold LT as a "shift key", then press other buttons for individual motor control.
+      </div>
+    </div>
+
+    <h3>Robot.java — match lifecycle</h3>
+    <p><code>Robot.java</code> extends <code>TimedRobot</code> and hooks into the match phases. The most important thing here is that <code>robotPeriodic()</code> runs the <code>CommandScheduler</code> — this is what actually executes your commands every loop:</p>
+
+    <div class="code-label">Robot.java — key lifecycle methods</div>
+    <pre><code class="language-java">@Override
+public void robotPeriodic() {
+    m_timeAndJoystickReplay.update();   // log joystick data for replay
+    CommandScheduler.getInstance().run(); // ← THIS runs all commands
+    updateDashboard();                    // push telemetry values to SmartDashboard
+}
+
+@Override
+public void autonomousInit() {
+    Constants.Field.STARTING_POSITION = positionChooser.getSelected(); // LEFT/CENTER/RIGHT
+    m_autonomousCommand = robotContainer.getAutonomousCommand();
+    if (m_autonomousCommand != null) {
+        CommandScheduler.getInstance().schedule(m_autonomousCommand);
+    }
+    matchTimer.reset(); matchTimer.start();
+}
+
+@Override
+public void teleopInit() {
+    // Cancel auto command when teleop starts
+    if (m_autonomousCommand != null) {
+        m_autonomousCommand.cancel();
+        m_autonomousCommand = null;
+    }
+}
+</code></pre>
+
+    <p>Robot.java also tracks match phase with a simple enum (<code>AUTONOMOUS → TRANSITION → TELEOP_FIRST_SHIFT → ... → ENDGAME</code>) using timer-based transitions in <code>teleopPeriodic()</code>. This allows LED patterns and other behaviors to change as the match progresses.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="motors">
+    <h2>🔧 Motors</h2>
+
+    <p>All motors on this robot are <strong>CTRE TalonFX</strong> (brand name: Kraken X60 or Falcon 500). We don't call the TalonFX API directly — instead we use a custom wrapper class, <code>SmartTalonMotor</code>, that hides boilerplate and adds safety features.</p>
+
+    <h3>SmartTalonMotor — the wrapper</h3>
+    <p>The wrapper provides three things: a <strong>Builder pattern</strong> for clean configuration, automatic <strong>gear ratio</strong> conversion (so you always work in mechanism units, not motor rotations), and enforced <strong>angle limits</strong> that log warnings and reject out-of-range commands instead of crashing.</p>
+
+    <div class="code-label">util/SmartTalonMotor.java — Builder configuration</div>
+    <pre><code class="language-java">public static class Builder {
+    private int port;
+    private double p, i, d;
+    private double minOutput = -1.0;
+    private double maxOutput = 1.0;
+    private double mechMinAngle = -1;   // set by mechanismAngleLimits()
+    private double mechMaxAngle = -1;
+    private MotorMode mode = MotorMode.CONTINUOUS;
+    private double gearRatio = 1.0;
+
+    public static Builder newInstance() { return new Builder(); }
+
+    public Builder port(int port)                               { this.port = port; return this; }
+    public Builder PID(double p, double i, double d)            { this.p=p; this.i=i; this.d=d; return this; }
+    public Builder outputRange(double min, double max)          { this.minOutput=min; this.maxOutput=max; return this; }
+    public Builder mechanismAngleLimits(double min, double max) { this.mechMinAngle=min; this.mechMaxAngle=max; return this; }
+    public Builder mode(MotorMode mode)                         { this.mode=mode; return this; }
+    public Builder gearRatio(double gearRatio)                  { this.gearRatio=gearRatio; return this; }
+
+    public SmartTalonMotor build() { return new SmartTalonMotor(this); }
+}</code></pre>
+
+    <h3>Key motor methods</h3>
+    <table>
+      <tr><th>Method</th><th>What it does</th><th>Units</th></tr>
+      <tr><td><code>setRawSpeedPercent(x)</code></td><td>Open-loop percent output (no PID)</td><td>-1.0 to 1.0</td></tr>
+      <tr><td><code>setRawSpeed(rpm)</code></td><td>Velocity control using VelocityVoltage — <strong>motor RPM</strong></td><td>motor RPM</td></tr>
+      <tr><td><code>setSpeed(rpm)</code></td><td>Velocity control — <strong>mechanism RPM</strong> (auto-applies gear ratio)</td><td>mechanism RPM</td></tr>
+      <tr><td><code>set(degrees)</code></td><td>Position control — mechanism angle (enforces limits in CONTINUOUS mode)</td><td>mechanism degrees</td></tr>
+      <tr><td><code>turn(degrees)</code></td><td>Relative position move from current angle</td><td>mechanism degrees</td></tr>
+      <tr><td><code>getAngle()</code></td><td>Current position in mechanism degrees</td><td>mechanism degrees</td></tr>
+      <tr><td><code>getSpeedRPM()</code></td><td>Current velocity in mechanism RPM</td><td>mechanism RPM</td></tr>
+      <tr><td><code>stopTurning()</code></td><td>Hold current position (CONTINUOUS) or zero output (coasting)</td><td>—</td></tr>
+      <tr><td><code>enableCoasting()</code></td><td>Let the motor coast freely instead of holding</td><td>—</td></tr>
+    </table>
+
+    <h3>Gear ratio in practice</h3>
+    <p>The hood motor has a 325:18 gear ratio (motor spins ~18x faster than the hood). When you configure <code>.gearRatio(325.0/18.0)</code>, calling <code>hoodMotor.set(10.0)</code> moves the hood to <em>10 degrees</em> — the wrapper calculates the motor rotations automatically. You never have to think about the gearbox.</p>
+
+    <div class="code-label">Inside SmartTalonMotor — gear ratio conversion</div>
+    <pre><code class="language-java">// Convert mechanism degrees → motor rotations for the TalonFX position controller
+private double toMotorRotations(double mechDegrees) {
+    return (mechDegrees / 360.0) * this.gearRatio;
+}
+
+// Convert motor rotations → mechanism degrees for reading back position
+private double toMechanismDegrees(double motorRotations) {
+    return (motorRotations * 360.0) / this.gearRatio;
+}
+
+// set() enforces angle limits before sending any motor command
+public boolean set(double mechDegrees) {
+    if (isWithinLimits(mechDegrees)) {
+        motor.setControl(positionRequest.withPosition(toMotorRotations(mechDegrees)));
+        return true;
+    }
+    LOGGER.warning(String.format(
+        "[set] Rejected angle %.2f°; limits are [%.2f°, %.2f°]",
+        mechDegrees, minAngleDeg, maxAngleDeg
+    ));
+    return false;   // returns false so callers can react if needed
+}</code></pre>
+
+    <h3>Two motor modes</h3>
+    <p><code>MotorMode.CONTINUOUS</code> is for mechanisms that have hard stops (like a hood that swings 0–12.5°). Limits are enforced and the motor holds position. <code>MotorMode.WRAPPED</code> is for spinning mechanisms (like a kicker wheel) where any angle is valid and position wraps at 360°.</p>
+
+    <h3>CAN IDs quick reference</h3>
+    <table>
+      <tr><th>Subsystem</th><th>Motor</th><th>CAN ID</th></tr>
+      <tr><td>Shooter</td><td>Spitter Lead</td><td><span class="port-pill">31</span></td></tr>
+      <tr><td>Snatcher</td><td>Smackdown (extender)</td><td><span class="port-pill">32</span></td></tr>
+      <tr><td>Slider</td><td>Indexer</td><td><span class="port-pill">33</span></td></tr>
+      <tr><td>Shooter</td><td>Backspin</td><td><span class="port-pill">34</span></td></tr>
+      <tr><td>Shooter</td><td>Spitter Follower</td><td><span class="port-pill">35</span></td></tr>
+      <tr><td>Kicker</td><td>Outer</td><td><span class="port-pill">36</span></td></tr>
+      <tr><td>Kicker</td><td>Inner</td><td><span class="port-pill">37</span></td></tr>
+      <tr><td>Shooter</td><td>Hood (angle)</td><td><span class="port-pill">38</span></td></tr>
+      <tr><td>Snatcher</td><td>Roller</td><td><span class="port-pill">39</span></td></tr>
+      <tr><td>Gyro</td><td>Pigeon 2 IMU</td><td><span class="port-pill">0</span></td></tr>
+    </table>
+
+    <h3>SmartVortexMotor</h3>
+    <p>The <code>SmartVortexMotor</code> is a similar wrapper for REV NEO Vortex motors (used for the spindexer in <span class="repo-imp">CompetitionBot2026-imported</span>). Its API mirrors <code>SmartTalonMotor</code>.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="vision">
+    <h2>📷 Vision</h2>
+
+    <p>We use <strong>PhotonVision</strong> running on a coprocessor (Raspberry Pi or Orange Pi) to detect <strong>AprilTag</strong> fiducial markers around the field and feed pose estimates into the drivetrain's odometry. Two cameras are mounted on the back of the robot, pointed outward.</p>
+
+    <h3>How it works</h3>
+    <ol class="steps">
+      <li>PhotonVision runs on the coprocessor and publishes AprilTag detection results over NetworkTables.</li>
+      <li><code>VisionSubsystem.periodic()</code> reads new results from both cameras every loop.</li>
+      <li>Each result is filtered: single-tag results must have low ambiguity (&lt; 0.20) and be within 4 meters. Multi-tag results pass with looser constraints.</li>
+      <li>Accepted results are fed to <code>drivetrain.addVisionMeasurement()</code> with a standard-deviation matrix that encodes our confidence in the measurement (farther away = less confident).</li>
+      <li>The drivetrain's pose estimator fuses these vision updates with wheel odometry using a Kalman filter.</li>
+    </ol>
+
+    <div class="code-label">VisionSubsystem.java — periodic() filtering logic</div>
+    <pre><code class="language-java">@Override
+public void periodic() {
+    currentPose = drivetrain.getState().Pose;
+
+    if (!enabled) return;
+
+    Pose3d referencePose = new Pose3d(currentPose);
+
+    for (CameraContext cameraContext : cameras) {
+        for (PhotonPipelineResult result : cameraContext.camera.getAllUnreadResults()) {
+
+            if (!result.hasTargets()) {
+                recordRejectedMeasurement(cameraContext.config.name(), "No targets");
+                continue;
+            }
+
+            // Single-tag results: check pose ambiguity
+            if (result.getTargets().size() == 1) {
+                double ambiguity = result.getBestTarget().getPoseAmbiguity();
+                if (ambiguity &lt; 0.0 || ambiguity >= SINGLE_TAG_AMBIGUITY_CUTOFF) { // 0.20
+                    recordRejectedMeasurement(cameraContext.config.name(), "High ambiguity");
+                    continue;
+                }
+            }
+
+            // Try multi-tag pose first (more accurate), fall back to closest-to-reference
+            Optional&lt;EstimatedRobotPose&gt; estimate =
+                cameraContext.poseEstimator.estimateCoprocMultiTagPose(result);
+            if (estimate.isEmpty()) {
+                estimate = cameraContext.poseEstimator.estimateClosestToReferencePose(
+                    result, referencePose
+                );
+            }
+
+            if (estimate.isEmpty()) {
+                recordRejectedMeasurement(cameraContext.config.name(), "No estimate");
+                continue;
+            }
+
+            // Check distance for single-tag results
+            double distanceToNearestTag = calculateDistanceToNearestTag(estimate.get());
+            if (result.getTargets().size() == 1
+                    &amp;&amp; distanceToNearestTag > MAX_SINGLE_TAG_DISTANCE_METERS) { // 4.0m
+                recordRejectedMeasurement(cameraContext.config.name(), "Too far");
+                continue;
+            }
+
+            // Assign standard deviations based on tag count
+            Matrix&lt;N3, N1&gt; stdDevs = result.getTargets().size() > 1
+                ? MULTI_TAG_STD_DEVS   // [0.35, 0.35, 0.75]  — high confidence
+                : SINGLE_TAG_STD_DEVS; // [1.5, 1.5, 6.0]     — lower confidence
+
+            // Feed accepted measurement to drivetrain Kalman filter
+            drivetrain.addVisionMeasurement(
+                estimate.get().estimatedPose.toPose2d(),
+                estimate.get().timestampSeconds,
+                stdDevs
+            );
+        }
+    }
+}</code></pre>
+
+    <h3>Camera transforms</h3>
+    <p>The robot-to-camera transform tells PhotonVision where each camera is physically mounted on the robot (measured in meters and radians from the robot center, using FRC coordinate conventions: +X forward, +Y left, +Z up). These are configured in <code>Constants.Vision</code>:</p>
+
+    <div class="code-label">Constants.java — Vision camera transforms</div>
+    <pre><code class="language-java">// Back Left camera position: 3.7" back, 13.5" left, 7.5" up
+public static final Translation3d LEFT_CAMERA_TRANSLATION = new Translation3d(
+    Units.inchesToMeters(-3.7),   // behind robot center
+    Units.inchesToMeters(13.5),   // to the left
+    Units.inchesToMeters(7.5)     // height
+);
+// Pointing 90° to the left (yaw = +90°)
+public static final Rotation3d LEFT_CAMERA_ROTATION =
+    new Rotation3d(0.0, 0.0, Math.toRadians(90.0));
+
+public static final Transform3d LEFT_CAMERA_TRANSFORM =
+    new Transform3d(LEFT_CAMERA_TRANSLATION, LEFT_CAMERA_ROTATION);
+
+// Right camera: mirror — 13.5" right, pointing 90° right
+public static final Translation3d RIGHT_CAMERA_TRANSLATION = new Translation3d(
+    Units.inchesToMeters(-3.7),
+    Units.inchesToMeters(-13.5),
+    Units.inchesToMeters(7.5)
+);
+public static final Rotation3d RIGHT_CAMERA_ROTATION =
+    new Rotation3d(0.0, 0.0, Math.toRadians(-90.0));
+</code></pre>
+
+    <div class="callout warning">
+      <div class="callout-icon">⚠️</div>
+      <div class="callout-body">
+        <strong>If you remount a camera</strong>, you must update the translation and rotation in <code>Constants.Vision</code>. Wrong transforms will corrupt pose estimation — the robot will think it's in the wrong place on the field.
+      </div>
+    </div>
+
+    <h3>Field layout</h3>
+    <p>The field is loaded from WPILib's built-in field definition: <code>AprilTagFields.k2026RebuiltAndymark</code>. This contains the 3D positions of every AprilTag on the official 2026 game field. Do not hardcode tag positions — always use the official layout file.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="constants">
+    <h2>🔢 Constants</h2>
+
+    <p><code>Constants.java</code> is the single source of truth for every tuneable number in the codebase. Instead of scattering magic numbers like <code>37</code> or <code>3000.0</code> throughout the code, we define them once here with descriptive names and reference those names everywhere else.</p>
+
+    <h3>Structure</h3>
+    <p>Constants are organized into <strong>nested static inner classes</strong> matching the subsystems they belong to. Each class has a private constructor to prevent instantiation — they're just namespaces for constants.</p>
+
+    <div class="code-label">Constants.java — structure overview</div>
+    <pre><code class="language-java">public final class Constants {
+    private Constants() {}  // prevent instantiation
+
+    public static final class Robot {
+        public static final double ROBOT_WIDTH  = Units.inchesToMeters(27.0);
+        public static final double ROBOT_LENGTH = Units.inchesToMeters(27.0);
+        public static final double ROBOT_HEIGHT = Units.inchesToMeters(21.5);
+        private Robot() {}
+    }
+
+    public static final class Controller {
+        public static final int    DRIVER_PORT                      = 0;
+        public static final int    OPERATOR_PORT                    = 1;
+        public static final double TRANSLATION_INPUT_DEADBAND       = 0.10;
+        public static final double ROTATION_INPUT_DEADBAND          = 0.12;
+        public static final double ROTATION_SLEW_RATE_RAD_PER_SEC_SQ = 12.0;
+        public static final double ROTATION_MULTIPLIER              = 2.0;
+        private Controller() {}
+    }
+
+    public static final class Kicker {
+        public static final int FAT_KICKER_INNER_MOTOR_PORT = 37;
+        public static final int FAT_KICKER_OUTER_MOTOR_PORT = 36;
+        public static final int KICKER_SPEED                = 3000;
+        private Kicker() {}
+    }
+
+    public static final class Shooter {
+        public static final int HOOD_MOTOR_PORT            = 38;
+        public static final int SPITTER_MOTOR_LEAD_PORT    = 31;
+        public static final int SPITTER_MOTOR_FOLLOWER_PORT = 35;
+
+        public static final class ShootConfig {
+            public static final double SHORT_SPITTER_SPEED  = 4000.0;   // RPM
+            public static final double MEDIUM_SPITTER_SPEED = 5000.0;
+            public static final double LONG_SPITTER_SPEED   = 6000.0;
+            public static final double BACKSPIN_RPM         = 6000.0;
+            public static final double LONG_SHOOT_RPM       = 15000.0;
+            public static final double MEDIUM_SHOOT_RPM     = 9000.0;
+            public static final double SHORT_SHOOT_RPM      = 6000.0;
+            public static final double KICKER_INIT_DELAY    = 0.5;      // seconds
+            private ShootConfig() {}
+        }
+
+        public static final class Hood {
+            public static final double MOTOR_ROTATIONS_PER_HOOD_ROTATION = 325.0 / 18.0;
+            public static final double MIN_HOOD_ANGLE_DEGREES = 0.0;
+            public static final double MAX_HOOD_ANGLE_DEGREES = 12.5;
+            private Hood() {}
+        }
+        private Shooter() {}
+    }
+
+    // Dashboard key strings (used to read/write SmartDashboard values)
+    public static final class Dashboard {
+        public static final String ELASTIC_TEST_SHOOTER_RPM        = "Elastic Test Shooter RPM";
+        public static final String ELASTIC_TEST_HOOD_ANGLE_DEGREES = "Elastic Test Hood Launch Angle";
+        public static final String ELASTIC_SHOOTER_TUNING_ENABLED  = "Elastic Shooter Tuning Enabled";
+        public static final double ELASTIC_TEST_SHOOTER_RPM_MIN    = 3000.0;
+        public static final double ELASTIC_TEST_SHOOTER_RPM_MAX    = 6500.0;
+        private Dashboard() {}
+    }
+
+    // CollectedData: lookup tables for distance → angle interpolation
+    public static final class CollectedData {
+        public static final Double[] distPoints  = {1.36, 1.49, 1.595, /* ... */ 5.055};
+        public static final Double[] anglePoints = {22.0, 22.0, 22.0, /* ... */ 36.82};
+        private CollectedData() {}
+    }
+}</code></pre>
+
+    <h3>How to add a new constant</h3>
+    <ol class="steps">
+      <li>Find the right inner class, or create a new one if your constant doesn't fit an existing category.</li>
+      <li>Add a <code>public static final</code> field with a descriptive ALL_CAPS name.</li>
+      <li>Reference it in your code as <code>Constants.SubsystemName.MY_CONSTANT</code>. Never paste the raw value — always use the constant name.</li>
+    </ol>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>Use <code>Units.*</code> helpers</strong> for unit conversions. WPILib provides <code>Units.inchesToMeters()</code>, <code>Units.degreesToRadians()</code>, etc. Always store distances in meters and angles in radians internally — convert at the constant definition level, not scattered in your command logic.
+      </div>
+    </div>
+
+    <h3>FieldConstants.java</h3>
+    <p>Field geometry lives in <code>FieldConstants.java</code> (a separate file from <code>Constants.java</code>). It defines things like field dimensions, trench widths, match timing constants, and the alliance zone positions used to calculate autonomous start positions.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="autos">
+    <h2>🤖 Autonomous Routines</h2>
+
+    <p>Autonomous routines are built with <strong>PathPlanner</strong>. You design paths visually in the PathPlanner GUI app and the robot follows them using the built-in path-following controller. Commands (like "shoot while driving") are triggered from within paths as <strong>named commands</strong>.</p>
+
+    <h3>How PathPlanner is wired in</h3>
+    <p>Before any auto runs, we register <strong>named commands</strong> — these are the Java commands PathPlanner can call by name from within a path. This registration happens in <code>RobotContainer.configurePathPlannerAutos()</code>:</p>
+
+    <div class="code-label">RobotContainer.java — named command registration</div>
+    <pre><code class="language-java">private void configurePathPlannerAutos() {
+    drivetrain.initializeAutoBuilder();  // must happen before buildAutoChooser()
+
+    // Register every command PathPlanner paths can reference by name
+    NamedCommands.registerCommand("DoNothingCommand",
+        Commands.none());
+    NamedCommands.registerCommand("AutoShootCommand",
+        new AutoShootCommand(drivetrain, shooter, slider, kicker));
+    NamedCommands.registerCommand("SnatchCommand",
+        new SnatchCommand(snatcher));
+    NamedCommands.registerCommand("UnSnatchCommand",
+        new UnSnatchCommand(snatcher));
+    NamedCommands.registerCommand("SmackdownSnatcherCommand",
+        new SmackdownSnatcherCommand(snatcher));
+    NamedCommands.registerCommand("Shoot Long",
+        new FixShootWithPowerCommand(shooter, slider, kicker,
+            () -> Constants.Shooter.ShootConfig.LONG_SHOOT_RPM, () -> 10.0));
+    NamedCommands.registerCommand("Shoot Medium",
+        new FixShootWithPowerCommand(shooter, slider, kicker,
+            () -> Constants.Shooter.ShootConfig.MEDIUM_SHOOT_RPM, () -> 12.5));
+    NamedCommands.registerCommand("Shoot Short",
+        new FixShootWithPowerCommand(shooter, slider, kicker,
+            () -> 5000.0, () -> 10.0));
+
+    // Build auto chooser and populate it from PathPlanner auto files on the roboRIO
+    autoChooser.setDefaultOption("None", Commands.none());
+    for (String autoName : AutoBuilder.getAllAutoNames()) {
+        try {
+            if (!autoName.startsWith("UNM")) {
+                // Most autos can be run from either side — add LEFT and RIGHT variants
+                autoChooser.addOption("LEFT "  + autoName, new PathPlannerAuto(autoName, false));
+                autoChooser.addOption("RIGHT " + autoName, new PathPlannerAuto(autoName, true));
+            } else {
+                // UNM- prefixed autos are symmetric (e.g. center starts)
+                autoChooser.addOption(autoName, new PathPlannerAuto(autoName));
+            }
+        } catch (Exception e) {
+            DriverStation.reportError("Skipping invalid auto '" + autoName + "': " + e.getMessage(),
+                e.getStackTrace());
+        }
+    }
+    SmartDashboard.putData("PathPlanner Auto Chooser", autoChooser);
+}</code></pre>
+
+    <h3>Adding a new auto</h3>
+    <ol class="steps">
+      <li>Open the PathPlanner app. Create a new auto and design your path(s). Drag named command events onto the path where you want them to fire.</li>
+      <li>Export the <code>.auto</code> and any new <code>.path</code> files to <code>src/main/deploy/pathplanner/</code>.</li>
+      <li>If your auto calls new commands, register them with <code>NamedCommands.registerCommand("MyCommandName", new MyCommand(...))</code> in <code>configurePathPlannerAutos()</code>.</li>
+      <li>Deploy to the roboRIO. The new auto will automatically appear in the SmartDashboard/Elastic chooser.</li>
+    </ol>
+
+    <div class="callout info">
+      <div class="callout-icon">💡</div>
+      <div class="callout-body">
+        <strong>LEFT/RIGHT mirroring:</strong> Autos without the <code>UNM-</code> prefix are automatically mirrored for the other side of the field. PathPlanner handles the coordinate flip. This means you only need to design each auto for one side.
+      </div>
+    </div>
+
+    <h3>How AutoBuilder configures PathPlanner</h3>
+    <p>The <code>CommandSwerveDrivetrain</code> calls <code>AutoBuilder.configure()</code> in its constructor (via <code>initializeAutoBuilder()</code>), providing the pose supplier, pose resetter, chassis speed supplier and consumer, plus the drive robot controller. You don't need to touch this — it's set up in the generated file.</p>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="dashboard">
+    <h2>📊 Dashboard</h2>
+
+    <p>We use <strong>Elastic</strong> (a WPILib-compatible dashboard) to monitor and tune the robot. Data flows via <strong>NetworkTables</strong> — the robot publishes values with <code>SmartDashboard.putXxx()</code>, and the dashboard displays and optionally writes them back.</p>
+
+    <h3>Elastic shooter tuning</h3>
+    <p>The most useful dashboard feature is the live shooter tuning. While disabled or testing, you can adjust RPM and hood angle with sliders and immediately see the effect on the robot without redeploying code:</p>
+
+    <div class="code-label">Robot.java — dashboard tuning update in robotPeriodic</div>
+    <pre><code class="language-java">private void updateDashboard() {
+    // Show robot on field widget
+    field.setRobotPose(drivetrain.getEstimatedPose());
+    SmartDashboard.putNumber(Constants.Dashboard.DISTANCE_FROM_HUB_METERS,
+        drivetrain.getDistanceToHubMeters());
+
+    // Live shooter RPM — clamp to safe range, then write back so slider
+    // can't be dragged out of bounds
+    double elasticRpm = MathUtil.clamp(
+        SmartDashboard.getNumber(Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM,
+            Constants.Shooter.ShootConfig.MEDIUM_SPITTER_SPEED),
+        Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MIN,  // 3000
+        Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM_MAX   // 6500
+    );
+    SmartDashboard.putNumber(Constants.Dashboard.ELASTIC_TEST_SHOOTER_RPM, elasticRpm);
+
+    // If tuning is enabled, snap the hood directly without going through the command scheduler
+    if (DriverStation.isEnabled()
+            &amp;&amp; SmartDashboard.getBoolean(Constants.Dashboard.ELASTIC_SHOOTER_TUNING_ENABLED, false)
+            &amp;&amp; !SmartDashboard.getBoolean("Manual Turret Control", false)) {
+        robotContainer.shooter.hoodMotor.set(elasticHoodAngleDegrees);
+    }
+}</code></pre>
+
+    <h3>Dashboard keys reference</h3>
+    <table>
+      <tr><th>Key</th><th>Type</th><th>Purpose</th></tr>
+      <tr><td><code>Elastic Test Shooter RPM</code></td><td>Number</td><td>Tunable flywheel target (3000–6500 RPM)</td></tr>
+      <tr><td><code>Elastic Test Hood Launch Angle</code></td><td>Number</td><td>Tunable hood angle in degrees</td></tr>
+      <tr><td><code>Elastic Shooter Tuning Enabled</code></td><td>Boolean</td><td>Toggle to enable slider overrides</td></tr>
+      <tr><td><code>Distance From Hub</code></td><td>Number</td><td>Live distance to hub (meters)</td></tr>
+      <tr><td><code>Field</code></td><td>Field2d</td><td>Robot pose on field map</td></tr>
+      <tr><td><code>Current Match Phase</code></td><td>String</td><td>AUTONOMOUS / TELEOP_FIRST_SHIFT / ENDGAME…</td></tr>
+      <tr><td><code>PathPlanner Auto Chooser</code></td><td>SendableChooser</td><td>Select which auto to run</td></tr>
+      <tr><td><code>Position</code></td><td>SendableChooser</td><td>Starting position: LEFT / CENTER / RIGHT</td></tr>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="conventions">
+    <h2>📐 Coding Conventions</h2>
+
+    <h3>Naming</h3>
+    <table>
+      <tr><th>Thing</th><th>Convention</th><th>Example</th></tr>
+      <tr><td>Classes</td><td>PascalCase</td><td><code>KickerSubsystem</code>, <code>FixShootWithPowerCommand</code></td></tr>
+      <tr><td>Methods</td><td>camelCase</td><td><code>setRawSpeed()</code>, <code>configureBindings()</code></td></tr>
+      <tr><td>Fields / variables</td><td>camelCase</td><td><code>fatKickerInnerMotor</code>, <code>feedersStarted</code></td></tr>
+      <tr><td>Constants</td><td>ALL_CAPS_SNAKE</td><td><code>KICKER_INIT_DELAY</code>, <code>MAX_HOOD_ANGLE_DEGREES</code></td></tr>
+      <tr><td>Packages</td><td>lowercase</td><td><code>frc.robot.subsystems.kicker</code></td></tr>
+      <tr><td>Command files</td><td>Descriptive + "Command" suffix</td><td><code>FixShootWithPowerCommand.java</code></td></tr>
+      <tr><td>Subsystem files</td><td>Descriptive + "Subsystem" suffix</td><td><code>KickerSubsystem.java</code></td></tr>
+    </table>
+
+    <h3>File organization</h3>
+    <p>Each subsystem lives in its own package under <code>subsystems/</code> — for example, <code>subsystems.kicker</code>. The subsystem class and all commands that only affect that subsystem go in the same package. Multi-subsystem commands go in <code>commandGroups/</code>. Hardware wrappers (SmartTalonMotor etc.) go in <code>util/</code>.</p>
+
+    <h3>Patterns that repeat everywhere</h3>
+
+    <h4>Builder pattern for configuration</h4>
+    <p>All motor setup uses the Builder pattern. Never pass a raw <code>TalonFX</code> around — always wrap it in <code>SmartTalonMotor</code>. This makes configuration readable and keeps the constructor clean.</p>
+
+    <h4>DoubleSupplier for live values</h4>
+    <p>When a command needs a value that might change during execution (like an RPM being tuned from the dashboard), we pass a <code>DoubleSupplier</code> (a lambda <code>() -> value</code>) instead of a plain <code>double</code>. The supplier is evaluated fresh every call.</p>
+
+    <div class="code-label">Supplier example — live dashboard value</div>
+    <pre><code class="language-java">// Bad: value is frozen at command creation time
+new FixShootWithPowerCommand(shooter, slider, kicker, 5000.0, 10.0);
+
+// Good: lambda re-reads the dashboard every execute() tick
+new FixShootWithPowerCommand(shooter, slider, kicker,
+    () -> SmartDashboard.getNumber("Elastic Test Shooter RPM", 5000.0),
+    () -> 0.0
+);</code></pre>
+
+    <h4>Always call addRequirements()</h4>
+    <p>In any command that directly controls motors, call <code>addRequirements(subsystem)</code> in the constructor. This prevents two commands from fighting over the same motor. The only exception is intentional concurrent control (rare — see <code>FixShootWithPowerCommand</code> which deliberately omits it to allow simultaneous drive).</p>
+
+    <h4>stopTurning() in end()</h4>
+    <p>Every command that starts a motor must stop it in <code>end()</code>. Pass-through to <code>SmartTalonMotor.stopTurning()</code> — never call raw TalonFX methods in commands.</p>
+
+    <h4>Constants, not magic numbers</h4>
+    <p>Zero raw numbers in command or subsystem code. Every port, speed, angle, and threshold goes through <code>Constants</code>. If you find yourself writing a literal number anywhere outside Constants.java, stop and add a constant instead.</p>
+
+    <h3>Comment style</h3>
+    <p>Comments explain <em>why</em>, not <em>what</em>. The code should be clear enough that "what" is obvious. Use comments for non-obvious decisions, hardware-specific quirks, or safety notes:</p>
+
+    <div class="code-label">Good comments from the codebase</div>
+    <pre><code class="language-java">// screw it  — MaxSpeed is intentionally 100% (the 1* is left as a reminder it can be tuned)
+private final double MaxSpeed = 1 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond);
+
+// Follower: spitterMotor2 mirrors spitterMotor, but spins opposite direction
+// MotorAlignmentValue.Opposed means reversed so both wheels push the note the same way
+this.spitterMotor2.motor.setControl(
+    new Follower(this.spitterMotor.motor.getDeviceID(), MotorAlignmentValue.Opposed)
+);
+
+// THIS IS ESSENTIAL DO NOT DELETE.  (WinSubsystem — yes it's a real comment)
+public static final boolean win = true;</code></pre>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="comparison">
+    <h2>⚖️ Repo Comparison</h2>
+
+    <p>Both repos implement the same game and share the same architecture. Here's what changed between the imported version and v2:</p>
+
+    <table>
+      <tr>
+        <th>Aspect</th>
+        <th class="repo-v2">v2.CompetitionBot2026 (competition)</th>
+        <th class="repo-imp">CompetitionBot2026-imported</th>
+      </tr>
+      <tr>
+        <td>Shooting mechanism</td>
+        <td>Separate subsystems: Shooter, Kicker, Slider, Snatcher — each independently commandable</td>
+        <td>Unified <code>TurretSubsystem</code> with 2-DOF aiming (horizontal + vertical motors)</td>
+      </tr>
+      <tr>
+        <td>Motor wrapper</td>
+        <td><code>SmartTalonMotor</code> — separate mechMin/mechMax vs motorMin/motorMax limits</td>
+        <td><code>SmartKrakenMotor</code> — single <code>angleLimits()</code> call; uses <code>VelocityDutyCycle</code> instead of <code>VelocityVoltage</code></td>
+      </tr>
+      <tr>
+        <td>Turret aiming</td>
+        <td>Manual preset angles commanded from buttons</td>
+        <td>Built-in <code>stepHorizontalMotor()</code> and <code>setLaunchAngleDegrees()</code> methods in subsystem; PIDController lives in subsystem</td>
+      </tr>
+      <tr>
+        <td>Intake</td>
+        <td><code>SnatcherSubsystem</code>: smackdown arm + snatcher roller</td>
+        <td><code>IntakeSubsystem</code>: extender + main roller (same concept, cleaner names)</td>
+      </tr>
+      <tr>
+        <td>Gyro</td>
+        <td><code>WhirligigSubsystem</code> (custom team name)</td>
+        <td><code>GyroSubsystem</code> (conventional name)</td>
+      </tr>
+      <tr>
+        <td>CAN IDs</td>
+        <td>31–39 range</td>
+        <td>25, 43–46 range</td>
+      </tr>
+      <tr>
+        <td>Auto selection</td>
+        <td>LEFT/RIGHT prefix variants using PathPlanner mirroring</td>
+        <td>Direct auto selection without mirroring</td>
+      </tr>
+      <tr>
+        <td>LEDs</td>
+        <td>Full <code>LEDSubsystem</code> with bounce patterns and state-driven mode switching</td>
+        <td>Not present</td>
+      </tr>
+    </table>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="section" id="newcode">
+    <h2>✨ Adding New Code</h2>
+
+    <h3>Adding a new subsystem</h3>
+    <ol class="steps">
+      <li>Create a new package: <code>src/main/java/frc/robot/subsystems/mysubsystem/</code></li>
+      <li>Create <code>MySubsystem.java</code> extending <code>SubsystemBase</code>. Declare motors as <code>public final SmartTalonMotor</code> fields. Configure them in the constructor using the Builder pattern. Add CAN IDs to <code>Constants.java</code> first.</li>
+      <li>Create a <code>commands/</code> subfolder and add your commands there.</li>
+      <li>In <code>RobotContainer.java</code>, add <code>public final MySubsystem mySubsystem = new MySubsystem();</code> as a field.</li>
+      <li>Wire buttons to commands in <code>configureDriverBindings()</code> or <code>configureOperatorBindings()</code>.</li>
+    </ol>
+
+    <h3>Adding a new command</h3>
+    <ol class="steps">
+      <li>Create <code>MyActionCommand.java</code> in the appropriate <code>commands/</code> folder.</li>
+      <li>Extend <code>Command</code>. Store subsystem references in final fields. Call <code>addRequirements(subsystem)</code> in the constructor.</li>
+      <li>Implement <code>initialize()</code>, <code>execute()</code>, <code>isFinished()</code>, and <code>end(boolean)</code>. At minimum, always implement <code>end()</code> to stop motors.</li>
+      <li>Use it in <code>RobotContainer</code> or register it with <code>NamedCommands</code> for PathPlanner.</li>
+    </ol>
+
+    <h3>Adding a new constant</h3>
+    <ol class="steps">
+      <li>Open <code>Constants.java</code>. Find the right inner class (e.g. <code>Constants.Shooter.ShootConfig</code> for a shooting speed).</li>
+      <li>Add <code>public static final double MY_NEW_CONSTANT = 1234.0;</code>.</li>
+      <li>Reference it as <code>Constants.Shooter.ShootConfig.MY_NEW_CONSTANT</code> in your command or subsystem.</li>
+    </ol>
+
+    <h3>Adding a new PathPlanner auto</h3>
+    <ol class="steps">
+      <li>Design the path in the PathPlanner app. Add named command events where needed.</li>
+      <li>Export to <code>src/main/deploy/pathplanner/</code>.</li>
+      <li>If the auto uses new commands, register them in <code>configurePathPlannerAutos()</code> with <code>NamedCommands.registerCommand("Name", new MyCommand(...))</code>.</li>
+      <li>Deploy. The auto appears automatically in the dashboard chooser.</li>
+    </ol>
+
+    <div class="callout danger">
+      <div class="callout-icon">🚨</div>
+      <div class="callout-body">
+        <strong>Before your first deploy</strong>, double-check: (1) CAN IDs in Constants match the physical hardware, (2) motor directions are correct (a reversed motor can damage mechanisms), (3) soft limits are set and tested on a benched robot before running on the field.
+      </div>
+    </div>
+
+    <h3>Build and deploy</h3>
+
+    <div class="code-label">Gradle commands (run in the repo root)</div>
+    <pre><code class="language-bash"># Build and check for compile errors (no deploy)
+./gradlew build
+
+# Deploy to a connected roboRIO over USB or WiFi
+./gradlew deploy
+
+# Run simulation on your desktop (no robot needed)
+./gradlew simulateJava</code></pre>
+
+    <p>The project uses <strong>GradleRIO 2026.2.1</strong> and targets <strong>Java 17</strong>. Dependencies (WPILib, CTRE Phoenix 6, PathPlanner, PhotonVision) are all declared as vendor JSON dependencies or Gradle dependencies in <code>build.gradle</code> — you don't need to install anything manually beyond the WPILib installer.</p>
+
+    <hr />
+
+    <p style="color:var(--text-muted); font-size:0.875rem; text-align:center; margin-top:32px;">
+      Generated from the actual source code of <strong>v2.CompetitionBot2026</strong> and <strong>CompetitionBot2026-imported</strong>.
+      If something in the code changes, update this document too. 🚀
+    </p>
+  </section>
+
+</main>
+
+<script>
+  // ── highlight.js init ──────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    hljs.highlightAll();
+
+    // ── Active nav link on scroll ─────────────────────────────────────────
+    const sections = document.querySelectorAll('.section[id]');
+    const navLinks = document.querySelectorAll('#sidebar a');
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const active = document.querySelector(`#sidebar a[href="#${entry.target.id}"]`);
+          if (active) active.classList.add('active');
+        }
+      });
+    }, { rootMargin: '-10% 0px -80% 0px' });
+
+    sections.forEach(s => observer.observe(s));
+
+    // ── Reading progress bar ───────────────────────────────────────────────
+    const bar = document.getElementById('progress-bar');
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      bar.style.width = `${(scrollTop / docHeight) * 100}%`;
+    });
+  });
+</script>
+</body>
+</html>
